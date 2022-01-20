@@ -9,21 +9,23 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use App\Repository\UserRepository;
-use App\Entity\ChatRoom;
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+
+use App\Repository\UserRepository;
+
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use App\Entity\Chat;
+
 
 #[AsCommand(
-    name: 'app:chat:start',
+    name: 'app:contact:add',
     description: 'Add a short description for your command',
 )]
-class ChatStartCommand extends Command
+class ContactAddCommand extends Command
 {
     public function __construct(UserRepository $users,EntityManagerInterface $em) {
         parent::__construct();
@@ -36,20 +38,23 @@ class ChatStartCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('alice', InputArgument::REQUIRED, 'id of creator')
-            ->addArgument('bob', InputArgument::REQUIRED, 'id of creator')
+            ->addArgument('alice', InputArgument::REQUIRED, 'id of alice')
+            ->addArgument('bob', InputArgument::REQUIRED, 'id of bob')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $chat = new ChatRoom();
-        $chat->addParticipant($this->users->findOneBy(['id'=> $input->getArgument('alice')]));
-        $chat->addParticipant($this->users->findOneBy(['id'=> $input->getArgument('bob')]));
+        $alice = $this->users->findOneBy(['id'=>$input->getArgument('alice')]);
+        $bob = $this->users->findOneBy(['id'=>$input->getArgument('bob')]);
+        $alice->addContact($bob); 
+        $chat = new Chat();
+        $chat->addUser($alice);
+        $chat->addUser($bob);
         $this->em->persist($chat);
-        $this->em->flush($chat);
-        $output->write($chat->getId());
-        
+        $this->em->persist($alice);
+        $this->em->persist($bob);
+        $this->em->flush();
         return Command::SUCCESS;
     }
 }

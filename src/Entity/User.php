@@ -11,9 +11,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\Ignore;
 /**
- * @UniqueEntity(fields={"username"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -35,13 +34,20 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
     private $roles = [];
 
     #[ORM\Column(type: 'string')]
-    #[Ignore]
     private $password;
+
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'contacts')]
+    private $contacts;
+
+    #[ORM\ManyToMany(targetEntity: Chat::class, mappedBy: 'users')]
+    private $chats;
 
 
 
     public function __construct()
     {
+        $this->contacts = new ArrayCollection();
+        $this->chats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,6 +118,57 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(self $contact): self
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts[] = $contact;
+        }
+
+        return $this;
+    }
+
+    public function removeContact(self $contact): self
+    {
+        $this->contacts->removeElement($contact);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Chat[]
+     */
+    public function getChats(): Collection
+    {
+        return $this->chats;
+    }
+
+    public function addChat(Chat $chat): self
+    {
+        if (!$this->chats->contains($chat)) {
+            $this->chats[] = $chat;
+            $chat->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChat(Chat $chat): self
+    {
+        if ($this->chats->removeElement($chat)) {
+            $chat->removeUser($this);
+        }
+
+        return $this;
     }
 
 

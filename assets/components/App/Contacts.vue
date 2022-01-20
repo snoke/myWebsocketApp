@@ -1,7 +1,7 @@
 <template>
     <div id="contacts">
       <input type="text" class="w-100" placeholder="find contacts" v-on:keyup="findContacts()" v-model="search" />
-      <button type="button" v-for="user in contacts" :key="user.id" class="w-100 btn btn-outline-primary" @click="startChat(user)">Chat with {{user.username}}</button>
+      <button type="button" v-for="user in contacts" :key="user.id" class="w-100 btn btn-outline-primary">Chat with {{user.username}}</button>
 
     </div>
 </template>
@@ -22,7 +22,7 @@ export default {
     startChat(user) {
         this.$root.connection.send(
             JSON.stringify({
-                'action': 'app:chat:start',
+                'action': 'app:contact:add',
                 'params': {
                   'alice': this.$root.claim.id,
                   'bob' :user.id,
@@ -44,8 +44,8 @@ export default {
   updated: function() {
   },
   created: function() {
-    this.$root.$on('app:chat:start', (result) => {
-        if (result.command=='app:chat:start') {
+    this.$root.$on('app:contact:add', (result) => {
+        if (result.command=='app:contact:add') {
           this.$router.push({ name: 'app_chat', params: { id: result.data }})
         }
      });
