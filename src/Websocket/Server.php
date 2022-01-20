@@ -11,24 +11,39 @@ class Server implements MessageComponentInterface {
     protected $application;
     protected $input;
     protected $output;
+    protected $io;
 
     public function __construct($input,$output,$application) {
         $this->clients = new \SplObjectStorage;
         $this->application = $application;
         $this->input = $input;
         $this->output = $output;
+        
+        $this->io = new SymfonyStyle($this->input, $this->output);
     }
 
     public function onOpen(ConnectionInterface $conn) {
-        // Store the new connection to send messages to later
+        // Store the new connectioarran to send messages to later
         $this->clients->attach($conn);
-
-        echo "New connection! ({$conn->resourceId})\n";
+        $this->consoleMessage("New connection from " . $conn->resourceId);
     }
 
+    private function consoleMessage($data,$type='info') {
+        if ($type=='info') {
+            $this->io->info(json_encode($data));
+        } elseif ($type='warning') {
+            $this->io->warning(json_encode($data));
+        } elseif ($type='error') {
+            $this->io->error(json_encode($data));
+        } elseif ($type='success') {
+            $this->io->success(json_encode($data));
+        } else {
+            echo $data;
+        }
+    }
 
     private function actionController($client,$action,$params) {
-
+        $this->consoleMessage([$client->resourceId,$action,$params]);
         $arguments = new ArrayInput($params);
         $command = $this->application->find($action);
         $output = new BufferedOutput();
