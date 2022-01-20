@@ -53,7 +53,9 @@ class Server implements MessageComponentInterface {
     }
     public function onMessage(ConnectionInterface $from, $msg) {
         
-        $options = json_decode($msg, true);
+        $options = json_decode($msg, true); 
+        
+       
         $from->send(json_encode($this->actionController($from,$options['action'],$options['params'])));
         /*
         $numRecv = count($this->clients) - 1;

@@ -16,6 +16,7 @@ import Auth from './components/Auth';
 import App from './components/App';
 import Contacts from './components/App/Contacts';
 import Chats from './components/App/Chats';
+import Chat from './components/App/Chat';
 import Settings from './components/App/Settings';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
@@ -58,6 +59,12 @@ const router = new VueRouter({
                     name: "app_contacts",
                     path: '/app/contacts', 
                     component:  Contacts,
+                    props: true,
+                  },
+                  { 
+                    name: "app_chat",
+                    path: '/app/chat/:id', 
+                    component:  Chat,
                     props: true,
                   },
                   { 
