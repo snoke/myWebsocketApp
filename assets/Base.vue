@@ -1,11 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="$root.token==null">
-      <Auth />
-    </div>
-    <div v-if="$root.claim!=null">
-      <App />
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -26,6 +21,12 @@ export default {
   methods: {
   },
   created: function() {
+    if (this.$root.token==null) {
+
+      this.$router.push({ name: 'auth'})
+    } else {
+      this.$router.push({ name: 'app'})
+    }
   },
   updated: function() {
   },

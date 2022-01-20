@@ -14,6 +14,9 @@ import Vue from 'vue';
 import Base from './Base';
 import Auth from './components/Auth';
 import App from './components/App';
+import Contacts from './components/App/Contacts';
+import Chats from './components/App/Chats';
+import Settings from './components/App/Settings';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { faCogs } from '@fortawesome/free-solid-svg-icons'
@@ -22,7 +25,6 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faUserSecret)
-
 library.add(faCogs)
 library.add(faUserPlus)
 library.add(faEdit)
@@ -40,12 +42,6 @@ const router = new VueRouter({
     components: {Base},
     routes: [
         { 
-                name: "root",
-                path: '/', 
-                component:  Base,
-                props: true,
-        },
-        { 
                 name: "auth",
                 path: '/auth', 
                 component:  Auth,
@@ -56,6 +52,28 @@ const router = new VueRouter({
                 path: '/app', 
                 component:  App,
                 props: true,
+                children:[
+                  
+                  { 
+                    name: "app_contacts",
+                    path: '/app/contacts', 
+                    component:  Contacts,
+                    props: true,
+                  },
+                  { 
+                    name: "app_chats",
+                    path: '/app/chats', 
+                    component:  Chats,
+                    props: true,
+                  },
+                  { 
+                    name: "app_settings",
+                    path: '/app/settings', 
+                    component:  Settings,
+                    props: true,
+                  }
+                ]
+
         }
     ]
 });

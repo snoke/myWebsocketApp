@@ -82,6 +82,7 @@ export default {
     this.$root.$on('auth:token:decode', (result) => {
             if (result.command=="auth:token:decode") {
                 this.$root.claim = JSON.parse(result.data);
+                this.$router.push({ name: 'app_chats'})
             }
      });
 
