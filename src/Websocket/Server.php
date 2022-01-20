@@ -43,7 +43,7 @@ class Server implements MessageComponentInterface {
     }
 
     private function actionController($client,$action,$params) {
-        $this->consoleMessage([$client->resourceId,$action,$params]);
+        $this->io->block(json_encode([$client->resourceId,$action,$params]), 'USER REQUEST', 'fg=blue', ' ', true);
         $arguments = new ArrayInput($params);
         $command = $this->application->find($action);
         $output = new BufferedOutput();

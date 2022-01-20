@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class AppController extends AbstractController
 {
     #[Route('/', name: 'app')]
+    #[Route('/{route}', name: 'vue_pages')]
     public function index(): Response
     {   
         return $this->render('app/index.html.twig', [

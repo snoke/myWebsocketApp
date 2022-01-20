@@ -41,7 +41,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $queryBuilder = $this->createQueryBuilder('u');
         foreach($params as $key => $val) {
             $queryBuilder = $queryBuilder->andWhere('u.' . $key . ' LIKE :val') //TODO: NOT CORRECTLY UNESCAPED KEY!!!
-            ->setParameter('val', $val);
+            ->setParameter('val', $val . '%');
         }
         return $queryBuilder->orderBy('u.id', 'ASC')
             ->setMaxResults(10)

@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 /**
  * @UniqueEntity(fields={"username"}, message="There is already an account with this email")
  */
@@ -34,6 +35,7 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
     private $roles = [];
 
     #[ORM\Column(type: 'string')]
+    #[Ignore]
     private $password;
 
 
