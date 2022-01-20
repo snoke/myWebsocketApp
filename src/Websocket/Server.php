@@ -38,7 +38,7 @@ class Server implements MessageComponentInterface {
         } elseif ($type='success') {
             $this->io->success(json_encode($data));
         } else {
-            echo $data;
+            echo json_encode($data) . "\n";
         }
     }
 
