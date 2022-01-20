@@ -12,7 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 #[AsCommand(
     name: 'auth:token:decode',
-    description: 'Add a short description for your command',
+    description: 'Extracts Claim from provided Token',
 )]
 class AuthTokenDecodeCommand extends Command
 {
@@ -24,7 +24,7 @@ class AuthTokenDecodeCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('token', InputArgument::OPTIONAL, 'Argument description')
+            ->addArgument('token', InputArgument::REQUIRED, 'the token to extract the claim')
         ;
     }
 

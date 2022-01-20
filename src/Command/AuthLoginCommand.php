@@ -19,7 +19,7 @@ use App\Entity\User;
 
 #[AsCommand(
     name: 'auth:login',
-    description: 'Add a short description for your command',
+    description: 'Authenticate with provided credentials and retrieve JWT',
 )]
 class AuthLoginCommand extends Command
 {    private $client;
@@ -33,8 +33,8 @@ class AuthLoginCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('loginName', InputArgument::OPTIONAL, 'Argument description')
-            ->addArgument('password', InputArgument::OPTIONAL, 'Argument description')
+            ->addArgument('loginName', InputArgument::REQUIRED, 'login username')
+            ->addArgument('password', InputArgument::REQUIRED, 'login password')
         ;
     }
 

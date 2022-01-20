@@ -17,23 +17,22 @@ use Ratchet\WebSocket\WsServer;
 
 #[AsCommand(
     name: 'server:start',
-    description: 'Add a short description for your command',
+    description: 'Starts the Websocket Server',
 )]
 class ServerStartCommand extends Command
 {
     protected function configure(): void
     {
         $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+            ->addArgument('port', InputArgument::OPTIONAL, 'provide a custom Port (default is 8080)')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-
-        $port = 8080;
+        $port = $input->getArgument('port');
+        $port = $port?$port:8080;
         
         $io->success('Server running on Port ' . $port);
 
