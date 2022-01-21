@@ -21,15 +21,17 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use App\Entity\Chat;
 
 
+use Symfony\Component\Serializer\SerializerInterface;
+
 #[AsCommand(
     name: 'app:contact:add',
     description: 'Add a short description for your command',
 )]
 class ContactAddCommand extends Command
 {
-    public function __construct(UserRepository $users,EntityManagerInterface $em) {
+    public function __construct(UserRepository $users,EntityManagerInterface $em, SerializerInterface $serializer) {
         parent::__construct();
-        $this->serializer = new Serializer([new ObjectNormalizer()],  [new JsonEncoder()]);
+        $this->serializer = $serializer;
         $this->users = $users;
         $this->em = $em;
 

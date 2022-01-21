@@ -15,12 +15,22 @@ use App\Websocket\Server;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 
+use App\Repository\ChatRepository;
+use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
+
+
 #[AsCommand(
     name: 'server:start',
     description: 'Starts the Websocket Server',
 )]
 class ServerStartCommand extends Command
 {
+    public function __construct(ChatRepository $chats,JWTEncoderInterface $encoder) {
+        parent::__construct();
+        $this->chats = $chats;
+        $this->encoder = $encoder;
+    }
+
     protected function configure(): void
     {
         $this
@@ -39,7 +49,7 @@ class ServerStartCommand extends Command
         $server = IoServer::factory(
             new HttpServer(
                 new WsServer(
-                    new Server($input,$output,$this->getApplication())
+                    new Server($input,$output,$this->getApplication(),$this->chats,$this->encoder)
                 )
             ),
             $port

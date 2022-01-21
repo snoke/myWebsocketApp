@@ -16,6 +16,8 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use App\Repository\UserRepository;
+use Symfony\Component\Serializer\SerializerInterface;
+
 
 #[AsCommand(
     name: 'app:user:search',
@@ -23,11 +25,11 @@ use App\Repository\UserRepository;
 )]
 class UserSearchCommand extends Command
 {  
-    public function __construct(UserRepository $users) {
+    public function __construct(UserRepository $users,SerializerInterface $serializer) {
     parent::__construct();
     $this->users = $users;
 
-    $this->serializer = new Serializer([new ObjectNormalizer()],  [new JsonEncoder()]);
+    $this->serializer = $serializer;
 }
 
 protected function configure(): void

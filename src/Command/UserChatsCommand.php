@@ -17,17 +17,20 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use App\Repository\UserRepository;
 
+use Symfony\Component\Serializer\SerializerInterface;
+
 #[AsCommand(
     name: 'app:user:chats',
     description: 'Retrieves Chats participated by given User Id',
 )]
 class UserChatsCommand extends Command
 {
-    public function __construct(UserRepository $users) {
+    public function __construct(UserRepository $users, SerializerInterface $serializer) {
     parent::__construct();
     $this->users = $users;
+    $this->serializer = $serializer;
 
-    $this->serializer = new Serializer([new ObjectNormalizer()],  [new JsonEncoder()]);
+   // $this->serializer = new Serializer([new ObjectNormalizer()],  [new JsonEncoder()]);
 }
 
 protected function configure(): void
@@ -42,7 +45,8 @@ protected function execute(InputInterface $input, OutputInterface $output): int
     $userid = $input->getArgument('userid');
     $user = $this->users->findOneBy(['id'=> $userid]);
     $chats = $user->getChats();
-    $jsonContent = $this->serializer->serialize($chats, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['roles','contacts','password','userIdentifier','chats']]);
+    //$jsonContent = $this->serializer->serialize($chats, 'json', [AbstractNormalizer::ATTRIBUTES  => ['id']]);
+    $jsonContent = $this->serializer->serialize($chats, 'json', ['groups' => ['app_user_chats']]);
 
     $output->write($jsonContent);
     
