@@ -3,6 +3,9 @@
 Work in Progress
 Command driven Symfony6 Websocket Chat Server with VueJS Frontend Chat Client using JWT for authentication
 
+![alt text](https://github.com/snoke/myWebsocketApp/blob/master/myWebsocketApp.png?raw=true)
+
+
 ## installation
 ```
 git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat 
@@ -24,5 +27,3 @@ php bin/console server:start to start Websocket Server
 ```
 ## known bugs / Todo
 server not configured to use ssl, which will be blocked by most browsers when client and server not on same machine. 
-
-![alt text](https://github.com/snoke/myWebsocketApp/blob/master/myWebsocketApp.png?raw=true)
