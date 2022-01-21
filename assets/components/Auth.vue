@@ -51,7 +51,6 @@ export default {
                 'params': {
                     'loginName': this.register_loginName,    
                     'password': this.register_password, 
-                    'password2': this.register_password2, 
                 }
             })
         );
@@ -76,6 +75,21 @@ export default {
                 if (result.success==true) {
                     this.$root.token = result.data;
                     this.decodeToken();
+                }
+            }
+     });
+    this.$root.$on('auth:register', (result) => {
+            if (result.command=="auth:register") {
+                if (result.success==true) {
+                    this.$root.connection.send(
+                        JSON.stringify({
+                            'action': 'auth:login',
+                            'params': {
+                                'loginName': this.register_loginName,    
+                                'password': this.register_password, 
+                            }
+                        })
+                    );
                 }
             }
      });
