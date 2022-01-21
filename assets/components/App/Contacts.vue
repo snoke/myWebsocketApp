@@ -1,7 +1,7 @@
 <template>
     <div id="contacts">
-      <input type="text" class="w-100" placeholder="find contacts" v-on:keyup="findContacts()" v-model="search" />
-      <button type="button" v-for="user in contacts" :key="user.id" class="w-100 btn btn-outline-primary">Chat with {{user.username}}</button>
+      <input id="contact_search" type="text" class="w-100" placeholder="find contacts" v-on:keyup="findContacts()" v-model="search" />
+      <button type="button" v-for="user in contacts" :key="user.id" class="w-100 btn btn-outline-primary" @click="addContact(user)">Add {{user.username}}</button>
 
     </div>
 </template>
@@ -19,7 +19,7 @@ export default {
       }
   },
   methods: {
-    startChat(user) {
+    addContact(user) {
         this.$root.connection.send(
             JSON.stringify({
                 'action': 'app:contact:add',
@@ -42,6 +42,9 @@ export default {
     }
   },
   updated: function() {
+  },
+  mounted() {
+     document.getElementById('contact_search').focus()
   },
   created: function() {
     this.$root.$on('app:contact:add', (result) => {

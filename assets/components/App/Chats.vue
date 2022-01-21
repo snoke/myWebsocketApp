@@ -1,5 +1,6 @@
 <template>
-    <div id="chats">chats
+    <div id="chats">
+       <button type="button" v-for="chat in chats" :key="chat.id" class="w-100 btn btn-outline-primary" @click="startChat(chat.id)">Chat with {{renderUsernames(chat.users)}}</button>
     </div>
 </template>
 
@@ -11,13 +12,42 @@ export default {
   name: 'Chats',
   data: function() {
     return {
+      chats: null
       }
   },
   methods: {
+    startChat(chatId) {
+          this.$router.push({ name: 'app_chat', params: { id: chatId }})
+    },
+    renderUsernames(users) {
+      var names = [];
+      for(var user of users) {
+        if (user.id!=this.$root.claim.id) {
+            names.push(user.username)
+        }
+      }
+      return names.join(', ')
+    },
+    findChats() {
+        this.$root.connection.send(
+            JSON.stringify({
+                'action': 'app:user:chats',
+                'params': {
+                    'userid': this.$root.claim.id,    
+                }
+            })
+        );
+    }
   },
   updated: function() {
   },
   created: function() {
+    this.findChats();
+    this.$root.$on('app:user:chats', (result) => {
+        if (result.command=='app:user:chats') {
+          this.chats = JSON.parse(result.data);
+        }
+     });
   }
 }
 </script>

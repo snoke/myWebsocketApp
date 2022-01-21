@@ -1,3 +1,6 @@
 body {
     background-color: lightgray;
 }
+input, button, select, optgroup, textarea {
+    margin-bottom: 5px;
+}
