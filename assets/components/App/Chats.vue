@@ -28,7 +28,10 @@ export default {
       }
       return names.join(', ')
     },
-    findChats() {
+  },
+  updated: function() {
+  },
+  created: function() {
         this.$root.connection.send(
             JSON.stringify({
                 'action': 'app:user:chats',
@@ -37,12 +40,6 @@ export default {
                 }
             })
         );
-    }
-  },
-  updated: function() {
-  },
-  created: function() {
-    this.findChats();
     this.$root.$on('app:user:chats', (result) => {
         if (result.command=='app:user:chats') {
           this.chats = JSON.parse(result.data);
