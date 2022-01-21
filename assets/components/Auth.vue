@@ -26,7 +26,7 @@ export default {
   name: 'Auth',
   data: function() {
     return {
-      login_loginName:'test@test.de',
+      login_loginName:'alice',
       login_password:'test',
       register_loginName:'',
       register_password:'',

@@ -16,10 +16,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 
 #[AsCommand(
-    name: 'app:user:search',
+    name: 'app:user:contacts',
     description: 'Add a short description for your command',
 )]
-class UserSearchCommand extends Command
+class UserContactsCommand extends Command
 {  
     public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
     parent::__construct();
@@ -31,7 +31,7 @@ class UserSearchCommand extends Command
 protected function configure(): void
 {
     $this
-        ->addArgument('username', InputArgument::REQUIRED, 'search users')
+        ->addArgument('userId', InputArgument::REQUIRED, 'search users')
     ;
 }
 
@@ -39,9 +39,10 @@ protected function execute(InputInterface $input, OutputInterface $output): int
 {
     $this->em->clear();
     $users = $this->em->getRepository(User::class);
-    $username = $input->getArgument('username');
-    $users = $users->findByLike(['username'=> $username]);
-    $jsonContent = $this->serializer->serialize($users, 'json', ['groups' => ['app_user_search']]);
+    $userId = $input->getArgument('userId');
+    $user = $users->findOneBy(['id'=> $userId]);
+    $contacts = $user->getContacts();
+    $jsonContent = $this->serializer->serialize($contacts, 'json', ['groups' => ['app_user_contacts']]);
    // $jsonContent = $this->serializer->serialize($users, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['roles','password','userIdentifier','chats']]);
 
     $output->write($jsonContent);

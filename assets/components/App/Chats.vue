@@ -31,15 +31,19 @@ export default {
   },
   updated: function() {
   },
+  mounted: function() {
+  },
   created: function() {
+    
         this.$root.connection.send(
             JSON.stringify({
                 'action': 'app:user:chats',
                 'params': {
-                    'userid': this.$root.claim.id,    
+                    'userId': this.$root.claim.id,    
                 }
             })
         );
+        
     this.$root.$on('app:user:chats', (result) => {
         if (result.command=='app:user:chats') {
           this.chats = JSON.parse(result.data);

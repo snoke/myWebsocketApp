@@ -41,6 +41,7 @@ export default {
               }
           })
       );
+      document.getElementById('chat_input').value = "";
     },
     renderUsernames(users) {
       var names = [];

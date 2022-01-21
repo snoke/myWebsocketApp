@@ -15,7 +15,8 @@ export default {
   data: function() {
     return {
         search:null,
-        contacts:null
+        contacts:null,
+        mycontacts:null
       }
   },
   methods: {
@@ -47,15 +48,35 @@ export default {
      document.getElementById('contact_search').focus()
   },
   created: function() {
+        this.$root.connection.send(
+            JSON.stringify({
+                'action': 'app:user:contacts',
+                'params': {
+                    'userId': this.$root.claim.id
+                }
+            })
+        );
+
     this.$root.$on('app:contact:add', (result) => {
         if (result.command=='app:contact:add') {
           this.$router.push({ name: 'app_chat', params: { id: result.data }})
         }
      });
+    this.$root.$on('app:user:contacts', (result) => {
+        if (result.command=='app:user:contacts') {
+            this.mycontacts = JSON.parse(result.data);
+        }
+     });
     this.$root.$on('app:user:search', (result) => {
         if (result.command=='app:user:search') {
             this.contacts = JSON.parse(result.data).filter((u) => {
-              return u.username!=this.$root.claim.username
+              if (u.username==this.$root.claim.username) {
+                return false;
+              }
+              for(var contact of this.mycontacts) {
+                return u.username!=contact.username
+              }
+              return true;
             });
         }
      });

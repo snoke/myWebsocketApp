@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
@@ -22,11 +23,11 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['user','app_user_chats','app_chat','app_chat_send'])]
+    #[Groups(['user','app_user_chats','app_chat','app_chat_send','app_user_search','app_user_contacts'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]    
-    #[Groups(['user','app_user_chats','app_chat','app_chat_send'])]
+    #[Groups(['user','app_user_chats','app_chat','app_chat_send','app_user_search','app_user_contacts'])]
     private $username;
 
     #[ORM\Column(type: 'json')]

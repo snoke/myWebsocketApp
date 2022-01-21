@@ -14,8 +14,9 @@ use Ratchet\Server\IoServer;
 use App\Websocket\Server;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
+use Doctrine\ORM\EntityManagerInterface;
 
-use App\Repository\ChatRepository;
+use App\Entity\Chat;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 
 
@@ -25,9 +26,9 @@ use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 )]
 class ServerStartCommand extends Command
 {
-    public function __construct(ChatRepository $chats,JWTEncoderInterface $encoder) {
+    public function __construct(EntityManagerInterface $em,JWTEncoderInterface $encoder) {
         parent::__construct();
-        $this->chats = $chats;
+        $this->em = $em;
         $this->encoder = $encoder;
     }
 
@@ -40,6 +41,8 @@ class ServerStartCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->em->clear();
+        $chats = $this->em->getRepository(Chat::class);
         $io = new SymfonyStyle($input, $output);
         $port = $input->getArgument('port');
         $port = $port?$port:8080;
@@ -49,7 +52,7 @@ class ServerStartCommand extends Command
         $server = IoServer::factory(
             new HttpServer(
                 new WsServer(
-                    new Server($input,$output,$this->getApplication(),$this->chats,$this->encoder)
+                    new Server($input,$output,$this->getApplication(),$chats,$this->encoder)
                 )
             ),
             $port

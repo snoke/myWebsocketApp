@@ -56,6 +56,7 @@ class Server implements MessageComponentInterface {
         $output = new BufferedOutput();
         $command->run($arguments, $output);
         $data = $output->fetch();
+        $this->consoleMessage($data);
         return ["command"=>$action,"success"=>true,"data"=>$data];
     }
     public function onMessage(ConnectionInterface $from, $msg) {
