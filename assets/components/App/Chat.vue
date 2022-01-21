@@ -4,7 +4,12 @@
 
         Chat with {{renderUsernames(chat.users)}}
         <div v-for="chatMessage in chat.chatMessages" :key="chatMessage.id">
-          {{chatMessage.message}}
+           <div class="alert alert-primary" v-if="chatMessage.sender.id==$root.claim.id">
+              {{chatMessage.message}}
+          </div>
+           <div class="alert alert-secondary" v-if="chatMessage.sender.id!=$root.claim.id">
+              {{chatMessage.message}}
+          </div>
         </div>
          <textarea id="chat_input" class="w-100" placeholder="write a message" />
           <button type="button" class="w-100 btn btn-outline-primary" @click="send()">send</button>
@@ -14,6 +19,12 @@
 </template>
 
 <style scoped>
+.alert-primary {
+  margin-left:50px;
+}
+.alert-secondary {
+  margin-right:50px;
+}
 textarea {
   margin-bottom:-2px;
 }
