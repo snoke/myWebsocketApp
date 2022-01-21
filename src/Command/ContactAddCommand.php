@@ -48,13 +48,14 @@ class ContactAddCommand extends Command
         $alice = $this->users->findOneBy(['id'=>$input->getArgument('alice')]);
         $bob = $this->users->findOneBy(['id'=>$input->getArgument('bob')]);
         $alice->addContact($bob); 
+        $this->em->persist($alice);
+        $this->em->persist($bob);
         $chat = new Chat();
         $chat->addUser($alice);
         $chat->addUser($bob);
         $this->em->persist($chat);
-        $this->em->persist($alice);
-        $this->em->persist($bob);
         $this->em->flush();
+        $output->write($chat->getId());
         return Command::SUCCESS;
     }
 }
