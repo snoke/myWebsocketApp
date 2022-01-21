@@ -26,4 +26,4 @@ npm run dev
 php bin/console server:start to start Websocket Server
 ```
 ## known bugs / Todo
-server not configured to use ssl, which will be blocked by most browsers when client and server not on same machine. 
+server not configured to use ssl, which will be blocked by most browsers when client (not the vue front end) and server are not on the same machine. 
