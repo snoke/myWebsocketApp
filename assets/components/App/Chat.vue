@@ -71,7 +71,6 @@ export default {
         }
      });
 
-     //this may be fetched two times, once as default command return and once as return to all participants
     this.$root.$on('app:chat:send', (result) => {
         if (result.command=='app:chat:send') {
           this.chat.chatMessages.push(JSON.parse(result.data));
