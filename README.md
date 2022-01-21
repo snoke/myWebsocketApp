@@ -8,8 +8,7 @@ Command driven Symfony6 Websocket Chat Server with VueJS Frontend  using JWT for
 
 ## installation
 ```
-git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat 
-nano myWebsocketChat/.env
+git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && nano myWebsocketChat/.env
 ```
 -- edit .env Set database url and jwt passphrase--
 ```
