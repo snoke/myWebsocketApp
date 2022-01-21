@@ -5,4 +5,4 @@ Command driven Symfony6 Websocket Chat Server with VueJS Frontend Chat Client us
 
 bin/console server:start to start Websocket Server
 
-(https://github.com/snoke/myWebsocketApp/blob/master/myWebsocketApp.png?raw=true)
+![alt text](https://github.com/snoke/myWebsocketApp/blob/master/myWebsocketApp.png?raw=true)
