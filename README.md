@@ -21,9 +21,9 @@ php bin/console lexik:jwt:generate-keypair &&
 npm install &&
 npm run dev 
 ```
-## start
+## start websocket server
 ```
-php bin/console server:start to start Websocket Server
+php bin/console server:start
 ```
 ## known bugs / Todo
 server not configured to use ssl, which will be blocked by most browsers when client (not the vue front end) and server are not on the same machine. 
