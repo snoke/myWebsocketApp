@@ -1,8 +1,15 @@
 <template>
     <div>
-      <div v-if="chat">
-
-        Chat with {{renderUsernames(chat.users)}}
+      <div v-if="chat"> 
+        <b-dropdown  class="right">
+          <template #button-content>
+            <font-awesome-icon icon="cog" /> {{renderUsernames(chat.users)}}
+          </template>
+          <div class="dropdown-divider"></div>
+          <b-dropdown-item href="#" class="">Block {{renderUsernames(chat.users)}}</b-dropdown-item>
+        </b-dropdown>
+  
+      <div class="chat-container"> 
         <div v-for="chatMessage in chat.chatMessages" :key="chatMessage.id">
            <div class="alert alert-primary" v-if="chatMessage.sender.id==$root.claim.id">
               {{chatMessage.message}}
@@ -15,10 +22,19 @@
           <button type="button" class="w-100 btn btn-outline-primary" @click="send()">send</button>
 
       </div>
+      </div>
     </div>
 </template>
 
 <style scoped>
+.chat-container {
+  padding-top:50px;
+}
+.right {
+  float: right;
+  margin-left: auto; 
+  margin-right: 0;
+}
 .alert-primary {
   margin-left:50px;
 }

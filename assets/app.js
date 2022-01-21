@@ -21,12 +21,14 @@ import Settings from './components/App/Settings';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { faCogs } from '@fortawesome/free-solid-svg-icons'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faUserSecret)
 library.add(faCogs)
+library.add(faCog)
 library.add(faUserPlus)
 library.add(faEdit)
 

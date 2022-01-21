@@ -3,23 +3,43 @@
         <div id="auth_info" >
             <p v-if="!$root.connected">not connected</p>
         </div>
-        <div id="auth_login" v-if="$root.connected">
-            <input type="text" placeholder="loginName" name="loginName" v-model="login_loginName" />
-            <input type="password" placeholder="Password" name="password" v-model="login_password"   />
-            <button v-on:click="login()">login</button>
-        </div>
-        <div id="auth_register" v-if="$root.connected">
-            <input type="text" placeholder="loginName" name="loginName" v-model="register_loginName" />
-            <input type="password" placeholder="Password" name="password" v-model="register_password"   />
-            <input type="password" placeholder="repeat Password" name="password" v-model="register_password2"   />
-            <button v-on:click="register()">register</button>
+        <div class="accordion" role="tablist"  v-if="$root.connected">
+            <b-card no-body class="mb-1">
+                <b-card-header header-tag="header" class="p-1" role="tab">
+                    <b-button block v-b-toggle.accordion-1 variant="primary" class="w-100">Login</b-button>
+                </b-card-header>
+                <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+                    <b-card-body>
+                        <div id="auth_login">
+                            <input type="text" placeholder="loginName" name="loginName" v-model="login_loginName"  class="w-100"/>
+                            <input type="password" placeholder="Password" name="password" v-model="login_password"    class="w-100"/>
+                            <button v-on:click="login()"  class="btn btn-outline-primary  w-100">login</button>
+                        </div>
+                    </b-card-body>
+                </b-collapse>
+            </b-card>
+            <b-card no-body class="mb-1">
+                <b-card-header header-tag="header" class="p-1" role="tab">
+                    <b-button block v-b-toggle.accordion-2 variant="primary" class="w-100">Register</b-button>
+                </b-card-header>
+                <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+                    <b-card-body>
+                    
+                        <div id="auth_register" >
+                            <input type="text" placeholder="loginName" name="loginName" v-model="register_loginName"  class="w-100" />
+                            <input type="password" placeholder="Password" name="password" v-model="register_password"   class="w-100" />
+                            <input type="password" placeholder="repeat Password" name="password" v-model="register_password2"   class="w-100" />
+                            <button v-on:click="register()"  class="btn btn-outline-primary w-100">register</button>
+                        </div>
+                    </b-card-body>
+                </b-collapse>
+            </b-card>
         </div>
     </div>
 </template>
 
 <style>
 </style>
-
 
 <script>
 export default {
