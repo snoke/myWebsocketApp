@@ -41,6 +41,9 @@ class ServerStartCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+
+
+        
         $this->em->clear();
         $chats = $this->em->getRepository(Chat::class);
         $io = new SymfonyStyle($input, $output);
