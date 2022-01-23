@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 use Ratchet\Server\IoServer;
-use App\Websocket\Server;
+use App\Websocket\Server as AppServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,33 +36,63 @@ class ServerStartCommand extends Command
     {
         $this
             ->addArgument('port', InputArgument::OPTIONAL, 'provide a custom Port (default is 8080)')
+            ->addOption(
+                'ssl',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'start SSL Server',
+                false
+            )
         ;
     }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-
-
-        
         $this->em->clear();
         $chats = $this->em->getRepository(Chat::class);
-        $io = new SymfonyStyle($input, $output);
         $port = $input->getArgument('port');
-        $port = $port?$port:8080;
-        
-        $io->success('Server running on Port ' . $port);
 
-        $server = IoServer::factory(
-            new HttpServer(
+        $io = new SymfonyStyle($input, $output);
+
+        $ssl = $input->getOption('ssl');
+
+        if ($ssl) {
+            $loop = \React\EventLoop\Factory::create();
+            $server = new \React\Socket\Server('0.0.0.0:' .$port, $loop);
+            
+            $secureServer = new \React\Socket\SecureServer($server, $loop, [
+                'local_cert'  => __DIR__  . '/../ssl/certificate.crt',
+                'local_pk' => __DIR__  . '/../ssl/private.key',
+                'verify_peer' => false,
+            ]);
+            
+            $httpServer = new HttpServer(
                 new WsServer(
-                    new Server($input,$output,$this->getApplication(),$chats,$this->encoder)
+                    new AppServer($input,$output,$this->getApplication(),$chats,$this->encoder)
                 )
-            ),
-            $port
-        );
-        
-        $server->run();
+            );
+            
+            $server = new IoServer($httpServer, $secureServer, $loop);
+            
+            $io->success('WSS Server running on Port ' . $port);
+        } else {
 
+            $port = $port?$port:8080;
+            
+            $io->success('WS Server running on Port ' . $port);
+    
+            $server = IoServer::factory(
+                new HttpServer(
+                    new WsServer(
+                        new AppServer($input,$output,$this->getApplication(),$chats,$this->encoder)
+                    )
+                ),
+                $port
+            );
+            
+        }
+        $server->run();
+        
         return Command::SUCCESS;
+
     }
 }
