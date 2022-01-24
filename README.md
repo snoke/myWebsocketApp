@@ -16,6 +16,7 @@ WEBSOCKET_URL='ws://localhost:8080' //should match server:start command output a
 DATABASE_URL="mysql://root@127.0.0.1:3306/myDatabase?serverVersion=mariadb-10.4.11"
 JWT_PASSPHRASE=supersecretpassword
 ```
+mount web root to project dir
 then run following command to set up database, jwt keypairs and assets
 ```
 cd myWebsocketChat &&
