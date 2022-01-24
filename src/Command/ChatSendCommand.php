@@ -42,9 +42,9 @@ class ChatSendCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('senderId', InputArgument::OPTIONAL, 'Argument description')
-            ->addArgument('chatId', InputArgument::OPTIONAL, 'Argument description')
-            ->addArgument('message', InputArgument::OPTIONAL, 'Argument description')
+            ->addArgument('senderId', InputArgument::REQUIRED, 'Argument description')
+            ->addArgument('chatId', InputArgument::REQUIRED, 'Argument description')
+            ->addArgument('message', InputArgument::REQUIRED, 'Argument description')
         ;
     }
 
