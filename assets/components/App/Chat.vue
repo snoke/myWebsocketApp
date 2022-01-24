@@ -17,12 +17,30 @@
           </div>
         </div>
          <textarea id="chat_input" class="w-100" placeholder="write a message" />
-          <button type="button" class="w-100 btn btn-outline-primary" @click="send()">send</button>
+          <b-button-group class="w-100">
+            <button type="button" class="w-100 btn btn-outline-primary" @click="send()">send</button>
+            <b-dropdown dropup menu-class="minw-none" >
+              <template #button-content>
+                <font-awesome-icon icon="file" />
+              </template>
+              <!--   
+                <b-dropdown-item><font-awesome-icon icon="camera" /></b-dropdown-item>
+                <b-dropdown-divider /> 
+              -->
+              <b-dropdown-item  @click="$refs.file.click()"><font-awesome-icon icon="image" /></b-dropdown-item>
+            </b-dropdown>
+          </b-button-group>
+          <input type="file" ref="file" style="display: none" @change="fileAdded">
       </div>
       </div>
     </div>
 </template>
 
+<style>
+.minw-none {
+  min-width:3rem!important;
+}
+</style>
 <style scoped>
 .alert {
   padding: 0.5rem 0.5rem;
@@ -52,8 +70,11 @@ export default {
     }
   },
   methods: {
-      dragFile(e) {
-        this.files = e.dataTransfer.files;
+      fileAdded(e) {
+          this.files = this.$refs.file.files;
+          this.uploadFile();
+      },
+      uploadFile() {
         if (this.allowed_file_types.includes(this.files[0]['type'])) {
             if (this.files[0].size/1024<this.allowed_file_size) {
               var reader = new FileReader();
@@ -72,6 +93,10 @@ export default {
                 reader.readAsDataURL(this.files[0]);
             }
         }
+      },
+      dragFile(e) {
+        this.files = e.dataTransfer.files;
+          this.uploadFile();
       },
     send() {
      var  msg = document.getElementById('chat_input').value
@@ -101,6 +126,7 @@ export default {
   },
 
   created: function() {
+
       this.$root.connection.send(
           JSON.stringify({
               'action': 'app:chat',

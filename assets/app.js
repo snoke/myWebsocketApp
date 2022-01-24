@@ -24,6 +24,10 @@ import { faCogs } from '@fortawesome/free-solid-svg-icons'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faFile } from '@fortawesome/free-solid-svg-icons'
+import { faImage } from '@fortawesome/free-solid-svg-icons'
+import { faCamera } from '@fortawesome/free-solid-svg-icons'
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faUserSecret)
@@ -31,6 +35,9 @@ library.add(faCogs)
 library.add(faCog)
 library.add(faUserPlus)
 library.add(faEdit)
+library.add(faFile)
+library.add(faImage)
+library.add(faCamera)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -96,6 +103,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 
+import device from "vue-device-detector"
+Vue.use(device)
 new Vue({
     created: function() {
       this.websocket_url = JSON.parse(document.getElementById('_symfonyData').innerHTML).websocket_url;
