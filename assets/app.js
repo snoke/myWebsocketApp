@@ -40,6 +40,8 @@ import VueRouter from 'vue-router'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(VueRouter)
+
+
 const router = new VueRouter({  
     mode:'history',
     components: {Base},
@@ -93,10 +95,12 @@ Vue.use(IconsPlugin)
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
+
 new Vue({
     created: function() {
-      this.connection = new WebSocket("ws://localhost:8080")
-      
+      console.log(JSON.parse(document.getElementById('_symfonyData').innerHTML));
+      this.websocket_url = JSON.parse(document.getElementById('_symfonyData').innerHTML).websocket_url;
+      this.connection = new WebSocket(this.websocket_url)
         this.connection.onopen =  () => {
             this.connected = true;
         }
@@ -118,6 +122,7 @@ new Vue({
         connected:false,
         token:null,
         claim:null,
+        websocket_url:null,
       }
     },
     el: '#app',

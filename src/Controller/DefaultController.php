@@ -14,6 +14,8 @@ class DefaultController extends AbstractController
     {
         return $this->render('default/index.html.twig', [
             'controller_name' => 'AppController',
+            'SERVER_URL' => $_ENV['SERVER_URL'],
+            'WEBSOCKET_URL' => $_ENV['WEBSOCKET_URL'],
         ]);
     }
     /**

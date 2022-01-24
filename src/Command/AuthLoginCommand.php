@@ -16,6 +16,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Entity\User;
+use Symfony\Component\HttpFoundation\RequestStack;
+
 
 #[AsCommand(
     name: 'auth:login',
@@ -47,7 +49,7 @@ class AuthLoginCommand extends Command
         
         $response = $this->client->request(
             'POST',
-            'http://localhost/api/login_check',
+            $_ENV['SERVER_URL'] . '/api/login_check',
             [    'headers' => [
                 'Accept' => 'application/json',
             ],

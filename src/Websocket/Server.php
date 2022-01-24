@@ -16,6 +16,7 @@ class Server implements MessageComponentInterface {
     protected $chats;
     protected $encoder;
     protected $userClients;
+    protected $projectDir;
 
     public function __construct($input,$output,$application,ChatRepository $chats,JWTEncoderInterface $encoder) {
         $this->clients = new \SplObjectStorage;
