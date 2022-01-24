@@ -31,7 +31,6 @@ class Server implements MessageComponentInterface {
     }
 
     public function onOpen(ConnectionInterface $conn) {
-        // Store the new connectioarran to send messages to later
         $this->clients->attach($conn);
         $this->consoleMessage("New connection from " . $conn->resourceId);
     }
@@ -60,6 +59,7 @@ class Server implements MessageComponentInterface {
         $this->consoleMessage($data);
         return ["command"=>$action,"success"=>true,"data"=>$data];
     }
+
     public function onMessage(ConnectionInterface $from, $msg) {
         
         $options = json_decode($msg, true); 
@@ -68,47 +68,27 @@ class Server implements MessageComponentInterface {
         $result = $this->actionController($from,$options['action'],$options['params']);
         $from->send(json_encode($result)); 
 
-       //emit to participants
        if ($options['action']=='auth:login') {
             $payload = $this->encoder->decode($result['data']);
             $id = $payload['id'];
-           // $this->userClients[$id] =  $from;
             $this->userClients[$from->resourceId] = [
                 'client' =>$from,
                 'userId' =>$id
             ];
         }
 
-       //emit to participants
         if ($options['action']=='app:chat:send') {
             $chat = $this->chats->findOneBy(['id'=>$options['params']['chatId']]);
             $users = $chat->getUsers();
             
-
             foreach($this->userClients as $userClient) {
                 foreach($users as $user) {
                     if ($user->getId()==$userClient['userId'] && $user->getId()!=$options['params']['senderId'] ) {
                         $userClient['client']->send(json_encode($result)); 
                     }
                 }
-
-
-            }
-            //TODO: MAP USERS TO CLIENTS
-        }
-
-        /*
-        $numRecv = count($this->clients) - 1;
-        echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
-            , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
-
-        foreach ($this->clients as $client) {
-            if ($from !== $client) {
-                // The sender is not the receiver, send to each client connected
-                $client->send($msg);
             }
         }
-        */
     }
 
     public function onClose(ConnectionInterface $conn) {

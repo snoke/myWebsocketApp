@@ -25,7 +25,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 #[AsCommand(
     name: 'app:contact:add',
-    description: 'Add a short description for your command',
+    description: 'Adds a Contact',
 )]
 class ContactAddCommand extends Command
 {

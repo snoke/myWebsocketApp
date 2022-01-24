@@ -43,7 +43,6 @@ protected function execute(InputInterface $input, OutputInterface $output): int
     $user = $users->findOneBy(['id'=> $userId]);
     $contacts = $user->getContacts();
     $jsonContent = $this->serializer->serialize($contacts, 'json', ['groups' => ['app_user_contacts']]);
-   // $jsonContent = $this->serializer->serialize($users, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['roles','password','userIdentifier','chats']]);
 
     $output->write($jsonContent);
     

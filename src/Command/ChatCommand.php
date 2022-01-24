@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 #[AsCommand(
     name: 'app:chat',
-    description: 'Add a short description for your command',
+    description: 'Load a Chat',
 )]
 class ChatCommand extends Command
 {
@@ -45,7 +45,6 @@ protected function execute(InputInterface $input, OutputInterface $output): int
     $chat = $this->chats->findOneBy(['id'=> $chatId]);
 
 
-    //$jsonContent = $this->serializer->serialize($chats, 'json', ['groups' => ['app_user_chats']]);
     $jsonContent = $this->serializer->serialize($chat, 'json', ['groups' => ['app_chat']]);
 
     $output->write($jsonContent);

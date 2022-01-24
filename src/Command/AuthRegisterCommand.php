@@ -17,7 +17,7 @@ use App\Entity\User;
 
 #[AsCommand(
     name: 'auth:register',
-    description: 'Add a short description for your command',
+    description: 'Sign up a new User',
 )]
 class AuthRegisterCommand extends Command
 {    

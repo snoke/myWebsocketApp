@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 #[AsCommand(
     name: 'app:user:search',
-    description: 'Add a short description for your command',
+    description: 'Search a User',
 )]
 class UserSearchCommand extends Command
 {  

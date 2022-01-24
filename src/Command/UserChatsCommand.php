@@ -26,7 +26,6 @@ class UserChatsCommand extends Command
     $this->serializer = $serializer;
     $this->em = $em;
 
-   // $this->serializer = new Serializer([new ObjectNormalizer()],  [new JsonEncoder()]);
 }
 
 protected function configure(): void

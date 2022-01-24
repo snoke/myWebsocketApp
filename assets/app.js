@@ -98,7 +98,6 @@ Vue.use(VueAxios, axios)
 
 new Vue({
     created: function() {
-      console.log(JSON.parse(document.getElementById('_symfonyData').innerHTML));
       this.websocket_url = JSON.parse(document.getElementById('_symfonyData').innerHTML).websocket_url;
       this.connection = new WebSocket(this.websocket_url)
         this.connection.onopen =  () => {

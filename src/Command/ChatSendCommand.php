@@ -28,7 +28,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 #[AsCommand(
     name: 'app:chat:send',
-    description: 'Send a chat message',
+    description: 'Sends a chat message',
 )]
 class ChatSendCommand extends Command
 {

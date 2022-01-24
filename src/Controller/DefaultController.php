@@ -18,12 +18,4 @@ class DefaultController extends AbstractController
             'WEBSOCKET_URL' => $_ENV['WEBSOCKET_URL'],
         ]);
     }
-    /**
-    * @IsGranted("ROLE_ADMIN")
-    */
-    #[Route('/test', name: 'test')]
-    public function test(): Response
-    {
-        return new Response();
-    }
 }
