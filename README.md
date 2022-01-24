@@ -25,6 +25,7 @@ composer up &&
 php bin/console doctrine:database:create &&
 php bin/console do:mi:mi &&
 php bin/console lexik:jwt:generate-keypair &&
+chown www-data config/jwt -R &&
 npm install &&
 npm run dev 
 ```
