@@ -11,7 +11,13 @@ run following command to checkout the project and set database url and jwt passp
 ```
 git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && nano myWebsocketChat/.env
 ```
-then set up database, jwt keypairs and assets
+edit following DOTENV variables matching your system
+```
+SERVER_URL='http://localhost' 
+WEBSOCKET_URL='ws://localhost:8080' //depends on your server:start
+DATABASE_URL="mysql://root@127.0.0.1:3306/myDatabase?serverVersion=mariadb-10.4.11"
+JWT_PASSPHRASE=supersecretpassword
+```
 ```
 cd myWebsocketChat &&
 composer up &&
