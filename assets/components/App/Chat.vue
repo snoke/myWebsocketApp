@@ -1,13 +1,18 @@
 <template>
     <div>
-      <div v-if="chat"> 
-  
-      <div class="chat-container"> 
+      <div v-if="chat" @dragover.prevent @drop.prevent> 
+      <div class="chat-container" @drop="dragFile"> 
         <div v-for="chatMessage in chat.chatMessages" :key="chatMessage.id">
            <div class="alert alert-primary" v-if="chatMessage.sender.id==$root.claim.id">
+              <div v-if="chatMessage.file!=null">
+                 <img :src="chatMessage.file.content" />
+              </div>
               {{chatMessage.message}}
           </div>
            <div class="alert alert-secondary" v-if="chatMessage.sender.id!=$root.claim.id">
+              <div v-if="chatMessage.file!=null">
+                 <img :src="chatMessage.file.content" />
+              </div>
               {{chatMessage.message}}
           </div>
         </div>
@@ -36,11 +41,38 @@ export default {
   name: 'Chat',
   data: function() {
     return {
+      files: [],
       chat:null,
-      messages:[]
-      }
+      messages:[],
+      allowed_file_types:[
+        'image/jpeg',
+        'image/png'
+      ],
+      allowed_file_size:1024*4 //kb
+    }
   },
   methods: {
+      dragFile(e) {
+        this.files = e.dataTransfer.files;
+        if (this.allowed_file_types.includes(this.files[0]['type'])) {
+            if (this.files[0].size/1024<this.allowed_file_size) {
+              var reader = new FileReader();
+                reader.onloadend =  () => {
+                  this.$root.connection.send(
+                      JSON.stringify({
+                          'action': 'app:file:upload',
+                          'params': {
+                              'userId': this.$root.claim.id,    
+                              'content': reader.result,    
+                              'filename': this.files[0].name, 
+                          }
+                      })
+                  );
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        }
+      },
     send() {
      var  msg = document.getElementById('chat_input').value
       this.$root.connection.send(
@@ -80,6 +112,23 @@ export default {
     this.$root.$on('app:chat', (result) => {
         if (result.command=='app:chat') {
           this.chat = JSON.parse(result.data);
+          console.log(this.chat)
+        }
+     });
+
+    this.$root.$on('app:file:upload', (result) => {
+        if (result.command=='app:file:upload') {
+          this.$root.connection.send(
+              JSON.stringify({
+                  'action': 'app:chat:send',
+                  'params': {
+                      'senderId': this.$root.claim.id,    
+                      'chatId': this.$route.params.id,    
+                      'message': '',   
+                      'file': JSON.parse(result.data)
+                  }
+              })
+          );
         }
      });
 

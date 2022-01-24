@@ -26,6 +26,10 @@ class ChatMessage
     #[Groups(['app_chat','app_chat_send'])]
     private $message;
 
+    #[ORM\ManyToOne(targetEntity: File::class)]
+    #[Groups(['app_chat','app_chat_send'])]
+    private $file;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -63,6 +67,18 @@ class ChatMessage
     public function setMessage(string $message): self
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    public function setFile(?File $file): self
+    {
+        $this->file = $file;
 
         return $this;
     }

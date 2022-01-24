@@ -23,6 +23,7 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use App\Entity\Chat;
 use App\Entity\ChatMessage;
 
+use App\Entity\File;
 
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -45,6 +46,7 @@ class ChatSendCommand extends Command
             ->addArgument('senderId', InputArgument::REQUIRED, 'Argument description')
             ->addArgument('chatId', InputArgument::REQUIRED, 'Argument description')
             ->addArgument('message', InputArgument::REQUIRED, 'Argument description')
+            ->addArgument('file', InputArgument::OPTIONAL, 'Argument description')
         ;
     }
 
@@ -55,6 +57,7 @@ class ChatSendCommand extends Command
         $chatMessage->setMessage($input->getArgument('message'));
         $chatMessage->setSender($this->users->findOneBy(['id'=>$input->getArgument('senderId')]));
         $chatMessage->setChat($this->chats->findOneBy(['id'=>$input->getArgument('chatId')]));
+        $chatMessage->setFile($this->em->getRepository(File::class)->findOneBy(['id'=>$input->getArgument('file')]));
         $this->em->persist($chatMessage);
         $this->em->flush();
         $jsonContent = $this->serializer->serialize($chatMessage, 'json', ['groups' => ['app_chat_send']]);

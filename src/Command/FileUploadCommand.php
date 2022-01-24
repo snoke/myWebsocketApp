@@ -47,7 +47,7 @@ class FileUploadCommand extends Command
 
         $this->em->persist($file);
         $this->em->flush();
-
+        $output->write($file->getId());
         return Command::SUCCESS;
     }
 }
