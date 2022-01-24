@@ -3,7 +3,7 @@
         <ul class="nav nav-tabs">
                 <li class="nav-item"  @click="go('app_contacts')">
                     <a  href="#" target="_self" class="nav-link" v-bind:class="{ active: currentRoute('app_contacts')}" >  
-                        <font-awesome-icon icon="user-plus" /> Contacts 
+                        <font-awesome-icon icon="address-book" /> Contacts 
                     </a>
                 </li>
 

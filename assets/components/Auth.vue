@@ -13,7 +13,7 @@
                         <div id="auth_login">
                             <input type="text" placeholder="loginName" name="loginName" v-model="login_loginName"  class="w-100"/>
                             <input type="password" placeholder="Password" name="password" v-model="login_password"    class="w-100"/>
-                            <button v-on:click="login()"  class="btn btn-outline-primary  w-100">login</button>
+                            <button v-on:click="login()"  class="btn btn-outline-primary  w-100">login <font-awesome-icon icon="sign-in-alt" /></button>
                         </div>
                     </b-card-body>
                 </b-collapse>
@@ -29,7 +29,7 @@
                             <input type="text" placeholder="loginName" name="loginName" v-model="register_loginName"  class="w-100" />
                             <input type="password" placeholder="Password" name="password" v-model="register_password"   class="w-100" />
                             <input type="password" placeholder="repeat Password" name="password" v-model="register_password2"   class="w-100" />
-                            <button v-on:click="register()"  class="btn btn-outline-primary w-100">register</button>
+                            <button v-on:click="register()"  class="btn btn-outline-primary w-100">register <font-awesome-icon icon="user-plus" /></button>
                         </div>
                     </b-card-body>
                 </b-collapse>

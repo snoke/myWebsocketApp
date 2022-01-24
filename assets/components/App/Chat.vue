@@ -3,13 +3,7 @@
       <div v-if="chat" @dragover.prevent @drop.prevent> 
       <div class="chat-container" @drop="dragFile"> 
         <div v-for="chatMessage in chat.chatMessages" :key="chatMessage.id">
-           <div class="alert alert-primary" v-if="chatMessage.sender.id==$root.claim.id">
-              <div v-if="chatMessage.file!=null">
-                 <img :src="chatMessage.file.content" />
-              </div>
-              {{chatMessage.message}}
-          </div>
-           <div class="alert alert-secondary" v-if="chatMessage.sender.id!=$root.claim.id">
+           <div class="alert" v-bind:class="{ 'alert-secondary':chatMessage.sender.id!=$root.claim.id,'alert-primary': chatMessage.sender.id==$root.claim.id}">
               <div v-if="chatMessage.file!=null">
                  <img :src="chatMessage.file.content" />
               </div>
@@ -18,8 +12,8 @@
         </div>
          <textarea id="chat_input" class="w-100" placeholder="write a message" />
           <b-button-group class="w-100">
-            <button type="button" class="w-100 btn btn-outline-primary" @click="send()">send</button>
-            <b-dropdown dropup menu-class="minw-none" >
+            <button type="button" class="w-100 btn btn-outline-primary" @click="send()">send <font-awesome-icon icon="paper-plane" /></button>
+            <b-dropdown dropup menu-class="minw-none" variant="primary"  >
               <template #button-content>
                 <font-awesome-icon icon="file" />
               </template>
@@ -100,6 +94,7 @@ export default {
       },
     send() {
      var  msg = document.getElementById('chat_input').value
+     if (msg) {
       this.$root.connection.send(
           JSON.stringify({
               'action': 'app:chat:send',
@@ -111,6 +106,7 @@ export default {
           })
       );
       document.getElementById('chat_input').value = "";
+     }
     },
     renderUsernames(users) {
       var names = [];
@@ -125,6 +121,8 @@ export default {
   updated: function() {
   },
 
+  mounted() {
+  },
   created: function() {
 
       this.$root.connection.send(
@@ -138,7 +136,6 @@ export default {
     this.$root.$on('app:chat', (result) => {
         if (result.command=='app:chat') {
           this.chat = JSON.parse(result.data);
-          console.log(this.chat)
         }
      });
 

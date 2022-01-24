@@ -1,8 +1,7 @@
 <template>
     <div id="contacts">
-      <input id="contact_search" type="text" class="w-100" placeholder="find contacts" v-on:keyup="findContacts()" v-model="search" />
+      <input id="contact_search" type="text" class="w-100" placeholder="find new contacts" v-on:keyup="findContacts()" v-model="search" />
       <button type="button" v-for="user in contacts" :key="user.id" class="w-100 btn btn-outline-primary" @click="addContact(user)">Add {{user.username}}</button>
-
     </div>
 </template>
 
@@ -74,7 +73,9 @@ export default {
                 return false;
               }
               for(var contact of this.mycontacts) {
-                return u.username!=contact.username
+                if (u.username!=contact.username) {
+                  return false;
+                }
               }
               return true;
             });

@@ -27,6 +27,13 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
+import { faPaperPlane} from '@fortawesome/free-solid-svg-icons'
+import { faComments} from '@fortawesome/free-solid-svg-icons'
+import { faSave} from '@fortawesome/free-solid-svg-icons'
+import { faSignInAlt} from '@fortawesome/free-solid-svg-icons'
+import { faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
+import { faAddressBook} from '@fortawesome/free-solid-svg-icons'
+import { faQuestion} from '@fortawesome/free-solid-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -38,6 +45,13 @@ library.add(faEdit)
 library.add(faFile)
 library.add(faImage)
 library.add(faCamera)
+library.add(faPaperPlane)
+library.add(faComments)
+library.add(faSave)
+library.add(faSignInAlt)
+library.add(faSignOutAlt)
+library.add(faAddressBook)
+library.add(faQuestion)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
