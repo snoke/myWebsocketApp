@@ -32,3 +32,11 @@ npm run dev
 ```
 php bin/console server:start
 ```
+
+## Live Demo
+check https://websocketchat.stefan-sander.online
+using following credientials
+```
+alice:test
+bob:test
+```
