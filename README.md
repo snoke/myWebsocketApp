@@ -4,6 +4,14 @@ Command driven Symfony6 Websocket Chat Server with VueJS Client using JWT for au
 ![alt text](https://github.com/snoke/myWebsocketApp/blob/master/myWebsocketApp.png?raw=true)
 
 
+## Live Demo
+check https://websocketchat.stefan-sander.online
+using following credientials
+```
+alice:test
+bob:test
+```
+
 ## installation
 run following command to checkout the project
 ```
@@ -32,12 +40,4 @@ npm run dev
 ## start websocket server
 ```
 php bin/console server:start
-```
-
-## Live Demo
-check https://websocketchat.stefan-sander.online
-using following credientials
-```
-alice:test
-bob:test
 ```
