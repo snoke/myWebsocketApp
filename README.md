@@ -38,7 +38,3 @@ using following credientials
 alice:test
 bob:test
 ```
-
-## known bugs/todo
-server:start --SSL -should- but somehow did not yet work locally
-so i used stunnel to tunnel my ws server into wss protocol
