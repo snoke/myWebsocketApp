@@ -42,6 +42,6 @@ npm run dev
 php bin/console server:start
 ```
 
-## TODOS
+## Major Todos
 * implement user settings
 * append and check jwt bearer in socket commands
