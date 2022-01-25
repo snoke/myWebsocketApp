@@ -73,7 +73,7 @@ export default {
                 return false;
               }
               for(var contact of this.mycontacts) {
-                if (u.username!=contact.username) {
+                if (u.username==contact.username) {
                   return false;
                 }
               }
