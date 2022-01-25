@@ -35,6 +35,8 @@ import { faSignInAlt} from '@fortawesome/free-solid-svg-icons'
 import { faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 import { faAddressBook} from '@fortawesome/free-solid-svg-icons'
 import { faQuestion} from '@fortawesome/free-solid-svg-icons'
+import { faBan} from '@fortawesome/free-solid-svg-icons'
+import { faEraser} from '@fortawesome/free-solid-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -53,16 +55,22 @@ library.add(faSignInAlt)
 library.add(faSignOutAlt)
 library.add(faAddressBook)
 library.add(faQuestion)
+library.add(faBan)
+library.add(faEraser)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
-import VueRouter from 'vue-router'
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-Vue.use(VueRouter)
 
+
+import VueConfirmDialog from 'vue-confirm-dialog'
+Vue.use(VueConfirmDialog)
+Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
+
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
 
 const router = new VueRouter({  
     mode:'history',

@@ -1,5 +1,5 @@
 <template>
-    <div id="chats">
+    <div id="chats" v-if="chats!=null">
       
       <div v-if="chats.length==0">
          <p>you have no contacts added yet to chat with. </p>
@@ -17,7 +17,7 @@ export default {
   name: 'Chats',
   data: function() {
     return {
-      chats: []
+      chats: null
       }
   },
   methods: {

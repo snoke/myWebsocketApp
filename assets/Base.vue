@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app"> <vue-confirm-dialog></vue-confirm-dialog>
     <router-view></router-view>
   </div>
 </template>
