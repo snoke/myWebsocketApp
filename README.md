@@ -44,4 +44,4 @@ php bin/console server:start
 
 ## TODOS
 * implement user settings
-* check jwt bearer in socket commands
+* append and check jwt bearer in socket commands
