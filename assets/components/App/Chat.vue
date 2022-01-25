@@ -60,7 +60,7 @@ export default {
         'image/jpeg',
         'image/png'
       ],
-      allowed_file_size:1024*4 //kb
+      allowed_file_size:1024 * 1024 * 0.5 // 0.5 mb
     }
   },
   methods: {
@@ -70,7 +70,7 @@ export default {
       },
       uploadFile() {
         if (this.allowed_file_types.includes(this.files[0]['type'])) {
-            if (this.files[0].size/1024<this.allowed_file_size) {
+            if (this.files[0].size<this.allowed_file_size) {
               var reader = new FileReader();
                 reader.onloadend =  () => {
                   this.$root.connection.send(
@@ -85,8 +85,8 @@ export default {
                   );
                 }
                 reader.readAsDataURL(this.files[0]);
-            }
-        }
+            } else { alert ("the file is too big.")}
+        } else { alert ("the filetype is not allowed.")}
       },
       dragFile(e) {
         this.files = e.dataTransfer.files;

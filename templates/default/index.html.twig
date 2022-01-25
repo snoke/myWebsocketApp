@@ -5,7 +5,9 @@
 {% block body %}
 <script id="_symfonyData" type="application/json">
   {
-    "websocket_url": "{{WEBSOCKET_URL}}"
+    {% for k,v in config %}
+    "{{k}}": "{{v}}"
+    {% endfor %}
   }
 </script>
 

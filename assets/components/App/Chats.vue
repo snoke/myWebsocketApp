@@ -3,9 +3,8 @@
       
       <div v-if="chats.length==0">
          <p>you have no contacts added yet to chat with. </p>
-       <button type="button" class="w-100 btn btn-outline-primary" @click="$router.push({ name: 'app_contacts'})">Add Contacts <font-awesome-icon icon="address-book" /></button>
+       <button type="button" class="w-100 btn btn-outline-primary" @click="$router.push({ name: 'app_contacts'})">Find Contacts <font-awesome-icon icon="address-book" /></button>
       </div>
-
        <button type="button" v-for="chat in chats" :key="chat.id" class="w-100 btn btn-outline-primary" @click="startChat(chat.id)">Chat with {{renderUsernames(chat.users)}}  <font-awesome-icon icon="comments" /></button>
     </div>
 </template>
@@ -18,7 +17,7 @@ export default {
   name: 'Chats',
   data: function() {
     return {
-      chats: null
+      chats: []
       }
   },
   methods: {

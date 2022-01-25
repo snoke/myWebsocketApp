@@ -13,7 +13,7 @@ export default {
   name: 'Contacts',
   data: function() {
     return {
-        search:null,
+        search:'',
         contacts:null,
         mycontacts:null
       }
@@ -31,6 +31,7 @@ export default {
         );
     },
     findContacts() {
+      if (this.search!='') {
         this.$root.connection.send(
             JSON.stringify({
                 'action': 'app:user:search',
@@ -39,6 +40,7 @@ export default {
                 }
             })
         );
+      }
     }
   },
   updated: function() {

@@ -18,6 +18,7 @@ import Contacts from './components/App/Contacts';
 import Chats from './components/App/Chats';
 import Chat from './components/App/Chat';
 import Settings from './components/App/Settings';
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { faCogs } from '@fortawesome/free-solid-svg-icons'
@@ -121,8 +122,8 @@ import device from "vue-device-detector"
 Vue.use(device)
 new Vue({
     created: function() {
-      this.websocket_url = JSON.parse(document.getElementById('_symfonyData').innerHTML).websocket_url;
-      this.connection = new WebSocket(this.websocket_url)
+      this.config = JSON.parse(document.getElementById('_symfonyData').innerHTML);
+      this.connection = new WebSocket(this.config.websocket_url)
         this.connection.onopen =  () => {
             this.connected = true;
         }
@@ -140,11 +141,11 @@ new Vue({
     },
     data: function() {
       return {
+        config:[],
         connection:null,
         connected:false,
         token:null,
         claim:null,
-        websocket_url:null,
       }
     },
     el: '#app',
