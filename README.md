@@ -43,7 +43,6 @@ php bin/console server:start
 ```
 
 ## Major Todos
-* implement user settings
 * append and check jwt bearer in socket commands
 * store images as blob in db, not base64
 * Crypt Password Client Side before submitting
