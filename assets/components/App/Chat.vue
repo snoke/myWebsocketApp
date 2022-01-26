@@ -62,13 +62,15 @@
 <style>
 .btn-light{
   margin-bottom:0px!important;
+  background: none!important;
+  border: none!important;
 }
 .emoji-btn {
   padding:5px;
-  border-radius:5px;
-  margin-right: 1px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-right: -1px;
   border:1px solid grey;
-  border-right:0px;
   margin-bottom: 5px!important;
 }
 .minw-none {
@@ -77,13 +79,18 @@
 </style>
 
 <style scoped>
+textarea {
+  resize: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
 .left-border-rounded {
-  border-top-left-radius: 10px;
-border-bottom-left-radius: 10px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 .right-border-rounded {
-  border-top-right-radius: 10px;
-border-bottom-right-radius: 10px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 .icon-group {
   padding:5px;
