@@ -14,16 +14,16 @@
           <div @click="hide('.icon-group')">
             <div v-for="chatMessage in chat.chatMessages" :key="chatMessage.id">
                     <div class="row pb-1">
-                <b-col  v-bind:class="{ 'alert-primary': chatMessage.sender.id==$root.claim.id}"></b-col>
-                <b-col md="auto" v-bind:class="{ 'alert-secondary':chatMessage.sender.id!=$root.claim.id,'alert-primary': chatMessage.sender.id==$root.claim.id}">
-                  <div class="alert" >
+                <b-col class="left-border-rounded" v-bind:class="{ 'alert-primary': chatMessage.sender.id==$root.claim.id}"></b-col>
+                <b-col md="auto" v-bind:class="{ 'left-border-rounded':chatMessage.sender.id!=$root.claim.id,'right-border-rounded': chatMessage.sender.id==$root.claim.id,'alert-secondary':chatMessage.sender.id!=$root.claim.id,'alert-primary': chatMessage.sender.id==$root.claim.id}">
+                  <div class="alert" v-bind:class="{ }">
                       <div v-if="chatMessage.file!=null">
                         <img class="chat-image" :src="chatMessage.file.content" />
                       </div>
                       {{chatMessage.message}}
                   </div>
                 </b-col>
-                <b-col  v-bind:class="{ 'alert-secondary':chatMessage.sender.id!=$root.claim.id}"></b-col>
+                <b-col class="right-border-rounded" v-bind:class="{ 'alert-secondary':chatMessage.sender.id!=$root.claim.id}"></b-col>
               </div>
             </div>
             <hr style="margin-bottom:0.5em;margin-top:0.25em;"  />
@@ -34,7 +34,7 @@
               <b-dropdown-item v-for="k,group in this.emojis" :key="group" @click="showgroup(group)"> {{group}}</b-dropdown-item>
             </b-dropdown>
               <div v-for="arr,group in this.emojis" :key="group" :class="group+' icon-group w-100'" style="display:none;position:absolute;">
-                <div v-for="k,v in arr" :key="k" style="display:inline;" @click="addSmiley(v)">{{v}}</div>
+                <div v-for="k,v in arr" :key="k" style="display:inline;" role='button' @click="addSmiley(v)">{{v}}</div>
               </div>
             <textarea  rows="1" id="chat_input" class="w-100" placeholder="write a message" v-on:keyup="replaceEmoji" @click="hide('.icon-group')"/>
           </b-button-group>
@@ -64,6 +64,8 @@
   margin-bottom:0px!important;
 }
 .emoji-btn {
+  padding:5px;
+  border-radius:5px;
   margin-right: 1px;
   border:1px solid grey;
   border-right:0px;
@@ -75,11 +77,21 @@
 </style>
 
 <style scoped>
+.left-border-rounded {
+  border-top-left-radius: 10px;
+border-bottom-left-radius: 10px;
+}
+.right-border-rounded {
+  border-top-right-radius: 10px;
+border-bottom-right-radius: 10px;
+}
 .icon-group {
+  padding:5px;
+  border-radius:5px;
   background-color:white;
   border: 1px solid grey;
   border-bottom:0px;
-  bottom:52px;
+  bottom:55px;
 
 }
 .row {
