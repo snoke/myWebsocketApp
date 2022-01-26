@@ -45,4 +45,4 @@ php bin/console server:start
 ```
 
 ## Major Todos
-* append and check jwt bearer in socket commands (replace id submitting by token)
+* check jwt bearer in socket commands on each request
