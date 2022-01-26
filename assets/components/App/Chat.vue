@@ -256,14 +256,14 @@ import { emojis } from '../emojis.json'
                 }
             })
         );
-      this.$root.$once('app:chat', (result) => {
+      this.$root.$on('app:chat', (result) => {
           if (result.command=='app:chat') {
             this.chat = JSON.parse(result.data);
             this.onResize();
           }
       });
 
-      this.$root.$once('app:file:upload', (result) => {
+      this.$root.$on('app:file:upload', (result) => {
           if (result.command=='app:file:upload') {
             this.$root.connection.send(
                 JSON.stringify({
@@ -279,7 +279,7 @@ import { emojis } from '../emojis.json'
           }
       });
 
-      this.$root.$once('app:chat:send', (result) => {
+      this.$root.$on('app:chat:send', (result) => {
           if (result.command=='app:chat:send') {
             this.chat.chatMessages.push(JSON.parse(result.data));
             this.onResize();

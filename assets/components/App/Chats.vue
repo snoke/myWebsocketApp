@@ -52,7 +52,7 @@ export default {
             })
         );
         
-    this.$root.$once('app:user:chats', (result) => {
+    this.$root.$on('app:user:chats', (result) => {
         if (result.command=='app:user:chats') {
           this.chats = JSON.parse(result.data);
         }
