@@ -38,6 +38,9 @@ export default {
   },
   mounted: function() {
   },
+  beforeDestroy () {
+    this.$root.$off('app:user:chats')
+  },
   created: function() {
     
         this.$root.connection.send(
@@ -49,7 +52,7 @@ export default {
             })
         );
         
-    this.$root.$on('app:user:chats', (result) => {
+    this.$root.$once('app:user:chats', (result) => {
         if (result.command=='app:user:chats') {
           this.chats = JSON.parse(result.data);
         }

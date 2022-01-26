@@ -89,8 +89,13 @@ export default {
   },
   updated: function() {
   },
+  beforeDestroy () {
+    this.$root.$off('auth:login')
+    this.$root.$off('auth:register')
+    this.$root.$off('auth:token:decode')
+  },
   created: function() {
-    this.$root.$on('auth:login', (result) => {
+    this.$root.$once('auth:login', (result) => {
             if (result.command=="auth:login") {
                 if (result.success==true) {
                     this.$root.token = result.data;
@@ -98,7 +103,7 @@ export default {
                 }
             }
      });
-    this.$root.$on('auth:register', (result) => {
+    this.$root.$once('auth:register', (result) => {
             if (result.command=="auth:register") {
                 if (result.success==true) {
                     this.$root.connection.send(
@@ -113,7 +118,7 @@ export default {
                 }
             }
      });
-    this.$root.$on('auth:token:decode', (result) => {
+    this.$root.$once('auth:token:decode', (result) => {
             if (result.command=="auth:token:decode") {
                 this.$root.claim = JSON.parse(result.data);
                 this.$router.push({ name: 'app_chats'})

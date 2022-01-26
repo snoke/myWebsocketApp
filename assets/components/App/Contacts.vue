@@ -48,6 +48,11 @@ export default {
   mounted() {
      document.getElementById('contact_search').focus()
   },
+  beforeDestroy () {
+    this.$root.$off('app:contact:add')
+    this.$root.$off('app:user:contacts')
+    this.$root.$off('app:user:search')
+  },
   created: function() {
         this.$root.connection.send(
             JSON.stringify({
@@ -58,17 +63,17 @@ export default {
             })
         );
 
-    this.$root.$on('app:contact:add', (result) => {
+    this.$root.$once('app:contact:add', (result) => {
         if (result.command=='app:contact:add') {
           this.$router.push({ name: 'app_chat', params: { id: result.data }})
         }
      });
-    this.$root.$on('app:user:contacts', (result) => {
+    this.$root.$once('app:user:contacts', (result) => {
         if (result.command=='app:user:contacts') {
             this.mycontacts = JSON.parse(result.data);
         }
      });
-    this.$root.$on('app:user:search', (result) => {
+    this.$root.$once('app:user:search', (result) => {
         if (result.command=='app:user:search') {
             this.contacts = JSON.parse(result.data).filter((u) => {
               if (u.username==this.$root.claim.username) {

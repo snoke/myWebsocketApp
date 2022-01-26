@@ -234,6 +234,11 @@ import { emojis } from '../emojis.json'
     },
     mounted() {
             window.addEventListener('resize', this.onResize);
+    }, 
+      beforeDestroy () {
+        this.$root.$off('app:chat')
+        this.$root.$off('app:file:upload')
+        this.$root.$off('app:chat:send')
     },
     created: function() {
         this.$root.connection.send(
@@ -244,14 +249,14 @@ import { emojis } from '../emojis.json'
                 }
             })
         );
-      this.$root.$on('app:chat', (result) => {
+      this.$root.$once('app:chat', (result) => {
           if (result.command=='app:chat') {
             this.chat = JSON.parse(result.data);
             this.onResize();
           }
       });
 
-      this.$root.$on('app:file:upload', (result) => {
+      this.$root.$once('app:file:upload', (result) => {
           if (result.command=='app:file:upload') {
             this.$root.connection.send(
                 JSON.stringify({
@@ -267,7 +272,7 @@ import { emojis } from '../emojis.json'
           }
       });
 
-      this.$root.$on('app:chat:send', (result) => {
+      this.$root.$once('app:chat:send', (result) => {
           if (result.command=='app:chat:send') {
             this.chat.chatMessages.push(JSON.parse(result.data));
             this.onResize();
