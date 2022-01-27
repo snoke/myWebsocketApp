@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: FileRepository::class)]
-class File
+class File extends Entity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

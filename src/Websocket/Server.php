@@ -32,7 +32,7 @@ class Server implements MessageComponentInterface {
 
     public function onOpen(ConnectionInterface $conn) {
         $this->clients->attach($conn);
-        $this->consoleMessage("New connection from " . $conn->resourceId);
+        $this->consoleMessage("New connection from $conn->remoteAddress ($conn->resourceId)");
     }
 
     private function consoleMessage($data,$type='info') {
@@ -73,11 +73,12 @@ class Server implements MessageComponentInterface {
             $id = $payload['id'];
             $this->userClients[$from->resourceId] = [
                 'client' =>$from,
-                'userId' =>$id
+                'userId' =>$id,
+                'ip' =>$from->remoteAddress,
             ];
         }
 
-        if ($options['action']=='app:chat:send') {
+        if ($options['action']=='chat:message:send') {
             $chat = $this->chats->findOneBy(['id'=>$options['params']['chatId']]);
             $users = $chat->getUsers();
             
@@ -92,6 +93,8 @@ class Server implements MessageComponentInterface {
     }
 
     public function onClose(ConnectionInterface $conn) {
+        $this->userClients[$conn->resresourceId] = null;
+        $this->consoleMessage("Connection dropped $conn->remoteAddress ($conn->resourceId)");
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e) {

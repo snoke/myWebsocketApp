@@ -2,8 +2,11 @@
 
 namespace App\Command;
 
-use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Serializer\SerializerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,24 +17,22 @@ use Ratchet\Server\IoServer;
 use App\Websocket\Server as AppServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
-use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\Chat;
-use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 
+use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 
 #[AsCommand(
     name: 'server:start',
     description: 'Starts the Websocket Server',
 )]
-class ServerStartCommand extends Command
+class ServerStartCommand extends AbstractCommand
 {    
     const WS_PORT = 8080;
     const WSS_PORT = 8443;
 
-    public function __construct(EntityManagerInterface $em,JWTEncoderInterface $encoder) {
-        parent::__construct();
-        $this->em = $em;
+    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer,JWTEncoderInterface $encoder) {
+        parent::__construct($em,$serializer);
         $this->encoder = $encoder;
     }
 

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ChatMessageRepository::class)]
-class ChatMessage
+class ChatMessage extends Entity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,19 +16,35 @@ class ChatMessage
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Chat::class, inversedBy: 'chatMessages')]
+    #[Groups(['chat_message_status'])]
     private $chat;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[Groups(['app_chat','app_chat_send'])]
+    #[Groups(['app_chat','app_chat_send','chat_message_status'])]
     private $sender;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['app_chat','app_chat_send'])]
+    #[Groups(['app_chat','app_chat_send','chat_message_status'])]
     private $message;
 
     #[ORM\ManyToOne(targetEntity: File::class)]
-    #[Groups(['app_chat','app_chat_send'])]
+    #[Groups(['app_chat','app_chat_send','chat_message_status'])]
     private $file;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['app_chat','app_chat_send','chat_message_status'])]
+    private $sent;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['app_chat','app_chat_send','chat_message_status'])]
+    private $delivered;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['app_chat','app_chat_send','chat_message_status'])]
+    private $seen;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $status;
 
     public function getId(): ?int
     {
@@ -79,6 +95,54 @@ class ChatMessage
     public function setFile(?File $file): self
     {
         $this->file = $file;
+
+        return $this;
+    }
+
+    public function getSent(): ?\DateTimeInterface
+    {
+        return $this->sent;
+    }
+
+    public function setSent(?\DateTimeInterface $sent): self
+    {
+        $this->sent = $sent;
+
+        return $this;
+    }
+
+    public function getDelivered(): ?\DateTimeInterface
+    {
+        return $this->delivered;
+    }
+
+    public function setDelivered(?\DateTimeInterface $delivered): self
+    {
+        $this->delivered = $delivered;
+
+        return $this;
+    }
+
+    public function getSeen(): ?\DateTimeInterface
+    {
+        return $this->seen;
+    }
+
+    public function setSeen(?\DateTimeInterface $seen): self
+    {
+        $this->seen = $seen;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

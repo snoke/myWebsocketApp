@@ -13,24 +13,25 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-use App\Entity\File;
-use App\Entity\User;
+use App\Command\AbstractCommand;
+
+use App\Entity\ChatMessage;
 
 #[AsCommand(
-    name: 'file:upload',
-    description: 'Uploads a file',
+    name: 'chat:message:status',
+    description: "Sets a Message Status",
 )]
-class FileUploadCommand extends AbstractCommand
+class ChatMessageStatusCommand extends AbstractCommand
 {
+    
     public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
         parent::__construct($em,$serializer);
     }
     protected function configure(): void
     {
         $this
-            ->addArgument('userId', InputArgument::REQUIRED, 'Argument description')
-            ->addArgument('filename', InputArgument::REQUIRED, 'Argument description')
-            ->addArgument('content', InputArgument::REQUIRED, 'Argument description')
+            ->addArgument('messageId', InputArgument::OPTIONAL, "the ChatMessage ID")
+            ->addArgument('status', InputArgument::OPTIONAL, "possible values are: 'sent','delivered','read'")
         ;
     }
 
@@ -38,15 +39,19 @@ class FileUploadCommand extends AbstractCommand
     {
         $io = new SymfonyStyle($input, $output);
         
-        $file = new File();
+        $status = $input->getArgument('status');
+        $id = $input->getArgument('messageId');
 
-        $file->setUser($this->em->getRepository(User::class)->findOneBy(['id'=> $input->getArgument('userId')]));
-        $file->setFilename($input->getArgument('filename'));
-        $file->setContent($input->getArgument('content'));
-
-        $this->em->persist($file);
+        $message= $this->em->getRepository(ChatMessage::class)->findOneBy(['id'=>$id]);
+        $message->setStatus($status);
+        $message->__set($status,new \DateTime());
+        
+        $this->em->persist($message);
         $this->em->flush();
-        $output->write($file->getId());
+
+        $jsonContent = $this->serializer->serialize($message, 'json', ['groups' => ['chat_message_status']]);
+        $output->write($jsonContent);
         return Command::SUCCESS;
+
     }
 }

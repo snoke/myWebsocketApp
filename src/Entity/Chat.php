@@ -9,11 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ChatRepository::class)]
-class Chat
+class Chat extends Entity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[Groups(['app_chat','app_user_chats'])]
+    #[Groups(['app_chat','app_user_chats','chat_message_status'])]
     #[ORM\Column(type: 'integer')]
     private $id;
 

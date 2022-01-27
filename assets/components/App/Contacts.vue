@@ -22,7 +22,7 @@ export default {
     addContact(user) {
         this.$root.connection.send(
             JSON.stringify({
-                'action': 'app:contact:add',
+                'action': 'contact:add',
                 'params': {
                   'alice': this.$root.claim.id,
                   'bob' :user.id,
@@ -34,7 +34,7 @@ export default {
       if (this.search!='') {
         this.$root.connection.send(
             JSON.stringify({
-                'action': 'app:user:search',
+                'action': 'contact:search',
                 'params': {
                     'username': this.search,    
                 }
@@ -49,32 +49,32 @@ export default {
      document.getElementById('contact_search').focus()
   },
   beforeDestroy () {
-    this.$root.$off('app:contact:add')
-    this.$root.$off('app:user:contacts')
-    this.$root.$off('app:user:search')
+    this.$root.$off('contact:add')
+    this.$root.$off('user:contacts')
+    this.$root.$off('contact:search')
   },
   created: function() {
         this.$root.connection.send(
             JSON.stringify({
-                'action': 'app:user:contacts',
+                'action': 'user:contacts',
                 'params': {
                     'userId': this.$root.claim.id
                 }
             })
         );
 
-    this.$root.$on('app:contact:add', (result) => {
-        if (result.command=='app:contact:add') {
+    this.$root.$on('contact:add', (result) => {
+        if (result.command=='contact:add') {
           this.$router.push({ name: 'app_chat', params: { id: result.data }})
         }
      });
-    this.$root.$on('app:user:contacts', (result) => {
-        if (result.command=='app:user:contacts') {
+    this.$root.$on('user:contacts', (result) => {
+        if (result.command=='user:contacts') {
             this.mycontacts = JSON.parse(result.data);
         }
      });
-    this.$root.$on('app:user:search', (result) => {
-        if (result.command=='app:user:search') {
+    this.$root.$on('contact:search', (result) => {
+        if (result.command=='contact:search') {
             this.contacts = JSON.parse(result.data).filter((u) => {
               if (u.username==this.$root.claim.username) {
                 return false;

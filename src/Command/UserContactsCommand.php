@@ -1,6 +1,8 @@
 <?php
-
 namespace App\Command;
+
+use Symfony\Component\Serializer\SerializerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -11,27 +13,23 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 use App\Entity\User;
-use Symfony\Component\Serializer\SerializerInterface;
-use Doctrine\ORM\EntityManagerInterface;
 
 
 #[AsCommand(
-    name: 'app:user:contacts',
-    description: 'Add a short description for your command',
+    name: 'user:contacts',
+    description: 'gets user contacts',
 )]
-class UserContactsCommand extends Command
+class UserContactsCommand extends AbstractCommand
 {  
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-    parent::__construct();
-    $this->em = $em;
 
-    $this->serializer = $serializer;
-}
+    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
+        parent::__construct($em,$serializer);
+    }
 
 protected function configure(): void
 {
     $this
-        ->addArgument('userId', InputArgument::REQUIRED, 'search users')
+        ->addArgument('userId', InputArgument::REQUIRED, 'userid')
     ;
 }
 

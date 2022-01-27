@@ -13,7 +13,7 @@
         <div class="chat-container" @drop="dragFile" > 
           <div @click="hide('.icon-group')">
             <div v-for="chatMessage in chat.chatMessages" :key="chatMessage.id">
-                    <div class="row pb-1">
+              <div class="row pb-1">
                 <b-col class="left-border-rounded" v-bind:class="{ 'alert-primary': chatMessage.sender.id==$root.claim.id}"></b-col>
                 <b-col md="auto" v-bind:class="{ 'left-border-rounded':chatMessage.sender.id!=$root.claim.id,'right-border-rounded': chatMessage.sender.id==$root.claim.id,'alert-secondary':chatMessage.sender.id!=$root.claim.id,'alert-primary': chatMessage.sender.id==$root.claim.id}">
                   <div class="alert" v-bind:class="{ }">
@@ -36,7 +36,7 @@
               <div v-for="arr,group in this.emojis" :key="group" :class="group+' icon-group w-100'" style="display:none;position:absolute;">
                 <div v-for="k,v in arr" :key="k" style="display:inline;" role='button' @click="addSmiley(v)">{{v}}</div>
               </div>
-            <textarea  rows="1" id="chat_input" class="w-100" placeholder="write a message" v-on:keyup="replaceEmoji" @click="hide('.icon-group')"/>
+            <textarea rows="1" id="chat_input" class="w-100" placeholder="write a message" v-on:keyup="replaceEmoji" @click="hide('.icon-group')"/>
           </b-button-group>
           <div  @click="hide('.icon-group')">
             <b-button-group class="w-100"  >
@@ -131,6 +131,13 @@ import { emojis } from '../emojis.json'
       }
     },    
     methods: {
+      getMessage(msgId) {
+       for (var msg in messages) {
+         if (msg.id == msgId) {
+           return msg;
+         }
+       }
+      },
       hide(group) {
         $(group).hide();
       },
@@ -193,7 +200,7 @@ import { emojis } from '../emojis.json'
                   reader.onloadend =  () => {
                     this.$root.connection.send(
                         JSON.stringify({
-                            'action': 'app:file:upload',
+                            'action': 'file:upload',
                             'params': {
                                 'userId': this.$root.claim.id,    
                                 'content': reader.result,    
@@ -210,21 +217,34 @@ import { emojis } from '../emojis.json'
           this.files = e.dataTransfer.files;
             this.uploadFile();
         },
+      setStatus(msg,status) {
+        if (msg.status!=status) {
+          this.$root.connection.send(
+              JSON.stringify({
+                  'action': 'chat:message:status',
+                  'params': {
+                      'messageId': msg.id,
+                      'status': status,    
+                  }
+              })
+          );
+        }
+      },
       send() {
-      var  msg = document.getElementById('chat_input').value
-      if (msg) {
-        this.$root.connection.send(
-            JSON.stringify({
-                'action': 'app:chat:send',
-                'params': {
-                    'senderId': this.$root.claim.id,    
-                    'chatId': this.$route.params.id,    
-                    'message': msg,    
-                }
-            })
-        );
-        document.getElementById('chat_input').value = "";
-      }
+        var  msg = document.getElementById('chat_input').value
+        if (msg) {
+          this.$root.connection.send(
+              JSON.stringify({
+                  'action': 'chat:message:send',
+                  'params': {
+                      'senderId': this.$root.claim.id,    
+                      'chatId': this.$route.params.id,    
+                      'message': msg,    
+                  }
+              })
+          );
+          document.getElementById('chat_input').value = "";
+        }
       },
       renderUsernames(users) {
         var names = [];
@@ -243,31 +263,31 @@ import { emojis } from '../emojis.json'
             window.addEventListener('resize', this.onResize);
     }, 
       beforeDestroy () {
-        this.$root.$off('app:chat')
-        this.$root.$off('app:file:upload')
-        this.$root.$off('app:chat:send')
+        this.$root.$off('chat:load')
+        this.$root.$off('file:upload')
+        this.$root.$off('chat:message:send')
     },
     created: function() {
         this.$root.connection.send(
             JSON.stringify({
-                'action': 'app:chat',
+                'action': 'chat:load',
                 'params': {
                     'chatId': this.$route.params.id,    
                 }
             })
         );
-      this.$root.$on('app:chat', (result) => {
-          if (result.command=='app:chat') {
+      this.$root.$on('chat:load', (result) => {
+          if (result.command=='chat:load') {
             this.chat = JSON.parse(result.data);
             this.onResize();
           }
       });
 
-      this.$root.$on('app:file:upload', (result) => {
-          if (result.command=='app:file:upload') {
+      this.$root.$on('file:upload', (result) => {
+          if (result.command=='file:upload') {
             this.$root.connection.send(
                 JSON.stringify({
-                    'action': 'app:chat:send',
+                    'action': 'chat:message:send',
                     'params': {
                         'senderId': this.$root.claim.id,    
                         'chatId': this.$route.params.id,    
@@ -279,10 +299,17 @@ import { emojis } from '../emojis.json'
           }
       });
 
-      this.$root.$on('app:chat:send', (result) => {
-          if (result.command=='app:chat:send') {
+      this.$root.$on('chat:message:send', (result) => {
+          if (result.command=='chat:message:send') {
             this.chat.chatMessages.push(JSON.parse(result.data));
             this.onResize();
+          }
+      });
+
+      this.$root.$on('chat:message:status', (result) => {
+          if (result.command=='chat:message:status') {
+            var msgId = JSON.parse(result.data)
+            msg = getMessage(msgId);
           }
       });
     }

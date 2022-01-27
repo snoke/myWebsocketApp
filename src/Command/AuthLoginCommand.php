@@ -2,33 +2,32 @@
 
 namespace App\Command;
 
-use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Serializer\SerializerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use App\Entity\User;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+use App\Entity\User;
 
 #[AsCommand(
     name: 'auth:login',
     description: 'Authenticate with provided credentials and retrieve JWT',
 )]
-class AuthLoginCommand extends Command
+class AuthLoginCommand extends AbstractCommand
 {    private $client;
 
-    public function __construct(HttpClientInterface $client)
+    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer,HttpClientInterface $client)
     {
-        parent::__construct();
+        parent::__construct($em,$serializer);
         $this->client = $client;
     }
 

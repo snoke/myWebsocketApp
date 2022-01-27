@@ -13,33 +13,32 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
+use App\Entity\Chat;
 
 #[AsCommand(
-    name: 'auth:token:decode',
-    description: 'Extracts Claim from provided Token',
+    name: 'chat:load',
+    description: 'Load a Chat',
 )]
-class AuthTokenDecodeCommand extends AbstractCommand
+class ChatLoadCommand extends AbstractCommand
 {
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer,JWTEncoderInterface $encoder) {
+    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
         parent::__construct($em,$serializer);
-        $this->encoder = $encoder;
     }
-
     protected function configure(): void
     {
         $this
-            ->addArgument('token', InputArgument::REQUIRED, 'the token to extract the claim')
+            ->addArgument('chatId', InputArgument::REQUIRED, 'chatId')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
-        $token = $input->getArgument('token');
-        $payload = $this->encoder->decode($token);
-
-        $output->write(json_encode($payload));
+        $chatId = $input->getArgument('chatId');
+        $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=> $chatId]);
+        
+        $jsonContent = $this->serializer->serialize($chat, 'json', ['groups' => ['app_chat']]);
+        $output->write($jsonContent);
+        
         return Command::SUCCESS;
     }
 }

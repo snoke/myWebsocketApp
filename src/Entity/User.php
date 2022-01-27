@@ -97,6 +97,13 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
         return $this;
     }
 
+    public function addRole(string $role): self
+    {
+        $this->roles = array_unique($this->roles[] = $role);
+
+        return $this;
+    }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */

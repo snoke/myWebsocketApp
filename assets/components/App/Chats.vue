@@ -39,21 +39,21 @@ export default {
   mounted: function() {
   },
   beforeDestroy () {
-    this.$root.$off('app:user:chats')
+    this.$root.$off('chat:load:userchats')
   },
   created: function() {
     
         this.$root.connection.send(
             JSON.stringify({
-                'action': 'app:user:chats',
+                'action': 'chat:load:userchats',
                 'params': {
                     'userId': this.$root.claim.id,    
                 }
             })
         );
         
-    this.$root.$on('app:user:chats', (result) => {
-        if (result.command=='app:user:chats') {
+    this.$root.$on('chat:load:userchats', (result) => {
+        if (result.command=='chat:load:userchats') {
           this.chats = JSON.parse(result.data);
         }
      });

@@ -2,43 +2,30 @@
 
 namespace App\Command;
 
-use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Serializer\SerializerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-use Doctrine\ORM\EntityManagerInterface;
-
-use App\Repository\ChatRepository;
-use App\Repository\UserRepository;
-
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use App\Entity\Chat;
 use App\Entity\ChatMessage;
-
 use App\Entity\File;
-
-use Symfony\Component\Serializer\SerializerInterface;
+use App\Entity\User;
 
 #[AsCommand(
-    name: 'app:chat:send',
+    name: 'chat:message:send',
     description: 'Sends a chat message',
 )]
-class ChatSendCommand extends Command
+class ChatMessageSendCommand extends AbstractCommand
 {
-    public function __construct(UserRepository $users,ChatRepository $chats,EntityManagerInterface $em, SerializerInterface $serializer) {
-        parent::__construct();
-        $this->chats = $chats;
-        $this->users = $users;
-        $this->em = $em;
-        $this->serializer = $serializer;
+    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
+        parent::__construct($em,$serializer);
     }
     protected function configure(): void
     {
@@ -55,9 +42,10 @@ class ChatSendCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $chatMessage = new ChatMessage();
         $chatMessage->setMessage($input->getArgument('message'));
-        $chatMessage->setSender($this->users->findOneBy(['id'=>$input->getArgument('senderId')]));
-        $chatMessage->setChat($this->chats->findOneBy(['id'=>$input->getArgument('chatId')]));
+        $chatMessage->setSender($this->em->getRepository(User::class)->findOneBy(['id'=>$input->getArgument('senderId')]));
+        $chatMessage->setChat($this->em->getRepository(Chat::class)->findOneBy(['id'=>$input->getArgument('chatId')]));
         $chatMessage->setFile($this->em->getRepository(File::class)->findOneBy(['id'=>$input->getArgument('file')]));
+        $chatMessage->setSent(new \DateTime());
         $this->em->persist($chatMessage);
         $this->em->flush();
         $jsonContent = $this->serializer->serialize($chatMessage, 'json', ['groups' => ['app_chat_send']]);

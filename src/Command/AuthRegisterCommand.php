@@ -2,8 +2,11 @@
 
 namespace App\Command;
 
-use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Serializer\SerializerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -12,22 +15,19 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 
 #[AsCommand(
     name: 'auth:register',
     description: 'Sign up a new User',
 )]
-class AuthRegisterCommand extends Command
+class AuthRegisterCommand extends AbstractCommand
 {    
-    private $em;
     private $passwordHasher;
 
-    public function __construct(EntityManagerInterface $em, UserPasswordHasherInterface $userPasswordHasher)
+    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer,UserPasswordHasherInterface $userPasswordHasher)
     {
-        parent::__construct();
-        $this->em = $em;
+        parent::__construct($em,$serializer);
         $this->passwordHasher = $userPasswordHasher;
     }
 
@@ -44,6 +44,7 @@ class AuthRegisterCommand extends Command
         $loginName = $input->getArgument('loginName');
         $password = $input->getArgument('password');
         $user = new User();
+        $user->setUsername($loginName);
         $user->setUsername($loginName);
         $user->setPassword(
             $this->passwordHasher->hashPassword(

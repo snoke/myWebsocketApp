@@ -13,15 +13,15 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-use App\Entity\Chat;
 use App\Entity\User;
 
+
 #[AsCommand(
-    name: 'contact:add',
-    description: 'Adds a Contact',
+    name: 'contact:search',
+    description: 'search user by name (like search)',
 )]
-class ContactAddCommand extends AbstractCommand
-{
+class ContactSearchCommand extends AbstractCommand
+{  
 
     public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
         parent::__construct($em,$serializer);
@@ -29,26 +29,21 @@ class ContactAddCommand extends AbstractCommand
     protected function configure(): void
     {
         $this
-            ->addArgument('alice', InputArgument::REQUIRED, 'id of alice')
-            ->addArgument('bob', InputArgument::REQUIRED, 'id of bob')
+            ->addArgument('username', InputArgument::REQUIRED, 'search users')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->em->clear();
         $users = $this->em->getRepository(User::class);
-        $alice = $users->findOneBy(['id'=>$input->getArgument('alice')]);
-        $bob = $users->findOneBy(['id'=>$input->getArgument('bob')]);
-        $alice->addContact($bob); 
-        $bob->addContact($alice); 
-        $chat = new Chat();
-        $chat->addUser($alice);
-        $chat->addUser($bob);
-        $this->em->persist($alice);
-        $this->em->persist($bob);
-        $this->em->persist($chat);
-        $this->em->flush();
-        $output->write($chat->getId());
+        $username = $input->getArgument('username');
+        $users = $users->findByLike(['username'=> $username]);
+        $jsonContent = $this->serializer->serialize($users, 'json', ['groups' => ['app_user_search']]);
+    // $jsonContent = $this->serializer->serialize($users, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['roles','password','userIdentifier','chats']]);
+
+        $output->write($jsonContent);
+        
         return Command::SUCCESS;
     }
 }
