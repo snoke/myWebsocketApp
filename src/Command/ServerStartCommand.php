@@ -58,7 +58,7 @@ class ServerStartCommand extends AbstractCommand
 
         $httpServer = new HttpServer(
             new WsServer(
-                new AppServer($input,$output,$this->getApplication(),$chats,$this->encoder)
+                new AppServer($input,$output,$this->getApplication(),$this->em,$this->encoder)
             )
         );
 

@@ -46,6 +46,7 @@ class ChatMessageSendCommand extends AbstractCommand
         $chatMessage->setChat($this->em->getRepository(Chat::class)->findOneBy(['id'=>$input->getArgument('chatId')]));
         $chatMessage->setFile($this->em->getRepository(File::class)->findOneBy(['id'=>$input->getArgument('file')]));
         $chatMessage->setSent(new \DateTime());
+        $chatMessage->setStatus('sent');
         $this->em->persist($chatMessage);
         $this->em->flush();
         $jsonContent = $this->serializer->serialize($chatMessage, 'json', ['groups' => ['app_chat_send']]);

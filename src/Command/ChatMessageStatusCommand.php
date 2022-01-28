@@ -31,7 +31,7 @@ class ChatMessageStatusCommand extends AbstractCommand
     {
         $this
             ->addArgument('messageId', InputArgument::OPTIONAL, "the ChatMessage ID")
-            ->addArgument('status', InputArgument::OPTIONAL, "possible values are: 'sent','delivered','read'")
+            ->addArgument('status', InputArgument::OPTIONAL, "possible values are: 'sent','delivered','seen'")
         ;
     }
 

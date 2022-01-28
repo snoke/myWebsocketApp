@@ -5,27 +5,33 @@ use Ratchet\ConnectionInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Output\BufferedOutput;
-use App\Repository\ChatRepository;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 
+use Doctrine\ORM\EntityManagerInterface;
+
+use App\Entity\Chat;
+use App\Entity\ChatMessage;
+use App\Entity\User;
+
 class Server implements MessageComponentInterface {
-    protected $clients;
-    protected $application;
     protected $input;
     protected $output;
+    protected $application;
     protected $chats;
+    protected $messages;
     protected $encoder;
     protected $userClients;
-    protected $projectDir;
+    protected $clients;
 
-    public function __construct($input,$output,$application,ChatRepository $chats,JWTEncoderInterface $encoder) {
-        $this->clients = new \SplObjectStorage;
-        $this->application = $application;
+    public function __construct($input,$output,$application,EntityManagerInterface $em,JWTEncoderInterface $encoder) {
         $this->input = $input;
         $this->output = $output;
-        $this->chats = $chats;
+        $this->application = $application;
+        $this->em = $em;
         $this->encoder = $encoder;
+
         $this->userClients = [];
+        $this->clients = new \SplObjectStorage;
         
         $this->io = new SymfonyStyle($this->input, $this->output);
     }
@@ -79,12 +85,25 @@ class Server implements MessageComponentInterface {
         }
 
         if ($options['action']=='chat:message:send') {
-            $chat = $this->chats->findOneBy(['id'=>$options['params']['chatId']]);
+            $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$options['params']['chatId']]);
             $users = $chat->getUsers();
             
             foreach($this->userClients as $userClient) {
                 foreach($users as $user) {
                     if ($user->getId()==$userClient['userId'] && $user->getId()!=$options['params']['senderId'] ) {
+                        $userClient['client']->send(json_encode($result)); 
+                    }
+                }
+            }
+        }
+
+        if ($options['action']=='chat:message:status') {
+            $message = $this->em->getRepository(ChatMessage::class)->findOneBy(['id'=>$options['params']['messageId']]);
+            $chat = $message->getChat();
+            $users = $chat->getUsers();
+            foreach($this->userClients as $userClient) {
+                foreach($users as $user) {
+                    if ($user->getId()==$message->getSender()->getId()) {
                         $userClient['client']->send(json_encode($result)); 
                     }
                 }

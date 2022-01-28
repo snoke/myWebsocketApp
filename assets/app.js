@@ -14,10 +14,10 @@ import Vue from 'vue';
 import Base from './Base';
 import Auth from './components/Auth';
 import App from './components/App';
-import Contacts from './components/App/Contacts';
-import Chats from './components/App/Chats';
+import AppContacts from './components/App/AppContacts';
+import AppChats from './components/App/AppChats';
+import AppSettings from './components/App/AppSettings';
 import Chat from './components/App/Chat';
-import Settings from './components/App/Settings';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
@@ -37,6 +37,7 @@ import { faAddressBook} from '@fortawesome/free-solid-svg-icons'
 import { faQuestion} from '@fortawesome/free-solid-svg-icons'
 import { faBan} from '@fortawesome/free-solid-svg-icons'
 import { faEraser} from '@fortawesome/free-solid-svg-icons'
+import { faCheck} from '@fortawesome/free-solid-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -57,6 +58,7 @@ library.add(faAddressBook)
 library.add(faQuestion)
 library.add(faBan)
 library.add(faEraser)
+library.add(faCheck)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -68,7 +70,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueConfirmDialog from 'vue-confirm-dialog'
 Vue.use(VueConfirmDialog)
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
-
+Vue.use(require('vue-moment'));
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
@@ -92,7 +94,19 @@ const router = new VueRouter({
                   { 
                     name: "app_contacts",
                     path: '/app/contacts', 
-                    component:  Contacts,
+                    component:  AppContacts,
+                    props: true,
+                  },
+                  { 
+                    name: "app_chats",
+                    path: '/app/chats', 
+                    component:  AppChats,
+                    props: true,
+                  },
+                  { 
+                    name: "app_settings",
+                    path: '/app/settings', 
+                    component:  AppSettings,
                     props: true,
                   },
                   { 
@@ -101,18 +115,6 @@ const router = new VueRouter({
                     component:  Chat,
                     props: true,
                   },
-                  { 
-                    name: "app_chats",
-                    path: '/app/chats', 
-                    component:  Chats,
-                    props: true,
-                  },
-                  { 
-                    name: "app_settings",
-                    path: '/app/settings', 
-                    component:  Settings,
-                    props: true,
-                  }
                 ]
 
         }

@@ -1,30 +1,19 @@
 <template>
     <div>
-      <div v-if="chat" @dragover.prevent @drop.prevent> 
+      <div @dragover.prevent @drop.prevent> 
         <b-dropdown dropdown menu-class="minw-none" variant="secondary"  >
           <template #button-content>
-            <font-awesome-icon icon="cog" /> Chat with {{renderUsernames(chat.users)}}
+            <font-awesome-icon icon="cog" /> Chat with {{renderUsernames(users)}}
           </template>
           <b-dropdown-item  @click="clearChat()"><font-awesome-icon icon="eraser" /> Clear Chat</b-dropdown-item>
             <b-dropdown-divider /> 
           <b-dropdown-item  @click="blockChat()"><font-awesome-icon icon="ban" /> Block Chat</b-dropdown-item>
         </b-dropdown>
-        <hr v-if="chat.chatMessages.length>0" style="margin-bottom:0.5em;margin-top:0.25em;" />
+        <hr v-if="chatMessages.length>0" style="margin-bottom:0.5em;margin-top:0.25em;" />
         <div class="chat-container" @drop="dragFile" > 
           <div @click="hide('.icon-group')">
-            <div v-for="chatMessage in chat.chatMessages" :key="chatMessage.id">
-              <div class="row pb-1">
-                <b-col class="left-border-rounded" v-bind:class="{ 'alert-primary': chatMessage.sender.id==$root.claim.id}"></b-col>
-                <b-col md="auto" v-bind:class="{ 'left-border-rounded':chatMessage.sender.id!=$root.claim.id,'right-border-rounded': chatMessage.sender.id==$root.claim.id,'alert-secondary':chatMessage.sender.id!=$root.claim.id,'alert-primary': chatMessage.sender.id==$root.claim.id}">
-                  <div class="alert" v-bind:class="{ }">
-                      <div v-if="chatMessage.file!=null">
-                        <img class="chat-image" :src="chatMessage.file.content" />
-                      </div>
-                      {{chatMessage.message}}
-                  </div>
-                </b-col>
-                <b-col class="right-border-rounded" v-bind:class="{ 'alert-secondary':chatMessage.sender.id!=$root.claim.id}"></b-col>
-              </div>
+            <div v-for="chatMessage in chatMessages" :key="chatMessage.id">
+                <ChatMessage :data="chatMessage" />
             </div>
             <hr style="margin-bottom:0.5em;margin-top:0.25em;"  />
           </div>
@@ -79,16 +68,32 @@
 </style>
 
 <style scoped>
+.date-time{
+  float:right;
+}
+.message-seen {
+}
+.time {
+  text-align:right;
+}
+.alert-secondary{
+  margin-left:8em;
+
+}
+.check-icon{
+  display:block;
+}
+.message-seen {
+  color:green;
+}
 textarea {
   resize: none;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.left-border-rounded {
+.rounded {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-}
-.right-border-rounded {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
@@ -106,28 +111,35 @@ textarea {
   margin-right:0px!important;
 }
 .alert {
-  text-align:center;
-  margin-bottom:0px!important;
+  margin-bottom:4px!important;
+  padding:0.5rem!important;
+}
+.check-icon {
+  margin-top:-16px;
+  float:right;
 }
 </style>
 
 <script>
+import  ChatMessage  from './ChatMessage.vue'
 import { emojis } from '../emojis.json'
   import $ from 'jquery'
   export default {
     name: 'Chat',
+    components: {ChatMessage},
     data: function() {
       return {       
+        id:null,
+        users:[],
+        chatMessages:[],
+
+        emojis,
         windowWidth: window.innerWidth,
-        files: [],
-        chat:null,
-        messages:[],
         allowed_file_types:[
           'image/jpeg',
           'image/png'
         ],
         allowed_file_size:1024 * 1024 * 0.5, // 0.5 mb
-        emojis,
       }
     },    
     methods: {
@@ -278,7 +290,10 @@ import { emojis } from '../emojis.json'
         );
       this.$root.$on('chat:load', (result) => {
           if (result.command=='chat:load') {
-            this.chat = JSON.parse(result.data);
+            var chat = JSON.parse(result.data);
+            this.id = chat.id;
+            this.chatMessages = chat.chatMessages;
+            this.users = chat.users;
             this.onResize();
           }
       });
@@ -301,17 +316,11 @@ import { emojis } from '../emojis.json'
 
       this.$root.$on('chat:message:send', (result) => {
           if (result.command=='chat:message:send') {
-            this.chat.chatMessages.push(JSON.parse(result.data));
-            this.onResize();
+            var msg = JSON.parse(result.data);
+            this.chatMessages.push(msg);
           }
       });
 
-      this.$root.$on('chat:message:status', (result) => {
-          if (result.command=='chat:message:status') {
-            var msgId = JSON.parse(result.data)
-            msg = getMessage(msgId);
-          }
-      });
     }
   }
 </script>

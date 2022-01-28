@@ -10,9 +10,10 @@
 
 <script>
 export default {
-  name: 'Contacts',
+  name: 'AppContacts',
   data: function() {
     return {
+      
         search:'',
         contacts:null,
         mycontacts:null

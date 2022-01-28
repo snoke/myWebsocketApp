@@ -12,7 +12,7 @@ class ChatMessage extends Entity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['app_chat','app_chat_send'])]
+    #[Groups(['app_chat','app_chat_send','chat_message_status'])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Chat::class, inversedBy: 'chatMessages')]
@@ -44,6 +44,7 @@ class ChatMessage extends Entity
     private $seen;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['app_chat','app_chat_send','chat_message_status'])]
     private $status;
 
     public function getId(): ?int
