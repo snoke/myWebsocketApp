@@ -1,30 +1,50 @@
 <template>
     <div> 
         <div class="row pb-1">
-            <div class="col"></div>
-            <div class="col rounded" v-bind:class="{ 
-                'alert-primary': sender.id==$root.claim.id,
-                'alert-secondary': sender.id!=$root.claim.id
+            <div class="" v-bind:class="{
+                'col-1':  isSender(),
+                'col-2':  !isSender(),
+                }">
+            </div>
+            <div class="col-9 message-content" v-bind:class="{ 
+                'alert-primary': isSender(),
+                'alert-secondary': !isSender()
                 }">
                 {{message}}
-                <ChatMessageFile :data="file" v-if="file"/>
-                      <div><span>{{ sent | moment("dddd, MMMM Do YYYY hh:mm") }}</span></div>
-                      <div  v-if="sender.id==$root.claim.id">
-                          <font-awesome-icon class="check-icon" icon="check" v-if="seen" />
-                          <font-awesome-icon class="check-icon" icon="check" v-if="sent" />
-                      </div>
+                <ChatMessageFile :data="file" v-if="file" />
+                <div  class="message-check" v-if="isSender">
+                    <font-awesome-icon class="check-icon" icon="check" v-if="seen" />
+                    <font-awesome-icon class="check-icon" icon="check" v-if="sent" />
                 </div>
-            <div class="col"></div>
+
+                <div class="message-date">{{ sent | moment("D.MM.YYYY hh:mm") }} </div>
+            </div>
+            <div class="" v-bind:class="{
+                'col-1':  !isSender(),
+                'col-2':  isSender(),
+                }">
+            </div>
         </div>
     </div>
 </template>
 
 <style scoped>
-.rounded {
+.message-content {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  white-space: break-spaces;
+}
+.message-check {
+    margin-top:0.25rem;
+    float:right;
+    font-size:0.75rem
+}
+.message-date {
+    margin-top:0.25rem;
+    float:right;
+    font-size:0.75rem
 }
 </style>
 
@@ -47,6 +67,9 @@ export default {
   },
   
   methods: {
+      isSender() {
+          return  this.sender.id==this.$root.claim.id
+      },
       save() {
           this.$root.connection.send(
               JSON.stringify({
