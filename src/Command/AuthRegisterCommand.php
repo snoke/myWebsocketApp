@@ -45,7 +45,6 @@ class AuthRegisterCommand extends AbstractCommand
         $password = $input->getArgument('password');
         $user = new User();
         $user->setUsername($loginName);
-        $user->setUsername($loginName);
         $user->setPassword(
             $this->passwordHasher->hashPassword(
                 $user,
@@ -55,8 +54,6 @@ class AuthRegisterCommand extends AbstractCommand
         $this->em->persist($user);
         $this->em->flush();
         $io = new SymfonyStyle($input, $output);
-        
-
         $output->write($user->getId());
         return Command::SUCCESS;
     }

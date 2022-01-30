@@ -17,7 +17,7 @@
                 <ChatMessage :data="chatMessage" />
             </div>
           </div>
-          <b-button-group class="w-100" >
+          <b-button-group class="pt-3 w-100" >
             <b-dropdown dropup menu-class="minw-none" class="emoji-btn btn btn-outline-primary" variant="light" >
               <template #button-content>😊</template>
               <b-dropdown-item v-for="k,group in this.emojis" :key="group" @click="showgroup(group)"> {{group}}</b-dropdown-item>
@@ -71,6 +71,7 @@
   min-height:3rem;
 }
 .stickyButton {
+  z-index:1;
   right: 1rem;
   position: fixed;
   top: 3.5rem;
@@ -96,6 +97,7 @@ textarea {
   border-bottom-right-radius: 5px;
 }
 .icon-group {
+  z-index:2;
   border:1px solid grey;
   padding:5px;
   border-radius:5px;

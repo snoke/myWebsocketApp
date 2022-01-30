@@ -65,7 +65,6 @@ class Server implements MessageComponentInterface {
         $this->consoleMessage($data);
         return ["command"=>$action,"success"=>true,"data"=>$data];
     }
-
     public function onMessage(ConnectionInterface $from, $msg) {
         
         $options = json_decode($msg, true); 
@@ -74,6 +73,7 @@ class Server implements MessageComponentInterface {
         $result = $this->actionController($from,$options['action'],$options['params']);
         $from->send(json_encode($result)); 
 
+       //return participants
        if ($options['action']=='auth:login') {
             $payload = $this->encoder->decode($result['data']);
             $id = $payload['id'];
@@ -90,7 +90,9 @@ class Server implements MessageComponentInterface {
             foreach($this->userClients as $userClient) {
                 foreach($users as $user) {
                     if ($user->getId()==$userClient['userId'] && $user->getId()!=$options['params']['senderId'] ) {
-                        $userClient['client']->send(json_encode($result)); 
+                        if ($userClient['client']) {
+                            $userClient['client']->send(json_encode($result)); 
+                        }
                     }
                 }
             }
@@ -103,7 +105,9 @@ class Server implements MessageComponentInterface {
             foreach($this->userClients as $userClient) {
                 foreach($users as $user) {
                     if ($user->getId()==$message->getSender()->getId()) {
-                        $userClient['client']->send(json_encode($result)); 
+                        if ($userClient['client']) {
+                            $userClient['client']->send(json_encode($result)); 
+                        }
                     }
                 }
             }
@@ -112,6 +116,7 @@ class Server implements MessageComponentInterface {
 
     public function onClose(ConnectionInterface $conn) {
         $this->userClients[$conn->resourceId] = null;
+        $this->userClients = array_filter($this->userClients);
         $this->consoleMessage("Connection dropped $conn->remoteAddress ($conn->resourceId)");
     }
 
