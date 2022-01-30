@@ -9,23 +9,23 @@
             <b-dropdown-divider /> 
           <b-dropdown-item  @click="blockChat()"><font-awesome-icon icon="ban" /> Block Chat</b-dropdown-item>
         </b-dropdown>
-        <hr v-if="chatMessages.length>0" style="margin-bottom:0.5em;margin-top:0.25em;" />
+        <hr v-if="chatMessages.length>0" />
         <div class="chat-container" @drop="dragFile" > 
           <div @click="hide('.icon-group')">
             <div v-for="chatMessage in chatMessages" :key="chatMessage.id">
                 <ChatMessage :data="chatMessage" />
             </div>
-            <hr style="margin-bottom:0.5em;margin-top:0.25em;"  />
+            <hr />
           </div>
           <b-button-group class="w-100" >
-            <b-dropdown dropup menu-class="minw-none" class="emoji-btn" variant="light" >
+            <b-dropdown dropup menu-class="minw-none" class="emoji-btn btn btn-outline-primary" variant="light" >
               <template #button-content>😊</template>
               <b-dropdown-item v-for="k,group in this.emojis" :key="group" @click="showgroup(group)"> {{group}}</b-dropdown-item>
             </b-dropdown>
               <div v-for="arr,group in this.emojis" :key="group" :class="group+' icon-group w-100'" style="display:none;position:absolute;">
                 <div v-for="k,v in arr" :key="k" style="display:inline;" role='button' @click="addSmiley(v)">{{v}}</div>
               </div>
-            <textarea rows="1" id="chat_input" class="w-100" placeholder="write a message" v-on:keyup="replaceEmoji" @click="hide('.icon-group')"/>
+            <textarea rows="1" id="chat_input" class="border-primary w-100 " placeholder="write a message" v-on:keyup="replaceEmoji" @click="hide('.icon-group')"/>
           </b-button-group>
           <div  @click="hide('.icon-group')">
             <b-button-group class="w-100"  >
@@ -59,7 +59,6 @@
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   margin-right: -1px;
-  border:1px solid grey;
   margin-bottom: 5px!important;
 }
 .minw-none {
@@ -68,23 +67,14 @@
 </style>
 
 <style scoped>
-.date-time{
-  float:right;
+hr {
+margin-bottom:0.5em;margin-top:0.25em;
 }
-.message-seen {
-}
-.time {
-  text-align:right;
+.border-primary {
+  border: 1px solid #0d6efd;
 }
 .alert-secondary{
   margin-left:8em;
-
-}
-.check-icon{
-  display:block;
-}
-.message-seen {
-  color:green;
 }
 textarea {
   resize: none;
@@ -101,7 +91,6 @@ textarea {
   padding:5px;
   border-radius:5px;
   background-color:white;
-  border: 1px solid grey;
   border-bottom:0px;
   bottom:55px;
 
@@ -113,10 +102,6 @@ textarea {
 .alert {
   margin-bottom:4px!important;
   padding:0.5rem!important;
-}
-.check-icon {
-  margin-top:-16px;
-  float:right;
 }
 </style>
 

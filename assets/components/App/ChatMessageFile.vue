@@ -4,6 +4,11 @@
     </div>
 </template>
 <style scoped>
+.chat-image {  
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>
 
 <script>
