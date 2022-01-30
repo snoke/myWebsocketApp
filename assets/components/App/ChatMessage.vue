@@ -63,6 +63,7 @@ export default {
         sent:this.data.sent,
         delivered:this.data.delivered,
         seen:this.data.seen,
+        status:this.data.status,
       }
   },
   
