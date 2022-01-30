@@ -1,7 +1,14 @@
 # myWebsocketApp
-Command driven Symfony6 Websocket Chat Server with VueJS Client using JWT for authentication
+Command driven Symfony6 Websocket Chat Server with VueJS Client using JWT for authentification
 
 ![alt text](https://github.com/snoke/myWebsocketApp/blob/master/myWebsocketApp.png?raw=true)
+
+## Features
+* JWT Authentification
+* Browser Push Notifications
+* Emojis
+* Message Status (delivered/seen)
+* Image Upload
 
 
 ## Live Demo
