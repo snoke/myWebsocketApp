@@ -6,9 +6,9 @@
           <template #button-content>
             <font-awesome-icon icon="cog" /> {{renderUsernames(users)}}
           </template>
-          <b-dropdown-item  @click="clearChat()"><font-awesome-icon icon="eraser" /> Clear Chat</b-dropdown-item>
+          <b-dropdown-item  @click="clearChat()"><font-awesome-icon icon="eraser" /> Clear</b-dropdown-item>
             <b-dropdown-divider /> 
-          <b-dropdown-item  @click="blockChat()"><font-awesome-icon icon="ban" /> Block Chat</b-dropdown-item>
+          <b-dropdown-item class="alert-danger"  @click="blockChat()"><font-awesome-icon icon="ban" /> Block</b-dropdown-item>
         </b-dropdown>
         </div>
         <div class="chat-container" @drop="dragFile" > 

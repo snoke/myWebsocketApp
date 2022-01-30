@@ -60,10 +60,10 @@ class Server implements MessageComponentInterface {
         $arguments = new ArrayInput($params);
         $command = $this->application->find($action);
         $output = new BufferedOutput();
-        $command->run($arguments, $output);
+        $returnCode = $command->run($arguments, $output);
         $data = $output->fetch();
         $this->consoleMessage($data);
-        return ["command"=>$action,"success"=>true,"data"=>$data];
+        return ["command"=>$action,"status"=>$returnCode,"data"=>$data];
     }
     public function onMessage(ConnectionInterface $from, $msg) {
         

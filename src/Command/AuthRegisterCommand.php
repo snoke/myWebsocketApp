@@ -34,8 +34,9 @@ class AuthRegisterCommand extends AbstractCommand
     protected function configure(): void
     {
         $this
-            ->addArgument('loginName', InputArgument::REQUIRED, 'login username')
-            ->addArgument('password', InputArgument::REQUIRED, 'login password')
+            ->addArgument('loginName', InputArgument::REQUIRED, 'username')
+            ->addArgument('password', InputArgument::REQUIRED, 'password')
+            ->addArgument('password2', InputArgument::REQUIRED, ' password2')
         ;
     }
 
@@ -43,6 +44,21 @@ class AuthRegisterCommand extends AbstractCommand
     {
         $loginName = $input->getArgument('loginName');
         $password = $input->getArgument('password');
+        $password2 = $input->getArgument('password2');
+        
+
+        if ($password!==$password2) {
+            $output->write("passwords are not identical");
+            return Command::FAILURE;
+        }
+        if (strlen($password)<4) {
+            $output->write("password is too short");
+            return Command::FAILURE;
+        }
+        if ($this->em->getRepository(User::class)->findOneBy(['username'=>$loginName])) {
+            $output->write("username already taken");
+            return Command::FAILURE;
+        }
         $user = new User();
         $user->setUsername($loginName);
         $user->setPassword(

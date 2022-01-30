@@ -14,7 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 use App\Entity\User;
 
@@ -60,6 +59,10 @@ class AuthLoginCommand extends AbstractCommand
         );
 
         $statusCode = $response->getStatusCode();
+        if ($statusCode==401) {
+            $output->write("login failed");
+            return Command::FAILURE;
+        }
         $contentType = $response->getHeaders()['content-type'][0];
         $content = $response->getContent();
         $content = $response->toArray();
