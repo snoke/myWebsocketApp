@@ -68,6 +68,11 @@ class Chat extends Entity
     {
         return $this->chatMessages;
     }
+    public function setChatMessages($chatMessages): self
+    {
+            $this->chatMessages[] = $chatMessages;
+            return $this;
+    }
 
     public function addChatMessage(ChatMessage $chatMessage): self
     {

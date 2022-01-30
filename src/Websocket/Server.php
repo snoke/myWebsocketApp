@@ -87,7 +87,6 @@ class Server implements MessageComponentInterface {
         if ($options['action']=='chat:message:send') {
             $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$options['params']['chatId']]);
             $users = $chat->getUsers();
-            
             foreach($this->userClients as $userClient) {
                 foreach($users as $user) {
                     if ($user->getId()==$userClient['userId'] && $user->getId()!=$options['params']['senderId'] ) {

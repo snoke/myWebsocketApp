@@ -1,21 +1,21 @@
 <template>
-    <div>
+    <div class="chat-wrapper">
       <div @dragover.prevent @drop.prevent> 
+      <div class=" stickyButton">
         <b-dropdown dropdown menu-class="minw-none" variant="secondary"  >
           <template #button-content>
-            <font-awesome-icon icon="cog" /> Chat with {{renderUsernames(users)}}
+            <font-awesome-icon icon="cog" /> {{renderUsernames(users)}}
           </template>
           <b-dropdown-item  @click="clearChat()"><font-awesome-icon icon="eraser" /> Clear Chat</b-dropdown-item>
             <b-dropdown-divider /> 
           <b-dropdown-item  @click="blockChat()"><font-awesome-icon icon="ban" /> Block Chat</b-dropdown-item>
         </b-dropdown>
-        <hr v-if="chatMessages.length>0" />
+        </div>
         <div class="chat-container" @drop="dragFile" > 
-          <div @click="hide('.icon-group')">
+          <div @click="hide('.icon-group')" class="chat-inner-container" >
             <div v-for="chatMessage in chatMessages" :key="chatMessage.id">
                 <ChatMessage :data="chatMessage" />
             </div>
-            <hr />
           </div>
           <b-button-group class="w-100" >
             <b-dropdown dropup menu-class="minw-none" class="emoji-btn btn btn-outline-primary" variant="light" >
@@ -67,6 +67,14 @@
 </style>
 
 <style scoped>
+.chat-inner-container{
+  min-height:3rem;
+}
+.stickyButton {
+  right: 1rem;
+  position: fixed;
+  top: 3.5rem;
+}
 hr {
 margin-bottom:0.5em;margin-top:0.25em;
 }
@@ -88,6 +96,7 @@ textarea {
   border-bottom-right-radius: 5px;
 }
 .icon-group {
+  border:1px solid grey;
   padding:5px;
   border-radius:5px;
   background-color:white;

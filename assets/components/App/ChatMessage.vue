@@ -1,6 +1,6 @@
 <template>
     <div> 
-        <div class="row pb-1">
+        <div class="row pb-1" ref="message">
             <div class="" v-bind:class="{
                 'col-1':  isSender(),
                 'col-2':  !isSender(),
@@ -84,8 +84,10 @@ export default {
       }
   },
   mounted: function() {
+    document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
   },
   updated: function() {
+    document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
   },
   created: function() {
     if (this.sender.id!=this.$root.claim.id && this.status!='seen') {
