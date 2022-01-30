@@ -10,7 +10,7 @@
                 'alert-danger':  message.status==1,
                 }">{{message.data}}</div>
           </div>
-          <input type="_password" placeholder="old Password" name="_password" v-model="_password"   class="w-100" />
+          <input type="oldpassword" placeholder="old Password" name="oldpassword" v-model="oldpassword"   class="w-100" />
           <input type="password" placeholder="Password" name="password" v-model="password"   class="w-100" />
           <input type="password" placeholder="repeat Password" name="password2" v-model="password2"   class="w-100" />
           <button v-on:click="save()"  class="btn btn-outline-primary w-100">change password <font-awesome-icon icon="save" /></button>
@@ -28,7 +28,7 @@ export default {
   name: 'Settings',
   data: function() {
     return {
-        _password: null,
+        oldpassword: null,
         password: null,
         password2: null,
         message: null,
@@ -42,7 +42,7 @@ export default {
                 'action': 'user:change:password',
                 'params': {
                   'token': this.$root.token,
-                  '_password': this._password,
+                  'oldpassword': this.oldpassword,
                   'password': this.password,
                   'password2': this.password2,
                 }

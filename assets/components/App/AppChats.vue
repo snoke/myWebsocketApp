@@ -42,7 +42,6 @@ export default {
     this.$root.$off('chat:load:userchats')
   },
   created: function() {
-    
         this.$root.connection.send(
             JSON.stringify({
                 'action': 'chat:load:userchats',

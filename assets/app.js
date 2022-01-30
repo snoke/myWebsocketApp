@@ -130,6 +130,7 @@ Vue.use(VueAxios, axios)
 
 import device from "vue-device-detector"
 Vue.use(device)
+
 new Vue({
     created: function() {
       this.config = JSON.parse(document.getElementById('_symfonyData').innerHTML);
@@ -148,6 +149,16 @@ new Vue({
       }
     },
     methods: {
+      notify:function(message) {
+        if (this.notify_permission) {
+          console.log("got permissions, sending notification")
+          var notification = new Notification(message);
+        } else {
+          console.log("no permissions")
+        }
+      },
+      created() {
+      },
     },
     data: function() {
       return {
@@ -156,6 +167,7 @@ new Vue({
         connected:false,
         token:null,
         claim:null,
+        notify_permission:null,
       }
     },
     el: '#app',

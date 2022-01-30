@@ -69,6 +69,28 @@ export default {
   updated: function() {
   },
   created: function() {
+      this.$root.$on('chat:message:send', (result) => {
+            this.$root.$emit('chat:message:_send', result)
+            var msg = JSON.parse(result.data);
+            if (msg.sender.id!=this.$root.claim.id) {
+              this.$root.notify(msg.sender.username + ": " + msg.message)
+            }
+      });
+        if (!("Notification" in window)) {
+          alert("This browser does not support desktop notification");
+        }
+        else if (Notification.permission !== "denied") {
+          Notification.requestPermission().then((permission) => {
+            // If the user accepts, let's create a notification
+            if (permission === "granted") {
+              this.$root.notify_permission = true;
+            }
+          });
+        }
+        else if (Notification.permission === "granted") {
+          // If it's okay let's create a notification
+              this.$root.notify_permission = true;
+        }
   }
 }
 </script>

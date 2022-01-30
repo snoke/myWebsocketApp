@@ -273,7 +273,7 @@ import { emojis } from '../emojis.json'
       beforeDestroy () {
         this.$root.$off('chat:load')
         this.$root.$off('file:upload')
-        this.$root.$off('chat:message:send')
+        this.$root.$off('chat:message:_send')
     },
     created: function() {
         this.$root.connection.send(
@@ -310,11 +310,9 @@ import { emojis } from '../emojis.json'
           }
       });
 
-      this.$root.$on('chat:message:send', (result) => {
-          if (result.command=='chat:message:send') {
+      this.$root.$on('chat:message:_send', (result) => {
             var msg = JSON.parse(result.data);
             this.chatMessages.push(msg);
-          }
       });
 
     }

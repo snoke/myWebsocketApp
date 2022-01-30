@@ -41,7 +41,7 @@ class UserChangePasswordCommand extends AbstractCommand
     {
         $this
             ->addArgument('token', InputArgument::REQUIRED, 'token')
-            ->addArgument('_password', InputArgument::REQUIRED, 'old password')
+            ->addArgument('oldpassword', InputArgument::REQUIRED, 'old password')
             ->addArgument('password', InputArgument::REQUIRED, 'new password')
             ->addArgument('password2', InputArgument::REQUIRED, 'new password repeat')
         ;
@@ -49,7 +49,7 @@ class UserChangePasswordCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $_password = $input->getArgument('_password');
+        $oldpassword = $input->getArgument('oldpassword');
         $password = $input->getArgument('password');
         $password2 = $input->getArgument('password2');
 
@@ -66,7 +66,7 @@ class UserChangePasswordCommand extends AbstractCommand
             ],
                 'json' => [
                     'username' => $user->getUsername(),
-                    'password' => $_password,
+                    'password' => $oldpassword,
                 ],
             ]
         );
