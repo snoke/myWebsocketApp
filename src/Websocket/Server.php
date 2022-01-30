@@ -112,7 +112,7 @@ class Server implements MessageComponentInterface {
     }
 
     public function onClose(ConnectionInterface $conn) {
-        $this->userClients[$conn->resresourceId] = null;
+        $this->userClients[$conn->resourceId] = null;
         $this->consoleMessage("Connection dropped $conn->remoteAddress ($conn->resourceId)");
     }
 
