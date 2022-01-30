@@ -44,5 +44,3 @@ npm run dev
 php bin/console server:start
 ```
 
-## Major Todos
-* check jwt bearer in socket commands on each request
