@@ -12,7 +12,7 @@
                 }">
                 {{message}}
                 <ChatMessageFile :data="file" v-if="file" />
-                <div  class="message-check" v-if="isSender">
+                <div  class="message-check" v-if="isSender()">
                     <font-awesome-icon class="check-icon" icon="check" v-if="seen" />
                     <font-awesome-icon class="check-icon" icon="check" v-if="sent" />
                 </div>
