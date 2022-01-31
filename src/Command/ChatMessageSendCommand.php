@@ -42,8 +42,12 @@ class ChatMessageSendCommand extends AbstractCommand
         $io = new SymfonyStyle($input, $output);
         $chatMessage = new ChatMessage();
         $chatMessage->setMessage($input->getArgument('message'));
+        $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$input->getArgument('chatId')]);
+        if ($chat->getBlockedBy()!=null) {
+            return Command::FAILURE;
+        }
         $chatMessage->setSender($this->em->getRepository(User::class)->findOneBy(['id'=>$input->getArgument('senderId')]));
-        $chatMessage->setChat($this->em->getRepository(Chat::class)->findOneBy(['id'=>$input->getArgument('chatId')]));
+        $chatMessage->setChat($chat);
         $chatMessage->setFile($this->em->getRepository(File::class)->findOneBy(['id'=>$input->getArgument('file')]));
         $chatMessage->setSent(new \DateTime());
         $chatMessage->setStatus('sent');

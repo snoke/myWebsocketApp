@@ -13,10 +13,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Component\Console\Attribute\AsCommand;
-#[AsCommand(
-    name: 'abstract',
-)]
-class AbstractCommand extends Command
+abstract class AbstractCommand extends Command
 {
 
     protected $em;
@@ -26,5 +23,5 @@ class AbstractCommand extends Command
 
         $this->em = $em;
         $this->serializer = $serializer;
-    }
+    }   
 }

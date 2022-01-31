@@ -98,6 +98,48 @@ class Server implements MessageComponentInterface {
             }
         }
 
+        if ($options['action']=='chat:unblock') {
+            $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$options['params']['chatId']]);
+            $users = $chat->getUsers();
+            foreach($this->userClients as $userClient) {
+                foreach($users as $user) {
+                    if ($user->getId()==$userClient['userId']  && $user->getId()!=$options['params']['userId'] ) {
+                        if ($userClient['client']) {
+                            $userClient['client']->send(json_encode($result)); 
+                        }
+                    }
+                }
+            }
+        }
+
+        if ($options['action']=='chat:block') {
+            $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$options['params']['chatId']]);
+            $users = $chat->getUsers();
+            foreach($this->userClients as $userClient) {
+                foreach($users as $user) {
+                    if ($user->getId()==$userClient["userId"]  && $user->getId()!=$options['params']['userId'] ) {
+                            if ($userClient['client']) {
+                                $userClient['client']->send(json_encode($result)); 
+                            }
+                     }
+                }
+            }
+        }
+
+        if ($options['action']=='chat:typing') {
+            $chat = $message->getChat();
+            $users = $chat->getUsers();
+            foreach($this->userClients as $userClient) {
+                foreach($users as $user) {
+                    if ($user->getId()==$userClient["userId"]) {
+                        if ($userClient['client']) {
+                            $userClient['client']->send(json_encode($result)); 
+                        }
+                    }
+                }
+            }
+        }
+
         if ($options['action']=='chat:message:status') {
             $message = $this->em->getRepository(ChatMessage::class)->findOneBy(['id'=>$options['params']['messageId']]);
             $chat = $message->getChat();

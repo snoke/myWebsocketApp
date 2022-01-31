@@ -70,7 +70,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueConfirmDialog from 'vue-confirm-dialog'
 Vue.use(VueConfirmDialog)
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
-Vue.use(require('vue-moment'));
+const moment = require('moment')
+Vue.use(require('vue-moment'), {
+  moment
+})
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
@@ -127,7 +130,6 @@ Vue.use(IconsPlugin)
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
-
 import device from "vue-device-detector"
 Vue.use(device)
 
@@ -147,6 +149,7 @@ new Vue({
             this.$emit(result.command, result)
             
       }
+      
     },
     methods: {
       notify:function(message) {

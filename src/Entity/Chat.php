@@ -22,8 +22,16 @@ class Chat extends Entity
     private $users;
     
     #[ORM\OneToMany(mappedBy: 'chat', targetEntity: ChatMessage::class)]
-    #[Groups(['app_chat','app_user_chats'])]
+    #[Groups(['app_chat'])]
     private $chatMessages;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[Groups(['app_chat','app_user_chats'])]
+    private $blockedBy;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['app_chat','app_user_chats'])]
+    private $typing;
 
 
     public function __construct()
@@ -92,6 +100,30 @@ class Chat extends Entity
                 $chatMessage->setChat(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBlockedBy(): ?User
+    {
+        return $this->blockedBy;
+    }
+
+    public function setBlockedBy(?User $blockedBy): self
+    {
+        $this->blockedBy = $blockedBy;
+
+        return $this;
+    }
+
+    public function getTyping(): ?\DateTimeInterface
+    {
+        return $this->typing;
+    }
+
+    public function setTyping(?\DateTimeInterface $typing): self
+    {
+        $this->typing = $typing;
 
         return $this;
     }

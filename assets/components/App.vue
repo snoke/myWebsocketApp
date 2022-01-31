@@ -69,13 +69,7 @@ export default {
   updated: function() {
   },
   created: function() {
-      this.$root.$on('chat:message:send', (result) => {
-            this.$root.$emit('chat:message:_send', result)
-            var msg = JSON.parse(result.data);
-            if (msg.sender.id!=this.$root.claim.id) {
-              this.$root.notify(msg.sender.username + ": " + msg.message)
-            }
-      });
+
         if (!("Notification" in window)) {
           alert("This browser does not support desktop notification");
         }
