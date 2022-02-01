@@ -8,6 +8,8 @@ Command driven Symfony6 Websocket Chat Server with VueJS Client using JWT for au
 * Emojis
 * Message Status (delivered/seen)
 * Image Upload/File Transfer
+* live is typing info
+* block/unblock chat
 
 
 ## Live Demo
