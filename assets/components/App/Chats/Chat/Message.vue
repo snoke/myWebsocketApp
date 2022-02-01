@@ -49,9 +49,9 @@
 </style>
 
 <script>
-import  ChatMessageFile  from './ChatMessageFile.vue'
+import  ChatMessageFile  from './Message/File.vue'
 export default {
-  name: 'ChatMessage',
+  name: 'Message',
   components: {ChatMessageFile},
   props: ['data'],
   data: function() {
@@ -103,7 +103,7 @@ export default {
         );
     }
 
-      this.$root.$on('chat:message:status', (result) => {
+      this.$root.$on('ChatMessage::chat:message:status', (result) => {
             if (result.command == 'chat:message:status') {
                 var _message = JSON.parse(result.data);
                 if (_message.id == this.id) {

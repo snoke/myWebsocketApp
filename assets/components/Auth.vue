@@ -3,7 +3,7 @@
         <div id="auth_info" >
             <p v-if="!$root.connected">not connected</p>
         </div>
-        <div class="accordion" role="tablist"  v-if="$root.connected">
+        <div class="accordion" role="tablist" >
             <b-card no-body class="mb-1">
                 <b-card-header header-tag="header" class="p-1" role="tab">
                     <b-button block v-b-toggle.accordion-1 variant="primary" class="w-100">Login</b-button>

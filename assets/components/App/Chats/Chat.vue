@@ -1,4 +1,11 @@
 <template>
+      <div class="card">
+        <div  class="card-body">
+        <b-card-text>
+    <div>
+      <div id="loading" v-if="ready==false">
+        loading
+      </div>
     <div class="chat-wrapper">
       <div @dragover.prevent @drop.prevent> 
       <div class=" stickyButton">
@@ -6,8 +13,10 @@
           <template #button-content>
             <font-awesome-icon icon="cog" /> {{renderUsernames(users)}}
           </template>
-          <b-dropdown-item  @click="clearChat()"><font-awesome-icon icon="eraser" /> Clear</b-dropdown-item>
+          <!--   
+            <b-dropdown-item  @click="clearChat()"><font-awesome-icon icon="eraser" /> Clear</b-dropdown-item>
             <b-dropdown-divider /> 
+          -->
           <b-dropdown-item class="alert-danger"  @click="blockChat()"><font-awesome-icon icon="ban" /> Block</b-dropdown-item>
         </b-dropdown>
         </div>
@@ -48,6 +57,10 @@
         </div>
       </div>
     </div>
+      </div>
+      </b-card-text>
+      </div>
+      </div>
 </template>
 
 <style>
@@ -119,14 +132,15 @@ textarea {
 </style>
 
 <script>
-import  ChatMessage  from './ChatMessage.vue'
-import { emojis } from '../emojis.json'
+import  ChatMessage  from './Chat/Message.vue'
+import { emojis } from './Chat/emojis.json'
   import $ from 'jquery'
   export default {
     name: 'Chat',
     components: {ChatMessage},
     data: function() {
       return {       
+        ready:false,
         id:null,
         users:[],
         chatMessages:[],
@@ -137,7 +151,7 @@ import { emojis } from '../emojis.json'
           'image/jpeg',
           'image/png'
         ],
-        allowed_file_size:1024 * 1024 * 0.5, // 0.5 mb
+        allowed_file_size:1024 * 1024 * 5, // 0.5 mb
       }
     },    
     methods: {
@@ -282,10 +296,11 @@ import { emojis } from '../emojis.json'
             window.addEventListener('resize', this.onResize);
     }, 
       beforeDestroy () {
-        this.$root.$off('chat:load')
-        this.$root.$off('file:upload')
-        this.$root.$off('chat:message:send')
-        this.$root.$off('chat:block')
+        this.$root.$off('Chat::chat:load')
+        this.$root.$off('Chat::file:upload')
+        this.$root.$off('Chat::chat:message:send')
+        this.$root.$off('Chat::chat:block')
+        this.$root.$off('Chat::chat:unblock')
     },
     created: function() {
         this.$root.connection.send(
@@ -296,21 +311,35 @@ import { emojis } from '../emojis.json'
                 }
             })
         );
-      this.$root.$on('chat:block', (result) => {
+      this.$root.$on('Chat::chat:unblock', (result) => {
+       var data = JSON.parse(result.data);
+        if (data.id==this.id) {
+          this.$root.connection.send(
+              JSON.stringify({
+                  'action': 'chat:load',
+                  'params': {
+                      'chatId': this.$route.params.id,    
+                  }
+              })
+          );
+        }
+      });
+      this.$root.$on('Chat::chat:block', (result) => {
        var data = JSON.parse(result.data);
         if (data.id==this.id) {
           this.$router.push({ name: "app_chats"})
         }
       });
-      this.$root.$on('chat:load', (result) => {
+      this.$root.$on('Chat::chat:load', (result) => {
             var chat = JSON.parse(result.data);
             this.id = chat.id;
             this.chatMessages = chat.chatMessages;
             this.users = chat.users;
             this.onResize();
+            this.ready=true;
       });
 
-      this.$root.$on('file:upload', (result) => {
+      this.$root.$on('Chat::file:upload', (result) => {
             this.$root.connection.send(
                 JSON.stringify({
                     'action': 'chat:message:send',
@@ -324,7 +353,7 @@ import { emojis } from '../emojis.json'
             );
       });
 
-      this.$root.$on('chat:message:send', (result) => {
+      this.$root.$on('Chat::chat:message:send', (result) => {
             var msg = JSON.parse(result.data);
             this.chatMessages.push(msg);
             if (msg.sender.id!=this.$root.claim.id) {

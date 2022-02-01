@@ -14,10 +14,10 @@ import Vue from 'vue';
 import Base from './Base';
 import Auth from './components/Auth';
 import App from './components/App';
-import AppContacts from './components/App/AppContacts';
-import AppChats from './components/App/AppChats';
-import AppSettings from './components/App/AppSettings';
-import Chat from './components/App/Chat';
+import Contacts from './components/App/Contacts';
+import Chats from './components/App/Chats';
+import Settings from './components/App/Settings';
+import Chat from './components/App/Chats/Chat';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
@@ -38,6 +38,8 @@ import { faQuestion} from '@fortawesome/free-solid-svg-icons'
 import { faBan} from '@fortawesome/free-solid-svg-icons'
 import { faEraser} from '@fortawesome/free-solid-svg-icons'
 import { faCheck} from '@fortawesome/free-solid-svg-icons'
+import { faLock} from '@fortawesome/free-solid-svg-icons'
+import { faUnlock} from '@fortawesome/free-solid-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -59,6 +61,8 @@ library.add(faQuestion)
 library.add(faBan)
 library.add(faEraser)
 library.add(faCheck)
+library.add(faLock)
+library.add(faUnlock)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -97,19 +101,19 @@ const router = new VueRouter({
                   { 
                     name: "app_contacts",
                     path: '/app/contacts', 
-                    component:  AppContacts,
+                    component:  Contacts,
                     props: true,
                   },
                   { 
                     name: "app_chats",
                     path: '/app/chats', 
-                    component:  AppChats,
+                    component:  Chats,
                     props: true,
                   },
                   { 
                     name: "app_settings",
                     path: '/app/settings', 
-                    component:  AppSettings,
+                    component:  Settings,
                     props: true,
                   },
                   { 
@@ -136,22 +140,30 @@ Vue.use(device)
 new Vue({
     created: function() {
       this.config = JSON.parse(document.getElementById('_symfonyData').innerHTML);
-      this.connection = new WebSocket(this.config.websocket_url)
-        this.connection.onopen =  () => {
-            this.connected = true;
-        }
-        this.connection.onclose =  () => {
-            this.connected = false;
-        }
-        
-        this.connection.onmessage = (event) => {
-            let result = JSON.parse(event.data);
-            this.$emit(result.command, result)
-            
-      }
-      
     },
     methods: {
+      connect() {
+        if (!this.connected) {
+          if (!this.connection) {
+          this.connection = new WebSocket(this.config.websocket_url)
+            this.connection.onopen =  () => {
+                this.connected = true;
+                this.$router.push({ name: 'auth'})
+            }
+            this.connection.onclose =  () => {
+              this.connected = null;
+              this.connection = null;
+              this.$root.$emit('Base::connection-lost',{});
+            }
+            
+            this.connection.onmessage = (event) => {
+                let result = JSON.parse(event.data);
+                this.$emit(result.command, result)
+                
+          }
+        }
+        }
+      },
       notify:function(message) {
         if (this.notify_permission) {
           console.log("got permissions, sending notification")
@@ -167,7 +179,7 @@ new Vue({
       return {
         config:[],
         connection:null,
-        connected:false,
+        connected:null,
         token:null,
         claim:null,
         notify_permission:null,

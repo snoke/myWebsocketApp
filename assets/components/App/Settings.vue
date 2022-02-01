@@ -1,7 +1,8 @@
 <template>
     <div id="settings">
       
-      <b-card title="Change Password">
+      <div class="card">
+        <div  class="card-body">
         <b-card-text>
           <div class="w-100">
             <div class="alert row " v-if="message"
@@ -10,17 +11,21 @@
                 'alert-danger':  message.status==1,
                 }">{{message.data}}</div>
           </div>
-          <input type="oldpassword" placeholder="old Password" name="oldpassword" v-model="oldpassword"   class="w-100" />
-          <input type="password" placeholder="Password" name="password" v-model="password"   class="w-100" />
-          <input type="password" placeholder="repeat Password" name="password2" v-model="password2"   class="w-100" />
+          <input type="oldpassword" placeholder="old password" name="oldpassword" v-model="oldpassword"   class="w-100" />
+          <input type="password" placeholder="new password" name="password" v-model="password"   class="w-100" />
+          <input type="password" placeholder="repeat new password" name="password2" v-model="password2"   class="w-100" />
           <button v-on:click="save()"  class="btn btn-outline-primary w-100">change password <font-awesome-icon icon="save" /></button>
         </b-card-text>
-
-      </b-card>
+</div>
+      </div>
     </div>
 </template>
 
 <style scoped>
+.card-title{
+text-align: center;
+
+}
 </style>
 
 <script>
@@ -48,7 +53,7 @@ export default {
                 }
             })
         );
-        this.$root.$on('user:change:password', (result) => {
+        this.$root.$on('AppSettings::user:change:password', (result) => {
           console.log(result)
             this.message = {
               status: result.status,
@@ -58,7 +63,7 @@ export default {
     }
   },
   beforeDestroy () {
-    this.$root.$off('user:change:password')
+    this.$root.$off('AppSettings::user:change:password')
   },
   updated: function() {
   },

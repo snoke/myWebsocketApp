@@ -33,9 +33,10 @@
 
 <style scoped>
 #content {
-  padding-top: 3rem;
+  padding-top: 2.5rem;
 }
 .nav {
+    z-index:1;
     position: fixed;
     background-color: white;
     width:100%;
@@ -62,13 +63,48 @@ export default {
       },
       go(page) {
         this.$router.push({ name: page})
-      }
+      },
   },
   mounted: function() {
   },
   updated: function() {
   },
   created: function() {
+      this.$root.$on('chat:message:status', (result) => {
+        this.$root.$emit('ChatMessage::chat:message:status',result);
+      });
+      this.$root.$on('user:change:password', (result) => {
+        this.$root.$emit('AppSettings::user:change:password',result);
+      });
+      this.$root.$on('chat:load:userchats', (result) => {
+        this.$root.$emit('AppChats::chat:load:userchats',result);
+      });
+      this.$root.$on('contact:add', (result) => {
+        this.$root.$emit('AppContacts::contact:add',result);
+      });
+      this.$root.$on('contact:search', (result) => {
+        this.$root.$emit('AppContacts::contact:search',result);
+      });
+      this.$root.$on('user:contacts', (result) => {
+        this.$root.$emit('AppContacts::user:contacts',result);
+      });
+      this.$root.$on('chat:unblock', (result) => {
+        this.$root.$emit('AppChats::chat:unblock',result);
+        this.$root.$emit('Chat::chat:unblock',result);
+      });
+      this.$root.$on('chat:block', (result) => {
+        this.$root.$emit('AppChats::chat:block',result);
+        this.$root.$emit('Chat::chat:block',result);
+      });
+      this.$root.$on('chat:message:send', (result) => {
+        this.$root.$emit('Chat::chat:message:send',result);
+      });
+      this.$root.$on('chat:load', (result) => {
+        this.$root.$emit('Chat::chat:load',result);
+      });
+      this.$root.$on('file:upload', (result) => {
+        this.$root.$emit('Chat::file:upload',result);
+      });
 
         if (!("Notification" in window)) {
           alert("This browser does not support desktop notification");

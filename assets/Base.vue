@@ -1,6 +1,12 @@
 <template>
-  <div id="app"> <vue-confirm-dialog></vue-confirm-dialog>
-    <router-view></router-view>
+  <div id="app"> 
+    <div v-if="!$root.connected">
+      connecting...
+    </div>
+    <div v-if="$root.connected">
+    <vue-confirm-dialog></vue-confirm-dialog>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -19,14 +25,23 @@ export default {
     }
   },
   methods: {
+    connect() {
+      if (!this.$root.connection) {
+        this.$root.connect();
+        setTimeout(() => {
+            this.connect()
+        }, 3000)
+    }
+}
+  },
+  beforeDestroy () {
+    this.$root.$off('Base::connection-lost')
   },
   created: function() {
-    if (this.$root.token==null) {
-
-      this.$router.push({ name: 'auth'})
-    } else {
-      this.$router.push({ name: 'app'})
-    }
+        this.connect();
+      this.$root.$on('Base::connection-lost', () => {
+        this.connect();
+        });
   },
   updated: function() {
   },
