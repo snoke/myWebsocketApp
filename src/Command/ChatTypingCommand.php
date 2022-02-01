@@ -27,20 +27,20 @@ class ChatTypingCommand extends AbstractCommand
     {
         $this
             ->addArgument('chatId', InputArgument::REQUIRED, 'chatId')
+            ->addArgument('userId', InputArgument::REQUIRED, 'userId')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $chatId = $input->getArgument('chatId');
-        $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=> $chatId]);
-        
-        $chat->setTyping(new \DateTime());
-        $this->em->persist($chat);
-        $this->em->flush();
-       // $jsonContent = $this->serializer->serialize($chat, 'json', ['groups' => ['app_chat']]);
-      // $output->write($jsonContent);
-        
+        $userId = $input->getArgument('userId');
+        $user = $this->em->getRepository(User::class)->findOneBy(['id'=>$userId]);
+        $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$chatId]);
+        $output->write(json_encode([
+            'user' => ['id'=>$user->getId(),'username'=>$user->getUsername()],
+            'chat' => ['id' => $chat->getId()]
+        ]));
         return Command::SUCCESS;
     }
 }

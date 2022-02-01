@@ -40,6 +40,8 @@ import { faEraser} from '@fortawesome/free-solid-svg-icons'
 import { faCheck} from '@fortawesome/free-solid-svg-icons'
 import { faLock} from '@fortawesome/free-solid-svg-icons'
 import { faUnlock} from '@fortawesome/free-solid-svg-icons'
+import { faKeyboard} from '@fortawesome/free-solid-svg-icons'
+import { faSpinner} from '@fortawesome/free-solid-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -63,6 +65,8 @@ library.add(faEraser)
 library.add(faCheck)
 library.add(faLock)
 library.add(faUnlock)
+library.add(faKeyboard)
+library.add(faSpinner)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'

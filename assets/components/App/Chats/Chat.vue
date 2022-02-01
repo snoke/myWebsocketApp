@@ -25,8 +25,22 @@
             <div v-for="chatMessage in chatMessages" :key="chatMessage.id">
                 <ChatMessage :data="chatMessage" />
             </div>
+            <div>
+                <div v-if="timerCount>0">
+                    <div class="row pb-1" ref="message">
+                        <div class="col-3" >
+                        </div>
+                        <div class="col-6 alert alert-info rounded" >
+                            <font-awesome-icon icon="keyboard" /> 
+                            {{typingUser}} is typing <font-awesome-icon icon="spinner" spin />
+                        </div>
+                        <div class="col-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
           </div>
-          <b-button-group class="pt-3 w-100" >
+          <b-button-group class="pt-1 w-100" >
             <b-dropdown dropup menu-class="minw-none" class="emoji-btn btn btn-outline-primary" variant="light" >
               <template #button-content>😊</template>
               <b-dropdown-item v-for="k,group in this.emojis" :key="group" @click="showgroup(group)"> {{group}}</b-dropdown-item>
@@ -34,9 +48,7 @@
               <div v-for="arr,group in this.emojis" :key="group" :class="group+' icon-group w-100'" style="display:none;position:absolute;">
                 <div v-for="k,v in arr" :key="k" style="display:inline;" role='button' @click="addSmiley(v)">{{v}}</div>
               </div>
-            <textarea rows="1" id="chat_input" class="disabled border-primary w-100 " placeholder="write a message" v-on:keyup="replaceEmoji" @click="hide('.icon-group')"
-       
-            />
+            <textarea rows="1" id="chat_input" class="disabled border-primary w-100 " placeholder="write a message" v-on:keydown="isTyping()" v-on:keyup="replaceEmoji" @click="hide('.icon-group')" />
           </b-button-group>
           <div  @click="hide('.icon-group')">
             <b-button-group class="w-100"  >
@@ -64,6 +76,13 @@
 </template>
 
 <style>
+.rounded {
+    
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
 .btn-light{
   margin-bottom:0px!important;
   background: none!important;
@@ -132,6 +151,7 @@ textarea {
 </style>
 
 <script>
+import moment from 'moment';
 import  ChatMessage  from './Chat/Message.vue'
 import { emojis } from './Chat/emojis.json'
   import $ from 'jquery'
@@ -140,6 +160,8 @@ import { emojis } from './Chat/emojis.json'
     components: {ChatMessage},
     data: function() {
       return {       
+          typingUser:null,
+          timerCount:0,
         ready:false,
         id:null,
         users:[],
@@ -171,6 +193,17 @@ import { emojis } from './Chat/emojis.json'
       showgroup(group) {
         $('.icon-group').hide();
         $('.' + group).show();
+      },
+      isTyping() {
+              this.$root.connection.send(
+                  JSON.stringify({
+                      'action': 'chat:typing',
+                      'params': {
+                          'chatId': this.id,   
+                          'userId': this.$root.claim.id,     
+                      }
+                  })
+              );
       },
       replaceEmoji() {
        var txt = document.getElementById('chat_input').value
@@ -293,6 +326,7 @@ import { emojis } from './Chat/emojis.json'
             this.onResize();
     },
     mounted() {
+
             window.addEventListener('resize', this.onResize);
     }, 
       beforeDestroy () {
@@ -300,8 +334,21 @@ import { emojis } from './Chat/emojis.json'
         this.$root.$off('Chat::file:upload')
         this.$root.$off('Chat::chat:message:send')
         this.$root.$off('Chat::chat:block')
+        this.$root.$off('Chat::chat:typing')
         this.$root.$off('Chat::chat:unblock')
     },
+    
+        watch: {
+            timerCount: {
+                handler(value) {
+                    if (value > 0) {
+                        setTimeout(() => {
+                                    this.timerCount--;
+                        }, 1);
+                    }
+                },
+            }
+        },
     created: function() {
         this.$root.connection.send(
             JSON.stringify({
@@ -311,6 +358,15 @@ import { emojis } from './Chat/emojis.json'
                 }
             })
         );
+      this.$root.$on('Chat::chat:typing', (result) => {
+       var data = JSON.parse(result.data);
+        if (data.chat.id==this.id) {
+            if (data.user.id!=this.$root.claim.id) {
+                this.timerCount = 50;
+                this.typingUser = data.user.username;
+            }
+        }
+      })
       this.$root.$on('Chat::chat:unblock', (result) => {
        var data = JSON.parse(result.data);
         if (data.id==this.id) {

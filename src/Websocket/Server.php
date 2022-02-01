@@ -126,8 +126,9 @@ class Server implements MessageComponentInterface {
             }
         }
 
-        if ($options['action']=='chat:typing') {
-            $chat = $message->getChat();
+        if ($options['action']=='chat:typing') { 
+            
+            $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$options['params']['chatId']]);
             $users = $chat->getUsers();
             foreach($this->userClients as $userClient) {
                 foreach($users as $user) {

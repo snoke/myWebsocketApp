@@ -70,6 +70,9 @@ export default {
   updated: function() {
   },
   created: function() {
+      this.$root.$on('chat:typing', (result) => {
+        this.$root.$emit('Chat::chat:typing',result);
+      });
       this.$root.$on('chat:message:status', (result) => {
         this.$root.$emit('ChatMessage::chat:message:status',result);
       });
