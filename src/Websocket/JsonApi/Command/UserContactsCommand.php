@@ -1,5 +1,5 @@
 <?php
-namespace App\Websocket\Command;
+namespace App\Websocket\JsonApi\Command;
 
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;

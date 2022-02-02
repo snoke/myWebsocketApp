@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Websocket\Command;
+namespace App\Websocket\JsonApi\Command;
 
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,16 +14,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 use App\Entity\Chat;
-use App\Websocket\WebsocketCommand as AbstractCommand;
+use App\Entity\User;
 
+use App\Websocket\WebsocketCommand as AbstractCommand;
 #[AsCommand(
-    name: 'chat:load',
-    description: 'Load a Chat',
+    name: 'contact:add',
+    description: 'Adds a Contact',
 )]
-class ChatLoadCommand extends AbstractCommand
+class ContactAddCommand extends AbstractCommand
 {
+
     public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-        
+       
         parent::__construct();
         
         $this->em = $em;
@@ -32,18 +34,26 @@ class ChatLoadCommand extends AbstractCommand
     protected function configure(): void
     {
         $this
-            ->addArgument('chatId', InputArgument::REQUIRED, 'chatId')
+            ->addArgument('alice', InputArgument::REQUIRED, 'id of alice')
+            ->addArgument('bob', InputArgument::REQUIRED, 'id of bob')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $chatId = $input->getArgument('chatId');
-        $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=> $chatId]);
-        
-        $jsonContent = $this->serializer->serialize($chat, 'json', ['groups' => ['app_chat']]);
-        $output->write($jsonContent);
-        
+        $users = $this->em->getRepository(User::class);
+        $alice = $users->findOneBy(['id'=>$input->getArgument('alice')]);
+        $bob = $users->findOneBy(['id'=>$input->getArgument('bob')]);
+        $alice->addContact($bob); 
+        $bob->addContact($alice); 
+        $chat = new Chat();
+        $chat->addUser($alice);
+        $chat->addUser($bob);
+        $this->em->persist($alice);
+        $this->em->persist($bob);
+        $this->em->persist($chat);
+        $this->em->flush();
+        $output->write($chat->getId());
         return Command::SUCCESS;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Websocket\Command;
+namespace App\Websocket\JsonApi\Command;
 
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -54,6 +54,7 @@ class ChatMessageStatusCommand extends AbstractCommand
 
         $jsonContent = $this->serializer->serialize($message, 'json', ['groups' => ['chat_message_status']]);
         $output->write($jsonContent);
+        $this->setSubscribers($message->getChat()->getUsers());
         return Command::SUCCESS;
 
     }

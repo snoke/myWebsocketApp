@@ -17,7 +17,6 @@ class DefaultController extends AbstractController
         return $this->render('default/index.html.twig', [
             'controller_name' => 'AppController',
             'config' => [ 
-                // DO NOT PUT SENSITIVE DATA HERE, THIS CAN BE MODIFIED CLIENT SIDE
                 'websocket_url' => $_ENV['WEBSOCKET_URL'],
             ]
         ]);

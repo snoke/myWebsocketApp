@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Websocket\Command;
+namespace App\Websocket\JsonApi\Command;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -16,10 +16,10 @@ use App\Entity\User;
 use App\Entity\Chat;
 use App\Websocket\WebsocketCommand as AbstractCommand;
 #[AsCommand(
-    name: 'chat:block',
+    name: 'chat:typing',
     description: 'Add a short description for your command',
 )]
-class ChatBlockCommand extends AbstractCommand
+class ChatTypingCommand extends AbstractCommand
 {
     public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
         
@@ -40,17 +40,15 @@ class ChatBlockCommand extends AbstractCommand
     {
         $chatId = $input->getArgument('chatId');
         $userId = $input->getArgument('userId');
-        $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=> $chatId]);
-        if ($chat->getBlockedBy()!=null) {
-            return Command::FAILURE;
-        } 
-        $user = $this->em->getRepository(User::class)->findOneBy(['id'=> $userId]);
-        $chat->setBlockedBy($user);
-        $this->em->persist($chat);
-        $this->em->flush();
-        $jsonContent = $this->serializer->serialize($chat, 'json', ['groups' => ['app_chat']]);
-        $output->write($jsonContent);
+        $user = $this->em->getRepository(User::class)->findOneBy(['id'=>$userId]);
+        $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$chatId]);
+        $output->write(json_encode([
+            'user' => ['id'=>$user->getId(),'username'=>$user->getUsername()],
+            'chat' => ['id' => $chat->getId()]
+        ]));
         
+        $this->setSubscribers($chat->getUsers());
+            
         return Command::SUCCESS;
     }
 }

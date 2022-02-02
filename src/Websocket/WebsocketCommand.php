@@ -1,6 +1,7 @@
 <?php
 namespace App\Websocket;
 
+use App\Entity\User;
 use Symfony\Component\Console\Command\Command as Base;
 
 abstract Class WebsocketCommand extends Base {
@@ -13,7 +14,10 @@ abstract Class WebsocketCommand extends Base {
         $this->subscribers = [];
     }
 
-    public function addSubscriber( $user) {
+    public function setSubscribers( $users) {
+        $this->subscribers = $users;
+    }
+    public function addSubscriber(User $user) {
        $this->subscribers[] = $user;
    }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Websocket\Command;
+namespace App\Websocket\JsonApi\Command;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -55,6 +55,7 @@ class ChatUnblockCommand extends AbstractCommand
         $this->em->flush();
         $jsonContent = $this->serializer->serialize($chat, 'json', ['groups' => ['app_chat']]);
         $output->write($jsonContent);
+        $this->setSubscribers($chat->getUsers());
         return Command::SUCCESS;
     }
 }

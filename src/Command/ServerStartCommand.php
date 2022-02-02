@@ -15,13 +15,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 use Ratchet\Server\IoServer;
 use App\Websocket\Server as AppServer;
-use App\Websocket\Api;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 
-use App\Entity\Chat;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 
 #[AsCommand(
     name: 'server:start',
@@ -29,14 +26,13 @@ use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 )]
 class ServerStartCommand extends Command
 {    
+    protected $server;
     const WS_PORT = 8080;
     const WSS_PORT = 8443;
 
-    public function __construct(EntityManagerInterface $em,JWTEncoderInterface $encoder,Api $api) {
+    public function __construct(AppServer $server) {
         parent::__construct();
-        $this->em = $em;
-        $this->encoder = $encoder;
-        $this->api = $api;
+        $this->server = $server;
     }
 
     protected function configure(): void
@@ -53,15 +49,14 @@ class ServerStartCommand extends Command
     }
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->em->clear();
 
-        $chats = $this->em->getRepository(Chat::class);
         $port = $input->getArgument('port');
         $io = new SymfonyStyle($input, $output);
 
+        $this->server->setInterface($input,$output);
         $httpServer = new HttpServer(
             new WsServer(
-                new AppServer($input,$output,$this->getApplication(),$this->em,$this->encoder,$this->api)
+                $this->server
             )
         );
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Websocket\Command;
+namespace App\Websocket\JsonApi\Command;
 
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,12 +24,10 @@ use App\Websocket\WebsocketCommand as AbstractCommand;
 class AuthLoginCommand extends AbstractCommand
 {    private $client;
 
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer,HttpClientInterface $client)
+    public function __construct(HttpClientInterface $client)
     {
         parent::__construct();
         $this->client = $client;
-        $this->em = $em;
-        $this->serializer = $serializer;
     }
 
     protected function configure(): void

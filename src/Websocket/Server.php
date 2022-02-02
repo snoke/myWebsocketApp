@@ -1,168 +1,39 @@
 <?php
 namespace App\Websocket;
 use Ratchet\MessageComponentInterface;
+use Ratchet\MessageInterface;
 use Ratchet\ConnectionInterface;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
-use App\Websocket\Api;
-use Doctrine\ORM\EntityManagerInterface;
-
-use App\Entity\Chat;
-use App\Entity\ChatMessage;
-use App\Entity\User;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use App\Websocket\JsonApi\JsonApi as Api;
 
 class Server implements MessageComponentInterface {
-    protected $input;
-    protected $output;
-    protected $application;
-    protected $chats;
-    protected $messages;
-    protected $encoder;
-    protected $userClients;
-    protected $clients;
-    protected $api;
+    protected \SplObjectStorage $clients;
+    protected Api $api;
+    protected SymfonyStyle $io;
 
-    public function __construct($input,$output,$application,EntityManagerInterface $em,JWTEncoderInterface $encoder,Api $api) {
-        $this->input = $input;
-        $this->output = $output;
-        $this->application = $application;
-        $this->em = $em;
-        $this->encoder = $encoder;
-        $this->userClients = [];
+    public function __construct(Api $api) {
+
         $this->clients = new \SplObjectStorage;
         $this->api = $api;
-        $this->io = new SymfonyStyle($this->input, $this->output);
-
     }
 
+    public function setInterface(InputInterface $input, OutputInterface $output) {
+        $this->io = new SymfonyStyle($input, $output);
+    }
     public function onOpen(ConnectionInterface $conn) {
         $this->clients->attach($conn);
-        $this->consoleMessage("New connection from $conn->remoteAddress ($conn->resourceId)");
+        $this->io->block("New connection from $conn->remoteAddress ($conn->resourceId)", 'INFO', 'fg=yellow', ' ', true);
     }
-    private function consoleMessage($data,$type='info') {
-        if ($type=='info') {
-            $this->io->info(json_encode($data));
-        } elseif ($type='warning') {
-            $this->io->warning(json_encode($data));
-        } elseif ($type='error') {
-            $this->io->error(json_encode($data));
-        } elseif ($type='success') {
-            $this->io->success(json_encode($data));
-        } else {
-            echo json_encode($data) . "\n";
-        }
-    }
-
-    private function actionController($client,$action,$params) {
-        $this->io->block(json_encode([$client->resourceId,$action,$params]), 'USER REQUEST', 'fg=blue', ' ', true);
-       
-        $arguments = new ArrayInput($params);
-        $output = new BufferedOutput();
-        //$pusher = new Pusher($this->encoder,$this->userClients,$client);
-        $returnCode = $this->api->run($action,$arguments, $output);
-        $data = $output->fetch();
-        $this->consoleMessage($data);
-        return ["command"=>$action,"status"=>$returnCode,"data"=>$data];
-    }
-    public function onMessage(ConnectionInterface $from, $msg) {
-        
-        $options = json_decode($msg, true); 
-        
-       //return success to sender
-        $result = $this->actionController($from,$options['action'],$options['params']);
-        
-        $from->send(json_encode($result)); 
-
-       //return participants
-       if ($options['action']=='auth:login') {
-            $payload = $this->encoder->decode($result['data']);
-            $id = $payload['id'];
-            $this->userClients[$from->resourceId] = [
-                'client' =>$from,
-                'userId' =>$id,
-                'ip' =>$from->remoteAddress,
-            ];
-        }
-
-        if ($options['action']=='chat:message:send') {
-            $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$options['params']['chatId']]);
-            $users = $chat->getUsers();
-            foreach($this->userClients as $userClient) {
-                foreach($users as $user) {
-                    if ($user->getId()==$userClient['userId'] && $user->getId()!=$options['params']['senderId'] ) {
-                        if ($userClient['client']) {
-                            $userClient['client']->send(json_encode($result)); 
-                        }
-                    }
-                }
-            }
-        }
-
-        if ($options['action']=='chat:unblock') {
-            $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$options['params']['chatId']]);
-            $users = $chat->getUsers();
-            foreach($this->userClients as $userClient) {
-                foreach($users as $user) {
-                    if ($user->getId()==$userClient['userId']  && $user->getId()!=$options['params']['userId'] ) {
-                        if ($userClient['client']) {
-                            $userClient['client']->send(json_encode($result)); 
-                        }
-                    }
-                }
-            }
-        }
-
-        if ($options['action']=='chat:block') {
-            $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$options['params']['chatId']]);
-            $users = $chat->getUsers();
-            foreach($this->userClients as $userClient) {
-                foreach($users as $user) {
-                    if ($user->getId()==$userClient["userId"]  && $user->getId()!=$options['params']['userId'] ) {
-                            if ($userClient['client']) {
-                                $userClient['client']->send(json_encode($result)); 
-                            }
-                     }
-                }
-            }
-        }
-
-        if ($options['action']=='chat:typing') { 
-            
-            $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$options['params']['chatId']]);
-            $users = $chat->getUsers();
-            foreach($this->userClients as $userClient) {
-                foreach($users as $user) {
-                    if ($user->getId()==$userClient["userId"]) {
-                        if ($userClient['client']) {
-                            $userClient['client']->send(json_encode($result)); 
-                        }
-                    }
-                }
-            }
-        }
-
-        if ($options['action']=='chat:message:status') {
-            $message = $this->em->getRepository(ChatMessage::class)->findOneBy(['id'=>$options['params']['messageId']]);
-            $chat = $message->getChat();
-            $users = $chat->getUsers();
-            foreach($this->userClients as $userClient) {
-                foreach($users as $user) {
-                    if ($user->getId()==$message->getSender()->getId()) {
-                        if ($userClient['client']) {
-                            $userClient['client']->send(json_encode($result)); 
-                        }
-                    }
-                }
-            }
-        }
+    public function onMessage(ConnectionInterface $from,  $msg) {
+        $this->io->block($msg, 'USER REQUEST', 'fg=blue', ' ', true);
+        $this->io->block($this->api->run($from,$msg), 'API RESPONSE', 'fg=green', ' ', true);
     }
 
     public function onClose(ConnectionInterface $conn) {
-        $this->userClients[$conn->resourceId] = null;
-        $this->userClients = array_filter($this->userClients);
-        $this->consoleMessage("Connection dropped $conn->remoteAddress ($conn->resourceId)");
+        $this->io->block("Connection dropped $conn->remoteAddress ($conn->resourceId)", 'INFO', 'fg=yellow', ' ', true);
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e) {
