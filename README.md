@@ -15,6 +15,8 @@ Command driven Symfony6 Websocket Chat Server with VueJS Client using JWT for au
 Websockets are persistent connections over TCP. 
 This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.
 
+Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS Client.
+
 ## Live Demo
 check https://websocketchat.stefan-sander.online
 using following credientials
