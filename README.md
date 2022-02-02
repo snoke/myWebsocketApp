@@ -12,9 +12,8 @@ Command driven Symfony6 Websocket Chat Server with VueJS Client using JWT for au
 * block/unblock chat
 
 ## Description
-Websockets are persistent connections. 
-This is not only a lot faster then ajax requests where a new connection gets established for each request, also this allows live broadcasting to clients.
-Websockets will be implemented as default and replace TCP Connections in future HTTP3 Protocol. 
+Websockets are persistent connections over TCP. 
+This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.
 
 ## Live Demo
 check https://websocketchat.stefan-sander.online
