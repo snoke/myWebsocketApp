@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace App\Websocket\Command;
 
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,7 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 use App\Entity\User;
-
+use App\Websocket\WebsocketCommand as AbstractCommand;
 #[AsCommand(
     name: 'auth:login',
     description: 'Authenticate with provided credentials and retrieve JWT',
@@ -26,8 +26,10 @@ class AuthLoginCommand extends AbstractCommand
 
     public function __construct(EntityManagerInterface $em,SerializerInterface $serializer,HttpClientInterface $client)
     {
-        parent::__construct($em,$serializer);
+        parent::__construct();
         $this->client = $client;
+        $this->em = $em;
+        $this->serializer = $serializer;
     }
 
     protected function configure(): void
@@ -43,7 +45,6 @@ class AuthLoginCommand extends AbstractCommand
         $io = new SymfonyStyle($input, $output);
         $loginName = $input->getArgument('loginName');
         $password = $input->getArgument('password');
-        
         
         $response = $this->client->request(
             'POST',
@@ -66,6 +67,7 @@ class AuthLoginCommand extends AbstractCommand
         $contentType = $response->getHeaders()['content-type'][0];
         $content = $response->getContent();
         $content = $response->toArray();
+    
         $output->write($content["token"]);
         return Command::SUCCESS;
     }

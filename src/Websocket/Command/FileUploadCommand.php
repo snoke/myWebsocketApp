@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace App\Websocket\Command;
 
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,6 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\File;
 use App\Entity\User;
 
+use App\Websocket\WebsocketCommand as AbstractCommand;
 #[AsCommand(
     name: 'file:upload',
     description: 'Uploads a file',
@@ -23,7 +24,10 @@ use App\Entity\User;
 class FileUploadCommand extends AbstractCommand
 {
     public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-        parent::__construct($em,$serializer);
+        parent::__construct();
+        
+        $this->em = $em;
+        $this->serializer = $serializer;
     }
     protected function configure(): void
     {

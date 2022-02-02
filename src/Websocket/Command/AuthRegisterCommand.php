@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace App\Websocket\Command;
 
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,6 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 use App\Entity\User;
+use App\Websocket\WebsocketCommand as AbstractCommand;
 
 #[AsCommand(
     name: 'auth:register',
@@ -27,8 +28,12 @@ class AuthRegisterCommand extends AbstractCommand
 
     public function __construct(EntityManagerInterface $em,SerializerInterface $serializer,UserPasswordHasherInterface $userPasswordHasher)
     {
-        parent::__construct($em,$serializer);
+        
+        parent::__construct();
+
         $this->passwordHasher = $userPasswordHasher;
+        $this->em = $em;
+        $this->serializer = $serializer;
     }
 
     protected function configure(): void

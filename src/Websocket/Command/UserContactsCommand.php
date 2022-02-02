@@ -1,5 +1,5 @@
 <?php
-namespace App\Command;
+namespace App\Websocket\Command;
 
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,6 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\User;
 
 
+use App\Websocket\WebsocketCommand as AbstractCommand;
 #[AsCommand(
     name: 'user:contacts',
     description: 'gets user contacts',
@@ -23,7 +24,11 @@ class UserContactsCommand extends AbstractCommand
 {  
 
     public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-        parent::__construct($em,$serializer);
+        
+        parent::__construct();
+        
+        $this->em = $em;
+        $this->serializer = $serializer;
     }
 
 protected function configure(): void

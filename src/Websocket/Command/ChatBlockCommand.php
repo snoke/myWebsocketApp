@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace App\Websocket\Command;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\Chat;
+use App\Websocket\WebsocketCommand as AbstractCommand;
 #[AsCommand(
     name: 'chat:block',
     description: 'Add a short description for your command',
@@ -21,7 +22,11 @@ use App\Entity\Chat;
 class ChatBlockCommand extends AbstractCommand
 {
     public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-        parent::__construct($em,$serializer);
+        
+        parent::__construct();
+        
+        $this->em = $em;
+        $this->serializer = $serializer;
     }
     protected function configure(): void
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace App\Websocket\Command;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -14,14 +14,19 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\Chat;
+use App\Websocket\WebsocketCommand as AbstractCommand;
 #[AsCommand(
-    name: 'chat:unblock',
+    name: 'chat:typing',
     description: 'Add a short description for your command',
 )]
-class ChatUnblockCommand extends AbstractCommand
+class ChatTypingCommand extends AbstractCommand
 {
     public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-        parent::__construct($em,$serializer);
+        
+        parent::__construct();
+        
+        $this->em = $em;
+        $this->serializer = $serializer;
     }
     protected function configure(): void
     {
@@ -35,21 +40,12 @@ class ChatUnblockCommand extends AbstractCommand
     {
         $chatId = $input->getArgument('chatId');
         $userId = $input->getArgument('userId');
-        $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=> $chatId]);
-        if ($chat->getBlockedBy()==null) {
-            $output->write("not found");
-            return Command::FAILURE;
-        } 
-        $user = $this->em->getRepository(User::class)->findOneBy(['id'=> $userId]);
-        if ($chat->getBlockedBy()!=$user) {
-            $output->write("not authorized");
-            return Command::FAILURE;
-        } 
-        $chat->setBlockedBy(null);
-        $this->em->persist($chat);
-        $this->em->flush();
-        $jsonContent = $this->serializer->serialize($chat, 'json', ['groups' => ['app_chat']]);
-        $output->write($jsonContent);
+        $user = $this->em->getRepository(User::class)->findOneBy(['id'=>$userId]);
+        $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$chatId]);
+        $output->write(json_encode([
+            'user' => ['id'=>$user->getId(),'username'=>$user->getUsername()],
+            'chat' => ['id' => $chat->getId()]
+        ]));
         return Command::SUCCESS;
     }
 }

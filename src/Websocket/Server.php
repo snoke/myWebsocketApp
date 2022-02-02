@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
-
+use App\Websocket\Api;
 use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\Chat;
@@ -22,25 +22,25 @@ class Server implements MessageComponentInterface {
     protected $encoder;
     protected $userClients;
     protected $clients;
+    protected $api;
 
-    public function __construct($input,$output,$application,EntityManagerInterface $em,JWTEncoderInterface $encoder) {
+    public function __construct($input,$output,$application,EntityManagerInterface $em,JWTEncoderInterface $encoder,Api $api) {
         $this->input = $input;
         $this->output = $output;
         $this->application = $application;
         $this->em = $em;
         $this->encoder = $encoder;
-
         $this->userClients = [];
         $this->clients = new \SplObjectStorage;
-        
+        $this->api = $api;
         $this->io = new SymfonyStyle($this->input, $this->output);
+
     }
 
     public function onOpen(ConnectionInterface $conn) {
         $this->clients->attach($conn);
         $this->consoleMessage("New connection from $conn->remoteAddress ($conn->resourceId)");
     }
-
     private function consoleMessage($data,$type='info') {
         if ($type=='info') {
             $this->io->info(json_encode($data));
@@ -57,10 +57,11 @@ class Server implements MessageComponentInterface {
 
     private function actionController($client,$action,$params) {
         $this->io->block(json_encode([$client->resourceId,$action,$params]), 'USER REQUEST', 'fg=blue', ' ', true);
+       
         $arguments = new ArrayInput($params);
-        $command = $this->application->find($action);
         $output = new BufferedOutput();
-        $returnCode = $command->run($arguments, $output);
+        //$pusher = new Pusher($this->encoder,$this->userClients,$client);
+        $returnCode = $this->api->run($action,$arguments, $output);
         $data = $output->fetch();
         $this->consoleMessage($data);
         return ["command"=>$action,"status"=>$returnCode,"data"=>$data];
@@ -71,6 +72,7 @@ class Server implements MessageComponentInterface {
         
        //return success to sender
         $result = $this->actionController($from,$options['action'],$options['params']);
+        
         $from->send(json_encode($result)); 
 
        //return participants

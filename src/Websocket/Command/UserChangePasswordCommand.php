@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace App\Websocket\Command;
 
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,6 +19,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Entity\User;
 
+use App\Websocket\WebsocketCommand as AbstractCommand;
 #[AsCommand(
     name: 'user:change:password',
     description: 'change password',
@@ -30,11 +31,15 @@ class UserChangePasswordCommand extends AbstractCommand
 
     public function __construct(EntityManagerInterface $em,SerializerInterface $serializer,UserPasswordHasherInterface $userPasswordHasher,JWTEncoderInterface $encoder,HttpClientInterface $client)
     {
-        parent::__construct($em,$serializer);
+        
+        parent::__construct();
+        
         $this->em = $em;
         $this->encoder = $encoder;
         $this->passwordHasher = $userPasswordHasher;
         $this->client = $client;
+        $this->em = $em;
+        $this->serializer = $serializer;
     }
 
     protected function configure(): void

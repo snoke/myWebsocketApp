@@ -15,6 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 use Ratchet\Server\IoServer;
 use App\Websocket\Server as AppServer;
+use App\Websocket\Api;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 
@@ -26,14 +27,16 @@ use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
     name: 'server:start',
     description: 'Starts the Websocket Server',
 )]
-class ServerStartCommand extends AbstractCommand
+class ServerStartCommand extends Command
 {    
     const WS_PORT = 8080;
     const WSS_PORT = 8443;
 
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer,JWTEncoderInterface $encoder) {
-        parent::__construct($em,$serializer);
+    public function __construct(EntityManagerInterface $em,JWTEncoderInterface $encoder,Api $api) {
+        parent::__construct();
+        $this->em = $em;
         $this->encoder = $encoder;
+        $this->api = $api;
     }
 
     protected function configure(): void
@@ -58,7 +61,7 @@ class ServerStartCommand extends AbstractCommand
 
         $httpServer = new HttpServer(
             new WsServer(
-                new AppServer($input,$output,$this->getApplication(),$this->em,$this->encoder)
+                new AppServer($input,$output,$this->getApplication(),$this->em,$this->encoder,$this->api)
             )
         );
 

@@ -6,7 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\Console\Input\ArrayInput;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Websocket\Command\AuthLoginCommand;
 class DefaultController extends AbstractController
 {
     #[Route('/', name: 'default')]
