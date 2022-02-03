@@ -395,6 +395,13 @@ import { emojis } from './Chat/emojis.json'
             this.ready=true;
       });
 
+      this.$root.$on('Chat::chat:message:send', (result) => {
+            var msg = JSON.parse(result.data);
+            this.chatMessages.push(msg);
+            if (msg.sender.id!=this.$root.claim.id) {
+              this.$root.notify(msg.sender.username + ": " + msg.message)
+            }
+      });
       this.$root.$on('Chat::file:upload', (result) => {
             this.$root.connection.send(
                 JSON.stringify({

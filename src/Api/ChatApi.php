@@ -6,97 +6,60 @@ use Symfony\Component\Console\Input\ArrayInput;
 
 use \Ratchet\WebSocket\WsConnection;
 use App\Api\UserBroadcaster as Pusher;
+use App\Api\ChatApiCommandContainer;
+use App\Api\JsonCommandResponse;
+use App\Api\JsonCommandRequest;
 
-use App\Api\Command\AuthLoginCommand;
-use App\Api\Command\AuthRegisterCommand;
-use App\Api\Command\AuthTokenDecodeCommand;
-use App\Api\Command\ChatBlockCommand;
-use App\Api\Command\ChatLoadCommand;
-use App\Api\Command\ChatLoadUserchatsCommand;
-use App\Api\Command\ChatMessageSendCommand;
-use App\Api\Command\ChatMessageStatusCommand;
-use App\Api\Command\ChatTypingCommand;
-use App\Api\Command\ChatUnblockCommand;
-use App\Api\Command\ContactAddCommand;
-use App\Api\Command\ContactSearchCommand;
-use App\Api\Command\FileUploadCommand;
-use App\Api\Command\UserChangePasswordCommand;
-use App\Api\Command\UserContactsCommand;
-use App\Api\Command\ChatLoadMessagesCommand;
-
+use Symfony\Component\DependencyInjection\ContainerInterface;
 class ChatApi {
+
     private Pusher $pusher;
-    private array $commands;
-    
-    private function find(string $action) {
-        foreach($this->commands as $command) {
-            if ($command->getName()==$action) {
-                return $command;
-            }
-        }
-    }
+    private ChatApiCommandContainer $commands;
+
     public function __construct(
+        ChatApiCommandContainer $commands,
         UserAuthListener $listener,
         Pusher $pusher,
-
-        AuthLoginCommand $authLogin,
-        AuthTokenDecodeCommand $authTokenDecodeCommand,
-        ChatLoadUserchatsCommand $chatLoadUserchatsCommand,
-        AuthRegisterCommand $authRegisterCommand,
-        ChatBlockCommand $chatBlockCommand,
-        ChatLoadCommand $chatLoadCommand,
-        ChatMessageSendCommand $chatMessageSendCommand,
-        ChatMessageStatusCommand $chatMessageStatusCommand,
-        ChatTypingCommand $chatTypingCommand,
-        ChatUnblockCommand $chatUnblockCommand,
-        ContactAddCommand $contactAddCommand,
-        ContactSearchCommand $contactSearchCommand,
-        FileUploadCommand $fileUploadCommand,
-        UserChangePasswordCommand $userChangePasswordCommand,
-        UserContactsCommand $userContactsCommand,
-        ChatLoadMessagesCommand $chatLoadMessages,
-        ) {
-            
+    ) {
+        $this->commands = $commands;
         $this->pusher = $pusher;
         $this->listener = $listener;
-
-        $this->commands=[
-             $authLogin,
-             $authTokenDecodeCommand,
-             $chatLoadUserchatsCommand,
-             $authRegisterCommand,
-             $chatBlockCommand,
-             $chatLoadCommand,
-             $chatMessageSendCommand,
-             $chatMessageStatusCommand,
-             $chatTypingCommand,
-             $chatUnblockCommand,
-             $contactAddCommand,
-             $contactSearchCommand,
-             $fileUploadCommand,
-             $userChangePasswordCommand,
-             $userContactsCommand,
-             $chatLoadMessages,
-        ];
     }
-    public function run(WsConnection $from,string $json) {
-        $body = json_decode($json, true); 
-        $output = new BufferedOutput();
-        $command = $this->find($body['action']);
-        $statusCode = $command->run(new ArrayInput($body['params']), $output);
-        $data = $output->fetch();
 
-        $user = $this->listener->listen($command,$statusCode,$data);
+    private function execute(CommandInterface $command, ArrayInput $params) {
+        $output = new BufferedOutput();
+        $statusCode = $command->run($params, $output);
+        $data = $output->fetch();
+        return new JsonCommandResponse(
+            $command->getName(),
+            $params,
+            $statusCode,
+            $data
+        );
+    }
+
+    private function listen(WsConnection $from,CommandInterface $command,JsonCommandResponse $response) {
+        $user = $this->listener->listen($command,$response);
         if ($user) {
             $this->pusher->addClient($from,$user);
         } 
+    }
 
-        $this->pusher->push($from,$command,new JsonResponse(
-            $command->getName(),$body['params'],$statusCode,$data
-            )
-        );
-            
-        return $data; 
+    private function push(WsConnection $from,CommandInterface $command,JsonCommandResponse $response) {
+        $this->pusher->push($from,$command,$response);
+    }
+
+    public function run(WsConnection $from,string $json) {
+        $request = new JsonCommandRequest($from,$json);
+        $command = $this->commands->find($request->getAction());
+
+        $response = $this->execute($command,new ArrayInput($request->getParams()));
+        
+        $this->listen($from,$command,$response);
+
+        $this->push($from,$command,$response);
+
+        return $this->response; 
     }
 
 }

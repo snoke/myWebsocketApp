@@ -28,11 +28,11 @@ use App\Api\UserBroadcastCommand;
         $this->em=$em;
     }
 
-    public function listen(UserBroadcastCommand $command,int $statusCode,string $data)
+    public function listen(UserBroadcastCommand $command,JsonCommandResponse $response)
     {
         if ($command::class==self::LOGIN_COMMAND) {
-            if ($statusCode==Command::SUCCESS) {
-                return $this->extractUser($data);
+            if ($response->getStatusCode()==Command::SUCCESS) {
+                return $this->extractUser($response->getData());
             }
        } 
     }
