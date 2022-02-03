@@ -24,7 +24,6 @@ use App\Api\Command\UserChangePasswordCommand;
 use App\Api\Command\UserContactsCommand;
 use App\Api\Command\ChatLoadMessagesCommand;
 
-
 class ChatApi {
     private Pusher $pusher;
     private array $commands;
@@ -37,7 +36,6 @@ class ChatApi {
         }
     }
     public function __construct(
-
         UserAuthListener $listener,
         Pusher $pusher,
 
@@ -58,7 +56,7 @@ class ChatApi {
         UserContactsCommand $userContactsCommand,
         ChatLoadMessagesCommand $chatLoadMessages,
         ) {
-
+            
         $this->pusher = $pusher;
         $this->listener = $listener;
 
@@ -79,7 +77,6 @@ class ChatApi {
              $userChangePasswordCommand,
              $userContactsCommand,
              $chatLoadMessages,
-
         ];
     }
     public function run(WsConnection $from,string $json) {
@@ -94,12 +91,11 @@ class ChatApi {
             $this->pusher->addClient($from,$user);
         } 
 
-        $this->pusher->push($from,$command,json_encode([
-            "command"=>$command->getName(),
-            "params"=>$body['params'],
-            "status"=>$statusCode,
-            "data"=>$data
-        ]));
+        $this->pusher->push($from,$command,new JsonResponse(
+            $command->getName(),$body['params'],$statusCode,$data
+            )
+        );
+            
         return $data; 
     }
 

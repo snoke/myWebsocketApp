@@ -4,12 +4,14 @@ use Symfony\Component\Security\Core\User\UserInterface as User;
 use Ratchet\WebSocket\WsConnection;
 use App\Api\UserBroadcastCommand;
 use App\Api\WebsocketUserClient;
+use App\Api\JsonResponse;
 
 class UserBroadcaster {
 
     private array $userClients;
+    const ALWAYS_RESPOND_TO_SENDER = true;
 
-    private function sendToSubscribers(WsConnection $from,UserBroadcastCommand $command,string $jsonData) {
+    private function sendToSubscribers(WsConnection $from,UserBroadcastCommand $command,JsonResponse $jsonData) {
         foreach($command->getSubscribers() as $subscriber) {
             foreach($this->userClients as $userClient) {
                 if ($userClient->getUser()->getId()  == $subscriber->getId()) {
@@ -29,10 +31,12 @@ class UserBroadcaster {
         $this->userClients[$client->resourceId]=new WebsocketUserClient($client,$user);
     }
 
-    public function push(WsConnection $from,UserBroadcastCommand $command,string $jsonData) {
+    public function push(WsConnection $from,UserBroadcastCommand $command,JsonResponse $jsonData) {
 
         //Respond to Sender 
-        $from->send($jsonData); 
+        if (self::ALWAYS_RESPOND_TO_SENDER) {
+            $from->send($jsonData); 
+        }
         
         //Respond to Subscribers 
         $this->sendToSubscribers($from,$command,$jsonData);
