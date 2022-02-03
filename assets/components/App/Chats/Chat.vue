@@ -160,6 +160,7 @@ import { emojis } from './Chat/emojis.json'
     components: {ChatMessage},
     data: function() {
       return {       
+        page:0,
           typingUser:null,
           timerCount:0,
         ready:false,
@@ -391,8 +392,14 @@ import { emojis } from './Chat/emojis.json'
             this.id = chat.id;
             this.chatMessages = chat.chatMessages;
             this.users = chat.users;
-            this.onResize();
-            this.ready=true;
+            this.$root.connection.send(
+                JSON.stringify({
+                    'action': 'chat:load:messages',
+                    'params': {
+                        'chatId': this.$route.params.id,
+                    }
+                })
+            );
       });
 
       this.$root.$on('Chat::file:upload', (result) => {

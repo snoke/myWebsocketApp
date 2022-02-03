@@ -7,7 +7,7 @@ parameters:
 
 services:    
     websocket_api:
-        class:     App\Websocket\Api
+        class:     App\Api
     websocket_auth_login:
         class:     App\Websocket\Command\AuthLoginCommand
         arguments: ['@Symfony\Contracts\HttpClient\HttpClientInterface']
