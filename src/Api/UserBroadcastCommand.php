@@ -21,6 +21,7 @@ abstract Class UserBroadcastCommand extends Base {
     public function setSubscribers(array $users) {
         $this->subscribers = $users;
     }
+    
     public function addSubscriber(User $user) {
        $this->subscribers[] = $user;
    }

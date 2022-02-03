@@ -26,9 +26,11 @@ use Ratchet\WebSocket\WsServer;
 )]
 class ServerStartCommand extends Command
 {    
-    protected $server;
+    protected AppServer $server;
     const WS_PORT = 8080;
     const WSS_PORT = 8443;
+
+    private ?int $port;
 
     public function __construct(AppServer $server) {
         parent::__construct();
@@ -47,48 +49,50 @@ class ServerStartCommand extends Command
             )
         ;
     }
+
+    private function createWsServer (HttpServer $httpServer) {
+        $this->port = $this->port?$this->port:self::WS_PORT;
+        return IoServer::factory(
+            $httpServer,
+            $this->port
+        );
+    }
+
+    private function createWssServer (HttpServer $httpServer) {
+        $this->port = $this->port?$this->port:self::WSS_PORT;
+        $loop = \React\EventLoop\Factory::create();
+        $server = new \React\Socket\Server('0.0.0.0:' .$this->port, $loop);
+        $secureServer = new \React\Socket\SecureServer($server, $loop, [
+            'local_cert'  => __DIR__  . '/../../config/ssl/certificate.crt',
+            'local_pk' => __DIR__  . '/../../config/ssl/private.key',
+            'verify_peer' => false,
+        ]);
+        
+        return new IoServer($httpServer, $secureServer, $loop);
+
+    }
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-
-        $port = $input->getArgument('port');
-        $io = new SymfonyStyle($input, $output);
+        $this->port = $input->getArgument('port');
 
         $this->server->setInterface($input,$output);
-        $httpServer = new HttpServer(
-            new WsServer(
-                $this->server
-            )
-        );
+
+        $io = new SymfonyStyle($input, $output);
+
+        $httpServer = new HttpServer(new WsServer($this->server));
 
         if ($input->getOption('ssl')) {
-            $port = $port?$port:self::WSS_PORT;
-        
-            $loop = \React\EventLoop\Factory::create();
-            $server = new \React\Socket\Server('0.0.0.0:' .$port, $loop);
-            
-            $secureServer = new \React\Socket\SecureServer($server, $loop, [
-                'local_cert'  => __DIR__  . '/../../config/ssl/certificate.crt',
-                'local_pk' => __DIR__  . '/../../config/ssl/private.key',
-                'verify_peer' => false,
-            ]);
-            
-            $server = new IoServer($httpServer, $secureServer, $loop);
-            
-            $io->success('WSS Server running on Port ' . $port);
-        } else {
-            $port = $port?$port:self::WS_PORT;
-            
-            $server = IoServer::factory(
-                $httpServer,
-                $port
-            );
+            $server = $this->createWssServer($httpServer);
+            $io->success('Secured Websocket Server started on Port ' . $this->port);
 
-            $io->success('WS Server running on Port ' . $port);
-            
+        } else {
+            $server = $this->createWsServer($httpServer);
+            $io->success('Websocket Server started on Port ' . $this->port);
         }
+
+
         $server->run();
         
         return Command::SUCCESS;
-
     }
 }

@@ -94,12 +94,12 @@ class ChatApi {
             $this->pusher->addClient($from,$user);
         } 
 
-        $this->pusher->push($from,$command,[
+        $this->pusher->push($from,$command,json_encode([
             "command"=>$command->getName(),
             "params"=>$body['params'],
             "status"=>$statusCode,
             "data"=>$data
-        ]);
+        ]));
         return $data; 
     }
 

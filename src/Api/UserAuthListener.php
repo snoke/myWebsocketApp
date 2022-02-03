@@ -19,9 +19,7 @@ use App\Api\UserBroadcastCommand;
      private function extractUser(string $token): User 
      {
         $payload = $this->encoder->decode($token);
-        $id = $payload['id'];
-
-        return $this->em->getRepository(User::class)->findOneBy(["id"=>$id]);
+        return $this->em->getRepository(User::class)->findOneBy(["id"=>$payload['id']]);
      }
 
     public function __construct(EntityManagerInterface $em,JWTEncoderInterface $encoder)

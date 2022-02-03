@@ -3,18 +3,18 @@ namespace App\Api;
 use Symfony\Component\Security\Core\User\UserInterface as User;
 use Ratchet\WebSocket\WsConnection;
 use App\Api\UserBroadcastCommand;
+use App\Api\WebsocketUserClient;
 
 class UserBroadcaster {
 
     private array $userClients;
 
-    private function send(WsConnection $from,UserBroadcastCommand $command,array $body) {
-        $subscribers = $command->getSubscribers();
-        foreach($subscribers as $subscriber) {
+    private function sendToSubscribers(WsConnection $from,UserBroadcastCommand $command,string $jsonData) {
+        foreach($command->getSubscribers() as $subscriber) {
             foreach($this->userClients as $userClient) {
-                if ($userClient['user']->getId()  == $subscriber->getId()) {
-                    if ($this->userClients[$from->resourceId]["user"]->getId()!=$subscriber->getId()) {
-                        $userClient['connection']->send(json_encode($body));
+                if ($userClient->getUser()->getId()  == $subscriber->getId()) {
+                    if ($this->userClients[$from->resourceId]->getUser()->getId()!=$subscriber->getId()) {
+                        $userClient->getConnection()->send($jsonData);
                     }
                 }
             }
@@ -26,15 +26,15 @@ class UserBroadcaster {
     }
 
     public function addClient(WsConnection $client, User $user) {
-        $this->userClients[$client->resourceId]=[
-            "connection" => $client,
-            "user"  => $user,
-        ];
+        $this->userClients[$client->resourceId]=new WebsocketUserClient($client,$user);
     }
-    public function push(WsConnection $from,UserBroadcastCommand $command,array $body) {
+
+    public function push(WsConnection $from,UserBroadcastCommand $command,string $jsonData) {
+
         //Respond to Sender 
-        $from->send(json_encode($body)); 
+        $from->send($jsonData); 
+        
         //Respond to Subscribers 
-        $this->send($from,$command,$body);
+        $this->sendToSubscribers($from,$command,$jsonData);
     }
 }
