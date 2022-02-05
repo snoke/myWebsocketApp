@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+use App\Api\RestfulJsonApi\Entity;
 #[ORM\Entity(repositoryClass: ChatRepository::class)]
 class Chat extends Entity
 {

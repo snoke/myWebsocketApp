@@ -6,6 +6,7 @@ use App\Repository\ChatMessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+use App\Api\RestfulJsonApi\Entity;
 #[ORM\Entity(repositoryClass: ChatMessageRepository::class)]
 class ChatMessage extends Entity
 {

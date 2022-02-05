@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 use Ratchet\Server\IoServer;
 //use App\Server\WebsocketServer as AppServer;
-use App\Api\ChatApi as AppServer;
+use App\Api\ChatApi\ChatApi as AppServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 
