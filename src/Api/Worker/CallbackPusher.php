@@ -1,5 +1,5 @@
 <?php
-namespace App\Api;
+namespace App\Api\Worker;
 use Ratchet\WebSocket\WsConnection;
 use App\Api\SubscriberBroadcastCommand;
 use App\Api\JsonCommandResponse;

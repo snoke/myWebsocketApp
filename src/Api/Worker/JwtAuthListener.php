@@ -1,5 +1,5 @@
 <?php
-namespace App\Api;
+namespace App\Api\Worker;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 

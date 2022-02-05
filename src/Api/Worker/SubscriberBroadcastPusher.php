@@ -1,5 +1,5 @@
 <?php
-namespace App\Api;
+namespace App\Api\Worker;
 use Symfony\Component\Security\Core\User\UserInterface as User;
 use Ratchet\WebSocket\WsConnection;
 use App\Api\SubscriberBroadcastCommand;

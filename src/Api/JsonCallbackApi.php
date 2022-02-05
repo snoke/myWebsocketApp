@@ -9,8 +9,8 @@ use \Ratchet\WebSocket\WsConnection;
 use App\Api\CommandCollection;
 use App\Api\JsonCommandResponse;
 use App\Api\JsonCommandRequest;
-use App\Api\SubscriberBroadcastPusher;
-use App\Api\CallbackPusher;
+use App\Api\Worker\SubscriberBroadcastPusher;
+use App\Api\Worker\CallbackPusher;
 
 use Symfony\Component\Console\Command\Command;
 

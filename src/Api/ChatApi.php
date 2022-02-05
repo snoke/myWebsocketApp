@@ -8,9 +8,9 @@ use \Ratchet\WebSocket\WsConnection;
 use App\Api\ChatCommandCollection as CommandCollection;
 use App\Api\JsonCommandResponse;
 use App\Api\JsonCommandRequest;
-use App\Api\JwtAuthListener as Authenticator;
-use App\Api\SubscriberBroadcastPusher as BroadcastPusher;
-use App\Api\CallbackPusher;
+use App\Api\Worker\JwtAuthListener as Authenticator;
+use App\Api\Worker\SubscriberBroadcastPusher as BroadcastPusher;
+use App\Api\Worker\CallbackPusher;
 
 use Symfony\Component\Console\Command\Command;
 
