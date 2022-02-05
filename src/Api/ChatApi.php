@@ -5,61 +5,30 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Input\ArrayInput;
 
 use \Ratchet\WebSocket\WsConnection;
-use App\Api\UserBroadcaster as Pusher;
-use App\Api\ChatApiCommandContainer;
+use App\Api\ChatCommandCollection as CommandCollection;
 use App\Api\JsonCommandResponse;
 use App\Api\JsonCommandRequest;
+use App\Api\JwtAuthListener as Authenticator;
+use App\Api\SubscriberBroadcastPusher as BroadcastPusher;
+use App\Api\CallbackPusher;
+
+use Symfony\Component\Console\Command\Command;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-class ChatApi {
+class ChatApi extends JsonCallbackApi {
 
-    private Pusher $pusher;
-    private ChatApiCommandContainer $commands;
+    private array $workers;
+    private CommandCollection $commands;
 
     public function __construct(
-        ChatApiCommandContainer $commands,
-        UserAuthListener $listener,
-        Pusher $pusher,
+        CommandCollection $commands,
+        CallbackPusher $callbackPusher,
+        Authenticator $authenticator,
+        BroadcastPusher $broadcastPusher,
     ) {
-        $this->commands = $commands;
-        $this->pusher = $pusher;
-        $this->listener = $listener;
-    }
-
-    private function execute(CommandInterface $command, ArrayInput $params) {
-        $output = new BufferedOutput();
-        $statusCode = $command->run($params, $output);
-        $data = $output->fetch();
-        return new JsonCommandResponse(
-            $command->getName(),
-            $params,
-            $statusCode,
-            $data
-        );
-    }
-
-    private function listen(WsConnection $from,CommandInterface $command,JsonCommandResponse $response) {
-        $user = $this->listener->listen($command,$response);
-        if ($user) {
-            $this->pusher->addClient($from,$user);
-        } 
-    }
-
-    private function push(WsConnection $from,CommandInterface $command,JsonCommandResponse $response) {
-        $this->pusher->push($from,$command,$response);
-    }
-
-    public function run(WsConnection $from,string $json) {
-        $request = new JsonCommandRequest($from,$json);
-        $command = $this->commands->find($request->getAction());
-
-        $response = $this->execute($command,new ArrayInput($request->getParams()));
-        
-        $this->listen($from,$command,$response);
-
-        $this->push($from,$command,$response);
-
-        return $this->response; 
+        parent::__construct($commands,$callbackPusher);
+        $this->addWorker($authenticator);
+        $this->addWorker($broadcastPusher);
     }
 
 }

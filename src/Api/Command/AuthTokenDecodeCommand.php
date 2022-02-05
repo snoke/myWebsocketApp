@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\User;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 
-use App\Api\UserBroadcastCommand as AbstractCommand;
+use App\Api\SubscriberBroadcastCommand as AbstractCommand;
 #[AsCommand(
     name: 'auth:token:decode',
     description: 'Extracts Claim from provided Token',

@@ -19,7 +19,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Entity\User;
 
-use App\Api\UserBroadcastCommand as AbstractCommand;
+use App\Api\SubscriberBroadcastCommand as AbstractCommand;
 #[AsCommand(
     name: 'user:change:password',
     description: 'change password',

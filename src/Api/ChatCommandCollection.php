@@ -4,16 +4,7 @@ namespace App\Api;
 
 use App\Api\Command;
 
-class ChatApiCommandContainer {
-    private array $commands;
-    
-    public function find(string $action):CommandInterface {
-        foreach($this->commands as $command) {
-            if ($command->getName()==$action) {
-                return $command;
-            }
-        }
-    }
+class ChatCommandCollection extends CommandCollection{
     public function __construct(
         Command\AuthLoginCommand $authLogin,
         Command\AuthTokenDecodeCommand $authTokenDecodeCommand,
@@ -32,24 +23,21 @@ class ChatApiCommandContainer {
         Command\UserContactsCommand $userContactsCommand,
         Command\ChatLoadMessagesCommand $chatLoadMessages,
         ) {
-
-        $this->commands=[
-             $authLogin,
-             $authTokenDecodeCommand,
-             $chatLoadUserchatsCommand,
-             $authRegisterCommand,
-             $chatBlockCommand,
-             $chatLoadCommand,
-             $chatMessageSendCommand,
-             $chatMessageStatusCommand,
-             $chatTypingCommand,
-             $chatUnblockCommand,
-             $contactAddCommand,
-             $contactSearchCommand,
-             $fileUploadCommand,
-             $userChangePasswordCommand,
-             $userContactsCommand,
-             $chatLoadMessages,
-        ];
+            $this->addCommand($authLogin);
+            $this->addCommand($authTokenDecodeCommand);
+            $this->addCommand($chatLoadUserchatsCommand);
+            $this->addCommand($authRegisterCommand);
+            $this->addCommand($chatBlockCommand);
+            $this->addCommand($chatLoadCommand);
+            $this->addCommand($chatMessageSendCommand);
+            $this->addCommand($chatMessageStatusCommand);
+            $this->addCommand($chatTypingCommand);
+            $this->addCommand($chatUnblockCommand);
+            $this->addCommand($contactAddCommand);
+            $this->addCommand($contactSearchCommand);
+            $this->addCommand($fileUploadCommand);
+            $this->addCommand($userChangePasswordCommand);
+            $this->addCommand($userContactsCommand);
+            $this->addCommand($chatLoadMessages);
     }
 }

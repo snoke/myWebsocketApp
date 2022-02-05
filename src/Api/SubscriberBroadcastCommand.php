@@ -3,10 +3,9 @@ namespace App\Api;
 use Symfony\Component\Security\Core\User\UserInterface as User;
 
 use Symfony\Component\Console\Command\Command as Base;
-use App\Api\CommandInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-abstract Class UserBroadcastCommand extends Base  implements CommandInterface {
+abstract Class SubscriberBroadcastCommand extends Base {
     
     private Collection $subscribers;
 

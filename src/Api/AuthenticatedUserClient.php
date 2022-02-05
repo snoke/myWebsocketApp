@@ -3,7 +3,7 @@ namespace App\Api;
 use Ratchet\WebSocket\WsConnection;
 use Symfony\Component\Security\Core\User\UserInterface as User;
 
-class WebsocketUserClient {
+class AuthenticatedUserClient {
     private WsConnection $connection;
     private User $user;
 

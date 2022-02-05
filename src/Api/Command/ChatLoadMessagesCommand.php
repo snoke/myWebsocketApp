@@ -16,7 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Doctrine\Common\Collections\Criteria;
 use App\Entity\Chat;
 use App\Entity\ChatMessage;
-use App\Api\UserBroadcastCommand as AbstractCommand;
+use App\Api\SubscriberBroadcastCommand as AbstractCommand;
 
 #[AsCommand(
     name: 'chat:load:messages',

@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\Chat;
-use App\Api\UserBroadcastCommand as AbstractCommand;
+use App\Api\SubscriberBroadcastCommand as AbstractCommand;
 #[AsCommand(
     name: 'chat:block',
     description: 'Add a short description for your command',

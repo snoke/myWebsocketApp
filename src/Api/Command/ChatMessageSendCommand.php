@@ -17,7 +17,7 @@ use App\Entity\Chat;
 use App\Entity\ChatMessage;
 use App\Entity\File;
 use App\Entity\User;
-use App\Api\UserBroadcastCommand as AbstractCommand;
+use App\Api\SubscriberBroadcastCommand as AbstractCommand;
 
 #[AsCommand(
     name: 'chat:message:send',

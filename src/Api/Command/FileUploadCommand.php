@@ -16,7 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\File;
 use App\Entity\User;
 
-use App\Api\UserBroadcastCommand as AbstractCommand;
+use App\Api\SubscriberBroadcastCommand as AbstractCommand;
 #[AsCommand(
     name: 'file:upload',
     description: 'Uploads a file',

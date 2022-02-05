@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use App\Entity\ChatMessage;
 
-use App\Api\UserBroadcastCommand as AbstractCommand;
+use App\Api\SubscriberBroadcastCommand as AbstractCommand;
 #[AsCommand(
     name: 'chat:message:status',
     description: "Sets a Message Status",

@@ -16,7 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\Chat;
 use App\Entity\User;
 
-use App\Api\UserBroadcastCommand as AbstractCommand;
+use App\Api\SubscriberBroadcastCommand as AbstractCommand;
 #[AsCommand(
     name: 'contact:add',
     description: 'Adds a Contact',

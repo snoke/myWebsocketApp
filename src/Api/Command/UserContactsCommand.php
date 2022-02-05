@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\User;
 
 
-use App\Api\UserBroadcastCommand as AbstractCommand;
+use App\Api\SubscriberBroadcastCommand as AbstractCommand;
 #[AsCommand(
     name: 'user:contacts',
     description: 'gets user contacts',
