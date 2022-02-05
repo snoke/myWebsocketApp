@@ -1,10 +1,10 @@
 <?php
 namespace App\Api;
 
-
 use App\Api\Command;
 
 class ChatCommandCollection extends CommandCollection{
+    
     public function __construct(
         Command\AuthLoginCommand $authLogin,
         Command\AuthTokenDecodeCommand $authTokenDecodeCommand,
@@ -23,6 +23,7 @@ class ChatCommandCollection extends CommandCollection{
         Command\UserContactsCommand $userContactsCommand,
         Command\ChatLoadMessagesCommand $chatLoadMessages,
         ) {
+            parent::__construct();
             $this->addCommand($authLogin);
             $this->addCommand($authTokenDecodeCommand);
             $this->addCommand($chatLoadUserchatsCommand);

@@ -4,13 +4,11 @@ use Ratchet\WebSocket\WsConnection;
 use App\Api\SubscriberBroadcastCommand;
 use App\Api\JsonCommandResponse;
 
-use App\Api\WorkerInterface;
+use App\Api\AbstractWorker as Worker;
 
- Class CallbackPusher implements WorkerInterface {
+ Class CallbackPusher extends Worker {
 
-    public function work(WsConnection $from,SubscriberBroadcastCommand $command,JsonCommandResponse $jsonData) {
-
-            $from->send($jsonData); 
-        
+    public function onMessage(WsConnection $from,SubscriberBroadcastCommand $command,JsonCommandResponse $jsonData) {
+        $from->send($jsonData); 
     }
 }

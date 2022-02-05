@@ -13,11 +13,11 @@ class AuthenticatedUserClientCollection {
         $this->userClients = [];
     }
 
-    public function addClient(WsConnection $client, User $user) {
-        $this->userClients[$client->resourceId]=new AuthenticatedUserClient($client,$user);
+    public function addClient(WsConnection $conn, User $user) {
+        $this->userClients[$conn->resourceId]=new AuthenticatedUserClient($conn,$user);
     }
-    public function removeClient(WsConnection $clien) {
-        unset($this->userClients[$client->resourceId]);
+    public function removeClient(WsConnection $conn) {
+        unset($this->userClients[$conn->resourceId]);
     }
     public function getClients() {
        return $this->userClients;

@@ -9,9 +9,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use App\Api\SubscriberBroadcastCommand;
 use App\Api\AuthenticatedUserClientCollection;
-use App\Api\WorkerInterface;
+use App\Api\AbstractWorker as Worker;
 
- Class JwtAuthListener implements WorkerInterface {
+use \Ratchet\WebSocket\WsConnection;
+use App\Api\JsonCommandResponse;
+ Class JwtAuthListener extends Worker {
 
      const LOGIN_COMMAND = AuthLoginCommand::class;
 
@@ -32,7 +34,12 @@ use App\Api\WorkerInterface;
         $this->userClients=$userClients;
     }
 
-    public function work($from,SubscriberBroadcastCommand $command,JsonCommandResponse $response)
+    public function onClose(WsConnection $from)
+    {
+        $this->userClients->removeClient($from);
+    }
+
+    public function onMessage(WsConnection $from,SubscriberBroadcastCommand $command,JsonCommandResponse $response)
     {
         if ($command::class==self::LOGIN_COMMAND) {
             if ($response->getStatusCode()==Command::SUCCESS) {
@@ -41,8 +48,7 @@ use App\Api\WorkerInterface;
                     $this->userClients->addClient($from,$user);
                 } 
             }
-       }         
-
+       }   
     }
 
 }

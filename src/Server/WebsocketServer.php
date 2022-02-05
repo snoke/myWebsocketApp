@@ -6,17 +6,14 @@ use Ratchet\ConnectionInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Api\ChatApi as Api;
 
 class WebsocketServer implements MessageComponentInterface {
     protected \SplObjectStorage $clients;
-    protected Api $api;
     protected SymfonyStyle $io;
 
-    public function __construct(Api $api) {
+    public function __construct() {
 
         $this->clients = new \SplObjectStorage;
-        $this->api = $api;
     }
 
     public function setInterface(InputInterface $input, OutputInterface $output) {
@@ -28,10 +25,10 @@ class WebsocketServer implements MessageComponentInterface {
     }
     public function onMessage(ConnectionInterface $from,  $msg) {
         $this->io->block($msg, 'USER REQUEST', 'fg=blue', ' ', true);
-        $this->io->block($this->api->run($from,$msg), 'API RESPONSE', 'fg=green', ' ', true);
     }
 
     public function onClose(ConnectionInterface $conn) {
+        $this->clients->detach($conn);
         $this->io->block("Connection dropped $conn->remoteAddress ($conn->resourceId)", 'INFO', 'fg=yellow', ' ', true);
     }
 
