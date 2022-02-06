@@ -20,7 +20,7 @@ use Symfony\Component\Console\Command\Command;
  * 
  * simply register Commands in CommandCollection ($this->commands->add($myCommand))
  * 
- * and by websocket clients can call them using following json
+ * and websocket clients can call them using following json format
  *  
  *  example request:
  * { 
