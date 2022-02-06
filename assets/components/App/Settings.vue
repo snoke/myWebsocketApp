@@ -1,9 +1,6 @@
 <template>
-    <div id="settings">
+    <div id="settings"  class=" h-100p">
       
-      <div class="card">
-        <div  class="card-body">
-        <b-card-text>
           <div class="w-100">
             <div class="alert row " v-if="message"
              v-bind:class="{
@@ -15,13 +12,14 @@
           <input type="password" placeholder="new password" name="password" v-model="password"   class="w-100" />
           <input type="password" placeholder="repeat new password" name="password2" v-model="password2"   class="w-100" />
           <button v-on:click="save()"  class="btn btn-outline-primary w-100">change password <font-awesome-icon icon="save" /></button>
-        </b-card-text>
-</div>
-      </div>
+
     </div>
 </template>
 
 <style scoped>
+.h-100p {
+  height:100%;
+}
 .card-title{
 text-align: center;
 

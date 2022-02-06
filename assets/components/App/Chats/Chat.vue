@@ -1,7 +1,4 @@
 <template>
-      <div class="card">
-        <div  class="card-body">
-        <b-card-text>
     <div>
       <div id="loading" v-if="ready==false">
         loading
@@ -25,7 +22,6 @@
             <div v-for="(chatMessage,index) in chatMessages" :key="chatMessage.id">
                 <ChatMessage :data="chatMessage" v-if="chatMessages.length-visible<index" />
             </div>
-            <div class="stickyInputclearfix"></div>
             <div>
                 <div v-if="timerCount>0">
                     <div class="row pb-1" ref="message">
@@ -44,9 +40,6 @@
         </div>
       </div>
     </div>
-      </div>
-      </b-card-text >
-      </div>
           <div class="stickyInput">
             <b-button-group class="pt-1 w-100" >
               <b-dropdown dropup menu-class="minw-none" class="emoji-btn btn btn-outline-primary" variant="light" >
@@ -76,10 +69,14 @@
             </div>
             
           </div>
+          <div id="bottom" style="height:0px;"></div>
       </div>
 </template>
 
 <style>
+.h-100p {
+  height:100%;
+}
 .rounded {
     
   border-top-left-radius: 5px;
@@ -105,15 +102,13 @@
 </style>
 
 <style scoped>
-.stickyInputclearfix {
-  height:60px;
-}
 .stickyInput {
     z-index:1;
     bottom:0px;
     width:100%;
-    position: fixed;    padding-right: 2em;
+    position: fixed;
     background-color: white;
+    left: 0;
 }
 .chat-inner-container{
   min-height:3rem;
@@ -378,7 +373,12 @@ import { emojis } from './Chat/emojis.json'
         if (data.chat.id==this.id) {
             if (data.user.id!=this.$root.claim.id) {
                 this.timerCount = 50;
-                this.typingUser = data.user.username;
+                this.typingUser = data.user.username;                
+
+              setTimeout(function() {    
+                document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
+              
+              }, 1);
             }
         }
       })
@@ -406,7 +406,12 @@ import { emojis } from './Chat/emojis.json'
             this.id = chat.id;
            this.chatMessages = [];
             this.users = chat.users;
-            this.ready=true;
+            this.ready=true;   
+
+              setTimeout(function() {    
+                document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
+              
+              }, 1);
             this.$root.connection.send(
                 JSON.stringify({
                     'action': 'chat:load:messages',
@@ -424,9 +429,12 @@ import { emojis } from './Chat/emojis.json'
               var message = messages[0];
               this.chatMessages.unshift(message);
               this.page = this.page+1;
-              if (this.visible>this.page) {
+             // if (this.visible>this.page) {
+              setTimeout(function() {    
                 document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
-              }
+              
+              }, 1);
+             // }
               this.$root.connection.send(
                   JSON.stringify({
                       'action': 'chat:load:messages',
@@ -443,10 +451,14 @@ import { emojis } from './Chat/emojis.json'
       this.$root.$on('Chat::chat:message:send', (result) => {
             var msg = JSON.parse(result.data);
             this.chatMessages.push(msg);
-            document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
-            if (msg.sender.id!=this.$root.claim.id) {
-              this.$root.notify(msg.sender.username + ": " + msg.message)
-            }
+            
+              setTimeout(function() {    
+                document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
+              
+              }, 1);
+              if (msg.sender.id!=this.$root.claim.id) {
+                this.$root.notify(msg.sender.username + ": " + msg.message)
+              }
       });
       this.$root.$on('Chat::file:upload', (result) => {
             this.$root.connection.send(

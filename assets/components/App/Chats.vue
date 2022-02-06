@@ -1,8 +1,6 @@
 <template>
-    <div>
-      <div class="card">
-        <div  class="card-body">
-        <b-card-text>
+    <div class="h-100p">
+
 
       <div id="loading" v-if="ready==false">
         loading
@@ -31,13 +29,14 @@
             </button>
           </div>
       </div>
-              </b-card-text>
-        </div>
-        </div>
+
     </div>
 </template>
 
 <style scoped>
+.h-100p {
+  height:100%;
+}
 </style>
 
 <script>

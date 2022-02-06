@@ -1,18 +1,16 @@
 <template>
-    <div id="contacts">
-      
-      <div class="card">
-        <div  class="card-body">
-        <b-card-text>
+    <div id="contacts" class="h-100p">
+
       <input id="contact_search" type="text" class="w-100" placeholder="find new contacts" v-on:keyup="findContacts()" v-model="search" />
       <button type="button" v-for="user in contacts" :key="user.id" class="w-100 btn btn-outline-primary" @click="addContact(user)">Add {{user.username}}</button>
-        </b-card-text>
-        </div>
-        </div>
+
     </div>
 </template>
 
 <style scoped>
+.h-100p {
+  height:100%;
+}
 .card-title{
 text-align: center;
 

@@ -1,51 +1,65 @@
 <template>
-    <div id="app">
-        <div id="navigation">
-            <ul class="nav nav-tabs">
-                <li class="nav-item"  @click="go('app_contacts')">
-                    <a  href="#" target="_self" class="nav-link" v-bind:class="{ active: currentRoute('app_contacts')}" >  
-                        <font-awesome-icon icon="address-book" /> Contacts 
-                    </a>
-                </li>
+    <div id="layout " style="height:100vh;">
+        <div class="container-fluid d-flex hcontainer flex-column p-0">
+            <div class="row p-0">
+                <div class="col p-0">
+                    <ul class="nav nav-tabs p-0">
+                        <li class="nav-item"  @click="go('app_contacts')">
+                            <a  href="#" target="_self" class="nav-link" v-bind:class="{ active: currentRoute('app_contacts')}" >  
+                                <font-awesome-icon icon="address-book" /> Contacts 
+                            </a>
+                        </li>
 
-                <li class="nav-item"  @click="go('app_chats')"  >
-                    <a  href="#" target="_self" class="nav-link" v-bind:class="{ active: (currentRoute('app_chat') || currentRoute('app_chats')) }">
-                        <font-awesome-icon icon="edit" /> Chats 
-                    </a>
-                </li>
+                        <li class="nav-item"  @click="go('app_chats')"  >
+                            <a  href="#" target="_self" class="nav-link" v-bind:class="{ active: (currentRoute('app_chat') || currentRoute('app_chats')) }">
+                                <font-awesome-icon icon="edit" /> Chats 
+                            </a>
+                        </li>
 
-                <li class="nav-item"  @click="go('app_settings')" >
-                    <a  href="#" target="_self" class="nav-link" v-bind:class="{ active: currentRoute('app_settings')}">
-                        <font-awesome-icon icon="cogs" />  Settings 
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div id="content">
-            <div class="p-3">
-                <router-view></router-view>
+                        <li class="nav-item"  @click="go('app_settings')" >
+                            <a  href="#" target="_self" class="nav-link" v-bind:class="{ active: currentRoute('app_settings')}">
+                                <font-awesome-icon icon="cogs" />  Settings 
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div id="bottom">
+              <div class="row flex-fill d-flex justify-content-start scrollable">
+                  <div class="col portlet-container portlet-dropzone content">
+                    <div class="pt-3">
+                      <router-view></router-view>
+                     </div>
+                  </div>
+              </div>
+             
+                <div class="row ">
+                    <div class="col input-clearfix" v-if="currentRoute('app_chat')">
+                    </div>
+                </div>
         </div>
     </div>
 </template>
 
 <style scoped>
-#content {
-  padding-top: 2.5rem;
+#layout {
+    height:100vh;
 }
-.nav {
-    z-index:1;
-    position: fixed;
-    background-color: white;
-    width:100%;
+.hcontainer {
+  height:100vh;
 }
-.nav-item {
-    border-left:1px solid white;
+.input-clearfix {
+  height:100px;
 }
-#content {
-    background-color:white;
+.scrollable {
+    overflow-y: scroll;
+  overflow-x: hidden;
+}
+.flex-fill {
+    flex:1;
+}
+.row {
+    margin-left:0px;
+    margin-right:0px;
 }
 </style>
 

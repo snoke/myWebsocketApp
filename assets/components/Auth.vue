@@ -138,7 +138,7 @@ export default {
      });
     this.$root.$on('auth:token:decode', (result) => {
         this.$root.claim = JSON.parse(result.data);
-        this.$router.push({ name: 'app_chats'})
+        this.$router.push({ name: 'app_chats'});
      });
 
   }

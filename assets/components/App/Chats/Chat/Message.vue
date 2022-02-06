@@ -85,10 +85,10 @@ export default {
       }
   },
   mounted: function() {
-   document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
+   //document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
   },
   updated: function() {
-   document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
+   //document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
   },
   created: function() {
     if (this.sender.id!=this.$root.claim.id && this.status!='seen') {

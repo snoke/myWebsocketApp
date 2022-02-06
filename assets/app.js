@@ -125,6 +125,7 @@ const router = new VueRouter({
                   { 
                     name: "app_chat",
                     path: '/app/chat/:id', 
+               //     component:  Chat,
                     component:  Chat,
                     props: true,
                   },
