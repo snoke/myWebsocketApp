@@ -23,7 +23,6 @@ class Chat extends Entity
     private $users;
     
     #[ORM\OneToMany(mappedBy: 'chat', targetEntity: ChatMessage::class)]
-    #[Groups(['app_chat'])]
     private $chatMessages;
 
     #[ORM\ManyToOne(targetEntity: User::class)]

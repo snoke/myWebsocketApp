@@ -22,9 +22,10 @@
         </div>
         <div class="chat-container" @drop="dragFile" > 
           <div @click="hide('.icon-group')" class="chat-inner-container" >
-            <div v-for="chatMessage in chatMessages" :key="chatMessage.id">
-                <ChatMessage :data="chatMessage" />
+            <div v-for="(chatMessage,index) in chatMessages" :key="chatMessage.id">
+                <ChatMessage :data="chatMessage" v-if="chatMessages.length-visible<index" />
             </div>
+            <div class="stickyInputclearfix"></div>
             <div>
                 <div v-if="timerCount>0">
                     <div class="row pb-1" ref="message">
@@ -40,38 +41,41 @@
                 </div>
             </div>
           </div>
-          <b-button-group class="pt-1 w-100" >
-            <b-dropdown dropup menu-class="minw-none" class="emoji-btn btn btn-outline-primary" variant="light" >
-              <template #button-content>😊</template>
-              <b-dropdown-item v-for="k,group in this.emojis" :key="group" @click="showgroup(group)"> {{group}}</b-dropdown-item>
-            </b-dropdown>
-              <div v-for="arr,group in this.emojis" :key="group" :class="group+' icon-group w-100'" style="display:none;position:absolute;">
-                <div v-for="k,v in arr" :key="k" style="display:inline;" role='button' @click="addSmiley(v)">{{v}}</div>
-              </div>
-            <textarea rows="1" id="chat_input" class="disabled border-primary w-100 " placeholder="write a message" v-on:keydown="isTyping()" v-on:keyup="replaceEmoji" @click="hide('.icon-group')" />
-          </b-button-group>
-          <div  @click="hide('.icon-group')">
-            <b-button-group class="w-100"  >
-              <button type="button" class="w-100 btn btn-outline-primary " @click="send()" >send <font-awesome-icon icon="paper-plane" /></button>
-              <b-dropdown dropup menu-class="minw-none" variant="primary" >
-                <template #button-content>
-                  <font-awesome-icon icon="file" />
-                </template>
-                <!--   
-                  <b-dropdown-item><font-awesome-icon icon="camera" /></b-dropdown-item>
-                  <b-dropdown-divider /> 
-                -->
-                <b-dropdown-item  @click="$refs.file.click()"><font-awesome-icon icon="image" /></b-dropdown-item>
-              </b-dropdown>
-            </b-button-group>
-            <input type="file" ref="file" style="display: none" @change="fileAdded">
-          </div>
         </div>
       </div>
     </div>
       </div>
-      </b-card-text>
+      </b-card-text >
       </div>
+          <div class="stickyInput">
+            <b-button-group class="pt-1 w-100" >
+              <b-dropdown dropup menu-class="minw-none" class="emoji-btn btn btn-outline-primary" variant="light" >
+                <template #button-content>😊</template>
+                <b-dropdown-item v-for="k,group in this.emojis" :key="group" @click="showgroup(group)"> {{group}}</b-dropdown-item>
+              </b-dropdown>
+                <div v-for="arr,group in this.emojis" :key="group" :class="group+' icon-group w-100'" style="display:none;position:absolute;">
+                  <div v-for="k,v in arr" :key="k" style="display:inline;" role='button' @click="addSmiley(v)">{{v}}</div>
+                </div>
+              <textarea rows="1" id="chat_input" class="disabled border-primary w-100 " placeholder="write a message" v-on:keydown="isTyping()" v-on:keyup="replaceEmoji" @click="hide('.icon-group')" />
+            </b-button-group>
+            <div  @click="hide('.icon-group')">
+              <b-button-group class="w-100"  >
+                <button type="button" class="w-100 btn btn-outline-primary " @click="send()" >send <font-awesome-icon icon="paper-plane" /></button>
+                <b-dropdown dropup menu-class="minw-none" variant="primary" >
+                  <template #button-content>
+                    <font-awesome-icon icon="file" />
+                  </template>
+                  <!--   
+                    <b-dropdown-item><font-awesome-icon icon="camera" /></b-dropdown-item>
+                    <b-dropdown-divider /> 
+                  -->
+                  <b-dropdown-item  @click="$refs.file.click()"><font-awesome-icon icon="image" /></b-dropdown-item>
+                </b-dropdown>
+              </b-button-group>
+              <input type="file" ref="file" style="display: none" @change="fileAdded">
+            </div>
+            
+          </div>
       </div>
 </template>
 
@@ -101,6 +105,16 @@
 </style>
 
 <style scoped>
+.stickyInputclearfix {
+  height:60px;
+}
+.stickyInput {
+    z-index:1;
+    bottom:0px;
+    width:100%;
+    position: fixed;    padding-right: 2em;
+    background-color: white;
+}
 .chat-inner-container{
   min-height:3rem;
 }
@@ -160,9 +174,10 @@ import { emojis } from './Chat/emojis.json'
     components: {ChatMessage},
     data: function() {
       return {       
+        visible:99999,
         page:0,
-          typingUser:null,
-          timerCount:0,
+        typingUser:null,
+        timerCount:0,
         ready:false,
         id:null,
         users:[],
@@ -321,13 +336,12 @@ import { emojis } from './Chat/emojis.json'
           }
         }
         return names.join(', ')
-      },
+      },    
     },
     updated: function() {
             this.onResize();
     },
     mounted() {
-
             window.addEventListener('resize', this.onResize);
     }, 
       beforeDestroy () {
@@ -390,14 +404,46 @@ import { emojis } from './Chat/emojis.json'
       this.$root.$on('Chat::chat:load', (result) => {
             var chat = JSON.parse(result.data);
             this.id = chat.id;
-            this.chatMessages = chat.chatMessages;
+           this.chatMessages = [];
             this.users = chat.users;
             this.ready=true;
+            this.$root.connection.send(
+                JSON.stringify({
+                    'action': 'chat:load:messages',
+                    'params': {
+                        'chatId': this.$route.params.id,   
+                        'page': this.page,
+                        'steps': 1,
+                    }
+                })
+            );
+      });
+      this.$root.$on('Chat::chat:load:messages', (result) => {
+            var messages = JSON.parse(result.data);
+            if (messages.length!=0) {
+              var message = messages[0];
+              this.chatMessages.unshift(message);
+              this.page = this.page+1;
+              if (this.visible>this.page) {
+                document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
+              }
+              this.$root.connection.send(
+                  JSON.stringify({
+                      'action': 'chat:load:messages',
+                      'params': {
+                          'chatId': this.$route.params.id,   
+                          'page': this.page,
+                          'steps': 1,
+                      }
+                  })
+              );
+            }
       });
 
       this.$root.$on('Chat::chat:message:send', (result) => {
             var msg = JSON.parse(result.data);
             this.chatMessages.push(msg);
+            document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
             if (msg.sender.id!=this.$root.claim.id) {
               this.$root.notify(msg.sender.username + ": " + msg.message)
             }

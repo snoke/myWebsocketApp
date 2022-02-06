@@ -24,7 +24,7 @@ use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
 )]
 class ChatLoadMessagesCommand extends AbstractCommand
 {
-    CONST LIMIT = 10;
+    CONST LIMIT = 1;
 
     public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
         
@@ -38,17 +38,19 @@ class ChatLoadMessagesCommand extends AbstractCommand
         $this
             ->addArgument('chatId', InputArgument::REQUIRED, 'chatId')
             ->addArgument('page', InputArgument::OPTIONAL, 'page')
+            ->addArgument('steps', InputArgument::OPTIONAL, 'steps')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $chatId = $input->getArgument('chatId');
+        $steps = $input->getArgument('steps');
         $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=> $chatId]);
         $page = $input->getArgument('page');
-        $offset = ($page?$page:(int)0) * $limit;
-        $messages = $this->em->getRepository(ChatMessage::class)->findBy(['chat'=>$chat],["id"=>'desc'],self::LIMIT,$offset);
-        $jsonContent = $this->serializer->serialize($messages, 'json', ['groups' => ['app_chat']]);
+        $messages = $this->em->getRepository(ChatMessage::class)->findBy(['chat'=>$chat],["id"=>'desc'],$steps,$page);
+
+        $jsonContent = $this->serializer->serialize($messages, 'json', ['groups' => [$this->getName()]]);
         $output->write($jsonContent);
         return Command::SUCCESS;
     }

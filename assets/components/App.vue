@@ -105,6 +105,9 @@ export default {
       this.$root.$on('chat:load', (result) => {
         this.$root.$emit('Chat::chat:load',result);
       });
+      this.$root.$on('chat:load:messages', (result) => {
+        this.$root.$emit('Chat::chat:load:messages',result);
+      });
       this.$root.$on('file:upload', (result) => {
         this.$root.$emit('Chat::file:upload',result);
       });
