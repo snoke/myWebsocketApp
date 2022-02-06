@@ -1,5 +1,5 @@
 <?php
-namespace App\Api\RestfulJsonApi;
+namespace App\Api\JwtSubscriber;
 abstract class Entity
 {
     abstract public function getId();

@@ -6,7 +6,7 @@ use App\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-use App\Api\RestfulJsonApi\Entity;
+use App\Api\JwtSubscriber\Entity;
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 class File extends Entity
 {
