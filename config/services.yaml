@@ -6,13 +6,8 @@
 parameters:
 
 services:    
-    websocket_api:
-        class:     App\Api
-    websocket_auth_login:
-        class:     App\Websocket\Command\AuthLoginCommand
-        arguments: ['@Symfony\Contracts\HttpClient\HttpClientInterface']
     acme_api.event.jwt_created_listener:
-        class: App\EventListener\JWTCreatedListener
+        class: App\Api\JwtSubscriberApi\EventListener\JWTCreatedListener
         arguments: [ '@request_stack' ]
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }

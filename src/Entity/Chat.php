@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-use App\Api\JwtSubscriber\Entity;
+use App\Api\JwtSubscriberApi\Entity;
 #[ORM\Entity(repositoryClass: ChatRepository::class)]
 class Chat extends Entity
 {

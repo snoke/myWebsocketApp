@@ -1,5 +1,5 @@
 <?php
-namespace App\Api\JwtSubscriber;
+namespace App\Api\JwtSubscriberApi;
 abstract class Entity
 {
     abstract public function getId();

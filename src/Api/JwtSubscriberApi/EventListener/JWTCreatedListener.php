@@ -1,5 +1,5 @@
 <?php
-namespace App\EventListener;
+namespace App\Api\JwtSubscriberApi\EventListener;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
