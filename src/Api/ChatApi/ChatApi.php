@@ -20,11 +20,11 @@ class ChatApi extends Api {
 
     public function __construct(
         CommandCollection $commands,
-        CallbackResponder $CallbackResponder,
+        CallbackResponder $callbackResponder,
         Authenticator $authenticator,
         BroadcastPusher $broadcastPusher,
     ) {
-        parent::__construct($commands,$CallbackResponder,$authenticator,$broadcastPusher);
+        parent::__construct($commands,$callbackResponder,$authenticator,$broadcastPusher);
     }
 
 }

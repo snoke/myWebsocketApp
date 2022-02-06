@@ -31,11 +31,11 @@ class JwtSubscriberApi extends JsonApi {
 
     public function __construct(
         CommandCollection $commands,
-        CallbackResponder $CallbackResponder,
+        CallbackResponder $callbackResponder,
         Authenticator $authenticator,
         BroadcastPusher $broadcastPusher,
     ) {
-        parent::__construct($commands,$CallbackResponder);
+        parent::__construct($commands,$callbackResponder);
         $this->addWorker($authenticator);
         $this->addWorker($broadcastPusher);
     }

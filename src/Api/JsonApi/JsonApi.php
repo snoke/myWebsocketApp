@@ -48,11 +48,11 @@ class JsonApi extends WebsocketServer {
     private CommandCollection $commands;
     public function __construct(
         CommandCollection $commands,
-        CallbackResponder $CallbackResponder,
+        CallbackResponder $callbackResponder,
     ) {
         parent::__construct();
         $this->commands = $commands;
-        $this->workers = [$CallbackResponder];
+        $this->workers = [$callbackResponder];
     }
 
     private function execute(Command $command, ArrayInput $params) {
