@@ -53,7 +53,7 @@
   height:100vh;
 }
 .input-clearfix {
-  height:92px;
+  height:100px;
 }
 .scrollable {
     overflow-y: scroll;

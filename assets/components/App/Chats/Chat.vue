@@ -102,7 +102,9 @@
 
 <style scoped>
 .stickyInput {
-  height:92px;
+  height:100px;
+  padding-left:1em;
+  padding-right:1em;
     z-index:1;
     bottom:0px;
     width:100%;
@@ -427,17 +429,16 @@ import { emojis } from './Chat/emojis.json'
               var message = messages[0];
               this.chatMessages.unshift(message);     
               document.getElementById('bottom').scrollIntoView({behavior: "auto", block: "end"}); 
-              this.$root.connection.send(
-                  JSON.stringify({
-                      'action': 'chat:load:messages',
-                      'params': {
-                          'chatId': this.$route.params.id,   
-                          'page': this.page,
-                          'steps': 1,
-                      }
-                  })
-              );
-           
+                  this.$root.connection.send(
+                    JSON.stringify({
+                        'action': 'chat:load:messages',
+                        'params': {
+                            'chatId': this.$route.params.id,   
+                            'page': this.page,
+                            'steps': 1,
+                        }
+                    })
+                );
             }
       });
 

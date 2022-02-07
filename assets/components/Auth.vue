@@ -108,14 +108,14 @@ export default {
   },
   created: function() {
     this.$root.$on('auth:login', (result) => {
-        this.login_message = {
-            status: result.status,
-            data: result.data,
-        }
         if (result.status==0) {
                     this.$root.token = result.data;
                     this.decodeToken();
         } else {
+            this.login_message = {
+                status: result.status,
+                data: result.data,
+            }
 
         }
      });
