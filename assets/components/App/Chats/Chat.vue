@@ -41,7 +41,7 @@
       </div>
     </div>
           <div class="stickyInput">
-            <b-button-group class="pt-1 w-100" >
+            <b-button-group class="w-100" >
               <b-dropdown dropup menu-class="minw-none" class="emoji-btn btn btn-outline-primary" variant="light" >
                 <template #button-content>😊</template>
                 <b-dropdown-item v-for="k,group in this.emojis" :key="group" @click="showgroup(group)"> {{group}}</b-dropdown-item>
@@ -69,7 +69,6 @@
             </div>
             
           </div>
-          <div id="bottom" style="height:0px;"></div>
       </div>
 </template>
 
@@ -103,11 +102,11 @@
 
 <style scoped>
 .stickyInput {
+  height:92px;
     z-index:1;
     bottom:0px;
     width:100%;
     position: fixed;
-    background-color: white;
     left: 0;
 }
 .chat-inner-container{
@@ -132,6 +131,7 @@ textarea {
   resize: none;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  border-left: 0!important;
 }
 .rounded {
   border-top-left-radius: 5px;
@@ -346,6 +346,7 @@ import { emojis } from './Chat/emojis.json'
         this.$root.$off('Chat::chat:block')
         this.$root.$off('Chat::chat:typing')
         this.$root.$off('Chat::chat:unblock')
+        this.$root.$off('Chat::chat:load:messages')
     },
     
         watch: {
@@ -404,14 +405,10 @@ import { emojis } from './Chat/emojis.json'
       this.$root.$on('Chat::chat:load', (result) => {
             var chat = JSON.parse(result.data);
             this.id = chat.id;
-           this.chatMessages = [];
+            this.page = 0;
+            this.chatMessages = [];
             this.users = chat.users;
             this.ready=true;   
-
-              setTimeout(function() {    
-                document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
-              
-              }, 1);
             this.$root.connection.send(
                 JSON.stringify({
                     'action': 'chat:load:messages',
@@ -425,16 +422,11 @@ import { emojis } from './Chat/emojis.json'
       });
       this.$root.$on('Chat::chat:load:messages', (result) => {
             var messages = JSON.parse(result.data);
-            if (messages.length!=0) {
+            if (messages.length==1) {
+              this.page++;
               var message = messages[0];
-              this.chatMessages.unshift(message);
-              this.page = this.page+1;
-             // if (this.visible>this.page) {
-              setTimeout(function() {    
-                document.getElementById('bottom').scrollIntoView({behavior: "smooth", block: "end"});  
-              
-              }, 1);
-             // }
+              this.chatMessages.unshift(message);     
+              document.getElementById('bottom').scrollIntoView({behavior: "auto", block: "end"}); 
               this.$root.connection.send(
                   JSON.stringify({
                       'action': 'chat:load:messages',
@@ -445,6 +437,7 @@ import { emojis } from './Chat/emojis.json'
                       }
                   })
               );
+           
             }
       });
 

@@ -25,11 +25,16 @@
                 </div>
             </div>
               <div class="row flex-fill d-flex justify-content-start scrollable">
-                  <div class="col portlet-container portlet-dropzone content">
-                    <div class="pt-3">
+                  <div class="col portlet-container portlet-dropzone content p-3 pb-1">
+
                       <router-view></router-view>
-                     </div>
-                  </div>
+               
+
+
+
+
+                  </div> <div id="bottom">
+  </div>
               </div>
              
                 <div class="row ">
@@ -48,7 +53,7 @@
   height:100vh;
 }
 .input-clearfix {
-  height:100px;
+  height:92px;
 }
 .scrollable {
     overflow-y: scroll;
