@@ -15,7 +15,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
     name: 'app:generate:entrypoint',
     description: 'Create a static index.html entrypoint for capacitor',
 )]
-class AppGenerateIndex extends Command
+class AppGenerateEntrypoint extends Command
 {    private $client;
 
     public function __construct(HttpClientInterface $client)
@@ -26,8 +26,7 @@ class AppGenerateIndex extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $response = $this->client->request('POST', $_ENV['SERVER_URL'], ['headers' => ['Accept' => 'application/json',]]);
-        
+        $response = $this->client->request('GET', $_ENV['SERVER_URL']);
         $content = $response->getContent();
         file_put_contents(__DIR__.'/../../public/index.html', str_replace('/build','build',$content));
         return Command::SUCCESS;
