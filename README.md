@@ -63,11 +63,11 @@ php bin/console server:start
 setup:
 ```
 npm install @capacitor/cli --save-dev
-npx cap init && npx cap add android
+npx cap init && php bin/console app:generate:entrypoint && npx cap add android
 ```
 and finally build:
 ```
-php bin/console app:generate:entrypoint && npx cap run android
+npx cap run android
 ```
 ## ToDos
 * setup firebase and implement native android notification
