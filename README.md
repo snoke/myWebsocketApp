@@ -57,4 +57,6 @@ npm run dev
 ```
 php bin/console server:start
 ```
-
+## ToDos
+* setup firebase and implement native android notification
+* compile native ios client 
