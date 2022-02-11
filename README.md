@@ -57,6 +57,23 @@ npm run dev
 ```
 php bin/console server:start
 ```
+
+## build native client APK (Android Package Kit)
+ native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup)
+
+setup:
+```
+npm install @capacitor/core
+npm install @capacitor/cli --save-dev
+npm install @capacitor/android
+npx cap init &&
+npx cap add android
+```
+
+and finally build:
+```
+npx cap build android
+```
 ## ToDos
 * setup firebase and implement native android notification
 * build native ios client 
