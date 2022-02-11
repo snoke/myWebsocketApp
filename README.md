@@ -6,7 +6,8 @@
 
 ## Description
 Websockets are persistent connections over TCP. 
-This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.
+This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.<br /><br />
+Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS Client.<br />
 <br />
 ## Features
 * Browser Push Notifications
@@ -16,7 +17,7 @@ This is not only a lot faster then typical http requests where a new connection 
 * live is typing info
 * block/unblock chat
 * vuejs web and native android client
-Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS Client.<br />
+
 
 
 
