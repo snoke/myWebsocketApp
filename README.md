@@ -31,7 +31,7 @@ bob:test
 ## Downloads
 * [Native Android Chat Client (APK)](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk)  
 
-## server installation
+## Server Installation
 run following command to checkout the project
 ```
 git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && cd myWebsocketChat && nano .env
@@ -51,18 +51,18 @@ php bin/console doctrine:database:create && php bin/console do:mi:mi
 php bin/console lexik:jwt:generate-keypair && chown www-data config/jwt -R
 npm install && npm run dev 
 ```
-## start websocket server
+## Start Websocket Server
 ```
 php bin/console server:start
 ```
 
-## build client apk (Android Package Kit)
+## Build Client Apk (Android Package Kit)
  native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
 
 ```
 npm install @capacitor/cli --save-dev
 npx cap init && php bin/console app:generate:entrypoint && npx cap add android && npx cap run android
 ```
-## ToDos
+## TODOs
 * setup firebase and implement native android notification
 * build native ios client 
