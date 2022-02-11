@@ -16,33 +16,28 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\Chat;
 use App\Entity\User;
 
-use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
+use App\Api\ChatApi\ChatCommand as AbstractCommand;
 #[AsCommand(
     name: 'contact:add',
     description: 'Adds a Contact',
 )]
 class ContactAddCommand extends AbstractCommand
 {
-
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-       
-        parent::__construct();
-        
-        $this->em = $em;
-        $this->serializer = $serializer;
-    }
     protected function configure(): void
     {
+        parent::configure();
         $this
-            ->addArgument('alice', InputArgument::REQUIRED, 'id of alice')
             ->addArgument('bob', InputArgument::REQUIRED, 'id of bob')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $token = $input->getArgument('token');
+        $user = $this->getUserByToken($token);
+        if (!$user) { return 401; }
         $users = $this->em->getRepository(User::class);
-        $alice = $users->findOneBy(['id'=>$input->getArgument('alice')]);
+        $alice = $user;
         $bob = $users->findOneBy(['id'=>$input->getArgument('bob')]);
         $alice->addContact($bob); 
         $bob->addContact($alice); 

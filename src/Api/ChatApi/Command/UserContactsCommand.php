@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\User;
 
 
-use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
+use App\Api\ChatApi\ChatCommand as AbstractCommand;
 #[AsCommand(
     name: 'user:contacts',
     description: 'gets user contacts',
@@ -23,27 +23,17 @@ use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
 class UserContactsCommand extends AbstractCommand
 {  
 
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-        
-        parent::__construct();
-        
-        $this->em = $em;
-        $this->serializer = $serializer;
-    }
-
 protected function configure(): void
 {
-    $this
-        ->addArgument('userId', InputArgument::REQUIRED, 'userid')
-    ;
+    parent::configure();
 }
 
 protected function execute(InputInterface $input, OutputInterface $output): int
 {
+    $token = $input->getArgument('token');
+    $user = $this->getUserByToken($token);
+    if (!$user) { return 401; }
     $this->em->clear();
-    $users = $this->em->getRepository(User::class);
-    $userId = $input->getArgument('userId');
-    $user = $users->findOneBy(['id'=> $userId]);
     $contacts = $user->getContacts();
     $jsonContent = $this->serializer->serialize($contacts, 'json', ['groups' => ['app_user_contacts']]);
 

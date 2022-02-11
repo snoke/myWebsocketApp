@@ -76,7 +76,7 @@ export default {
               JSON.stringify({
                   'action': 'chat:message:send',
                   'params': {
-                      'senderId': this.$root.claim.id,    
+                          'token': this.$root.token,
                       'chatId': this.$route.params.id,    
                       'message': message,    
                   }
@@ -96,6 +96,7 @@ export default {
             JSON.stringify({
                 'action': 'chat:message:status',
                 'params': {
+                          'token': this.$root.token,
                     'messageId': this.id,
                     'status': 'seen',    
                 }

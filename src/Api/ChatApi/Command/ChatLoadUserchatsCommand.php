@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use App\Entity\User;
-use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
+use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
 #[AsCommand(
     name: 'chat:load:userchats',
@@ -21,26 +21,17 @@ use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
 )]
 class ChatLoadUserchatsCommand extends AbstractCommand
 {
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-        
-        parent::__construct();
-        
-        $this->em = $em;
-        $this->serializer = $serializer;
-    }
 protected function configure(): void
 {
-    $this
-        ->addArgument('userId', InputArgument::REQUIRED, 'userId')
-    ;
+    parent::configure();
 }
 
 protected function execute(InputInterface $input, OutputInterface $output): int
 {
+    $token = $input->getArgument('token');
+    $user = $this->getUserByToken($token);
+    if (!$user) { return 401; }
     $this->em->clear();
-    $users = $this->em->getRepository(User::class);
-    $userid = $input->getArgument('userId');
-    $user = $users->findOneBy(['id'=> $userid]);
     $chats = $user->getChats();
     $jsonContent = $this->serializer->serialize($chats, 'json', ['groups' => ['app_user_chats']]);
 

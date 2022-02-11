@@ -16,7 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Doctrine\Common\Collections\Criteria;
 use App\Entity\Chat;
 use App\Entity\ChatMessage;
-use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
+use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
 #[AsCommand(
     name: 'chat:load:messages',
@@ -26,15 +26,9 @@ class ChatLoadMessagesCommand extends AbstractCommand
 {
     CONST LIMIT = 1;
 
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-        
-        parent::__construct();
-        
-        $this->em = $em;
-        $this->serializer = $serializer;
-    }
     protected function configure(): void
     {
+        parent::configure();
         $this
             ->addArgument('chatId', InputArgument::REQUIRED, 'chatId')
             ->addArgument('page', InputArgument::OPTIONAL, 'page')
@@ -44,9 +38,13 @@ class ChatLoadMessagesCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $token = $input->getArgument('token');
+        $user = $this->getUserByToken($token);
+        if (!$user) { return 401; }
         $chatId = $input->getArgument('chatId');
         $steps = $input->getArgument('steps');
         $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=> $chatId]);
+        if (!in_array($user,$chat->getUsers()->toArray())) { return 401; }
         $page = $input->getArgument('page');
         $messages = $this->em->getRepository(ChatMessage::class)->findBy(['chat'=>$chat],["id"=>'desc'],$steps,$page);
 

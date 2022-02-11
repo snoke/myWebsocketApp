@@ -212,8 +212,8 @@ import { emojis } from './Chat/emojis.json'
                   JSON.stringify({
                       'action': 'chat:typing',
                       'params': {
+                          'token': this.$root.token,
                           'chatId': this.id,   
-                          'userId': this.$root.claim.id,     
                       }
                   })
               );
@@ -254,8 +254,8 @@ import { emojis } from './Chat/emojis.json'
                   JSON.stringify({
                       'action': 'chat:block',
                       'params': {
+                          'token': this.$root.token,
                           'chatId': this.id,    
-                          'userId': this.$root.claim.id,    
                       }
                   })
               );
@@ -281,7 +281,7 @@ import { emojis } from './Chat/emojis.json'
                         JSON.stringify({
                             'action': 'file:upload',
                             'params': {
-                                'userId': this.$root.claim.id,    
+                          'token': this.$root.token,
                                 'content': reader.result,    
                                 'filename': this.files[0].name, 
                             }
@@ -302,6 +302,7 @@ import { emojis } from './Chat/emojis.json'
               JSON.stringify({
                   'action': 'chat:message:status',
                   'params': {
+                          'token': this.$root.token,
                       'messageId': msg.id,
                       'status': status,    
                   }
@@ -316,7 +317,7 @@ import { emojis } from './Chat/emojis.json'
               JSON.stringify({
                   'action': 'chat:message:send',
                   'params': {
-                      'senderId': this.$root.claim.id,    
+                          'token': this.$root.token, 
                       'chatId': this.$route.params.id,    
                       'message': msg,    
                   }
@@ -367,6 +368,7 @@ import { emojis } from './Chat/emojis.json'
             JSON.stringify({
                 'action': 'chat:load',
                 'params': {
+                          'token': this.$root.token,
                     'chatId': this.$route.params.id,    
                 }
             })
@@ -392,6 +394,7 @@ import { emojis } from './Chat/emojis.json'
               JSON.stringify({
                   'action': 'chat:load',
                   'params': {
+                          'token': this.$root.token,
                       'chatId': this.$route.params.id,    
                   }
               })
@@ -415,6 +418,7 @@ import { emojis } from './Chat/emojis.json'
                 JSON.stringify({
                     'action': 'chat:load:messages',
                     'params': {
+                          'token': this.$root.token,
                         'chatId': this.$route.params.id,   
                         'page': this.page,
                         'steps': 1,
@@ -433,6 +437,7 @@ import { emojis } from './Chat/emojis.json'
                     JSON.stringify({
                         'action': 'chat:load:messages',
                         'params': {
+                          'token': this.$root.token,
                             'chatId': this.$route.params.id,   
                             'page': this.page,
                             'steps': 1,
@@ -459,7 +464,7 @@ import { emojis } from './Chat/emojis.json'
                 JSON.stringify({
                     'action': 'chat:message:send',
                     'params': {
-                        'senderId': this.$root.claim.id,    
+                          'token': this.$root.token,
                         'chatId': this.$route.params.id,    
                         'message': '',   
                         'file': JSON.parse(result.data)

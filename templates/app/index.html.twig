@@ -6,8 +6,9 @@
 <script id="_symfonyData" type="application/json">
   {
     {% for k,v in config %}
-    "{{k}}": "{{v}}"
+    "{{k}}": "{{v}}",
     {% endfor %}
+    "_null":"null"
   }
 </script>
 

@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use App\Entity\ChatMessage;
 
-use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
+use App\Api\ChatApi\ChatCommand as AbstractCommand;
 #[AsCommand(
     name: 'chat:message:status',
     description: "Sets a Message Status",
@@ -22,15 +22,9 @@ use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
 class ChatMessageStatusCommand extends AbstractCommand
 {
     
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-        
-        parent::__construct();
-        
-        $this->em = $em;
-        $this->serializer = $serializer;
-    }
     protected function configure(): void
     {
+        parent::configure();
         $this
             ->addArgument('messageId', InputArgument::OPTIONAL, "the ChatMessage ID")
             ->addArgument('status', InputArgument::OPTIONAL, "possible values are: 'sent','delivered','seen'")
@@ -39,6 +33,9 @@ class ChatMessageStatusCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $token = $input->getArgument('token');
+        $user = $this->getUserByToken($token);
+        if (!$user) { return 401; }
         $status = $input->getArgument('status');
         $id = $input->getArgument('messageId');
 

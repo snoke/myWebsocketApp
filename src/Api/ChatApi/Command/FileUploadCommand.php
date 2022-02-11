@@ -16,23 +16,17 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\File;
 use App\Entity\User;
 
-use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
+use App\Api\ChatApi\ChatCommand as AbstractCommand;
 #[AsCommand(
     name: 'file:upload',
     description: 'Uploads a file',
 )]
 class FileUploadCommand extends AbstractCommand
 {
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-        parent::__construct();
-        
-        $this->em = $em;
-        $this->serializer = $serializer;
-    }
     protected function configure(): void
     {
+        parent::configure();
         $this
-            ->addArgument('userId', InputArgument::REQUIRED, 'Argument description')
             ->addArgument('filename', InputArgument::REQUIRED, 'Argument description')
             ->addArgument('content', InputArgument::REQUIRED, 'Argument description')
         ;
@@ -40,11 +34,14 @@ class FileUploadCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $token = $input->getArgument('token');
+        $user = $this->getUserByToken($token);
+        if (!$user) { return 401; }
         $io = new SymfonyStyle($input, $output);
         
         $file = new File();
 
-        $file->setUser($this->em->getRepository(User::class)->findOneBy(['id'=> $input->getArgument('userId')]));
+        $file->setUser($user);
         $file->setFilename($input->getArgument('filename'));
         $file->setContent($input->getArgument('content'));
 

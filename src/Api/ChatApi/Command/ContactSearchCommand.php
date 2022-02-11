@@ -16,23 +16,16 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\User;
 
 
-use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
+use App\Api\ChatApi\ChatCommand as AbstractCommand;
 #[AsCommand(
     name: 'contact:search',
     description: 'search user by name (like search)',
 )]
 class ContactSearchCommand extends AbstractCommand
 {  
-
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-        
-        parent::__construct();
-        
-        $this->em = $em;
-        $this->serializer = $serializer;
-    }
     protected function configure(): void
     {
+        parent::configure();
         $this
             ->addArgument('username', InputArgument::REQUIRED, 'search users')
         ;
@@ -40,6 +33,9 @@ class ContactSearchCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $token = $input->getArgument('token');
+        $user = $this->getUserByToken($token);
+        if (!$user) { return 401; }
         $this->em->clear();
         $users = $this->em->getRepository(User::class);
         $username = $input->getArgument('username');

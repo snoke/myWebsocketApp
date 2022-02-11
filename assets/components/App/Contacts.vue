@@ -34,7 +34,7 @@ export default {
             JSON.stringify({
                 'action': 'contact:add',
                 'params': {
-                  'alice': this.$root.claim.id,
+                  'token': this.$root.token,
                   'bob' :user.id,
                 }
             })
@@ -46,6 +46,7 @@ export default {
             JSON.stringify({
                 'action': 'contact:search',
                 'params': {
+                  'token': this.$root.token,
                     'username': this.search,    
                 }
             })
@@ -68,7 +69,7 @@ export default {
             JSON.stringify({
                 'action': 'user:contacts',
                 'params': {
-                    'userId': this.$root.claim.id
+                          'token': this.$root.token,
                 }
             })
         );

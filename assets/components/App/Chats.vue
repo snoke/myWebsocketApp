@@ -62,8 +62,8 @@ export default {
                   JSON.stringify({
                       'action': 'chat:unblock',
                       'params': {
+                          'token': this.$root.token,
                           'chatId': chatId,    
-                          'userId': this.$root.claim.id,    
                       }
                   })
               );
@@ -113,7 +113,7 @@ export default {
                 JSON.stringify({
                     'action': 'chat:load:userchats',
                     'params': {
-                        'userId': this.$root.claim.id,    
+                          'token': this.$root.token,
                     }
                 })
             );
@@ -128,7 +128,7 @@ export default {
                 JSON.stringify({
                     'action': 'chat:load:userchats',
                     'params': {
-                        'userId': this.$root.claim.id,    
+                          'token': this.$root.token,
                     }
                 })
             );
@@ -140,7 +140,7 @@ export default {
             JSON.stringify({
                 'action': 'chat:load:userchats',
                 'params': {
-                    'userId': this.$root.claim.id,    
+                          'token': this.$root.token,
                 }
             })
         );

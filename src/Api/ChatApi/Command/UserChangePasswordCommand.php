@@ -19,7 +19,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Entity\User;
 
-use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
+use App\Api\ChatApi\ChatCommand as AbstractCommand;
 #[AsCommand(
     name: 'user:change:password',
     description: 'change password',
@@ -29,23 +29,18 @@ class UserChangePasswordCommand extends AbstractCommand
     private $passwordHasher;
     protected $em;
 
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer,UserPasswordHasherInterface $userPasswordHasher,JWTEncoderInterface $encoder,HttpClientInterface $client)
+    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer,JWTEncoderInterface $encoder,UserPasswordHasherInterface $userPasswordHasher,HttpClientInterface $client)
     {
         
-        parent::__construct();
-        
-        $this->em = $em;
-        $this->encoder = $encoder;
+        parent::__construct($em, $serializer,$encoder);
         $this->passwordHasher = $userPasswordHasher;
         $this->client = $client;
-        $this->em = $em;
-        $this->serializer = $serializer;
     }
 
     protected function configure(): void
     {
+        parent::configure();
         $this
-            ->addArgument('token', InputArgument::REQUIRED, 'token')
             ->addArgument('oldpassword', InputArgument::REQUIRED, 'old password')
             ->addArgument('password', InputArgument::REQUIRED, 'new password')
             ->addArgument('password2', InputArgument::REQUIRED, 'new password repeat')
@@ -54,15 +49,13 @@ class UserChangePasswordCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $token = $input->getArgument('token');
+        $user = $this->getUserByToken($token);
+        if (!$user) { return 401; }
         $oldpassword = $input->getArgument('oldpassword');
         $password = $input->getArgument('password');
         $password2 = $input->getArgument('password2');
 
-        $token = $input->getArgument('token');
-        $payload = $this->encoder->decode($token);
-
-        $user = $this->em->getRepository(User::class)->findOneBy(['id'=> $payload['id']]);
-        
         $response = $this->client->request(
             'POST',
             $_ENV['SERVER_URL'] . '/api/login_check',

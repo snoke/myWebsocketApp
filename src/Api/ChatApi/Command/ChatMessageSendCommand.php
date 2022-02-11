@@ -17,7 +17,7 @@ use App\Entity\Chat;
 use App\Entity\ChatMessage;
 use App\Entity\File;
 use App\Entity\User;
-use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
+use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
 #[AsCommand(
     name: 'chat:message:send',
@@ -25,17 +25,10 @@ use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
 )]
 class ChatMessageSendCommand extends AbstractCommand
 {
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-        
-        parent::__construct();
-        
-        $this->em = $em;
-        $this->serializer = $serializer;
-    }
     protected function configure(): void
     {
+        parent::configure();
         $this
-            ->addArgument('senderId', InputArgument::REQUIRED, 'Argument description')
             ->addArgument('chatId', InputArgument::REQUIRED, 'Argument description')
             ->addArgument('message', InputArgument::REQUIRED, 'Argument description')
             ->addArgument('file', InputArgument::OPTIONAL, 'Argument description')
@@ -44,14 +37,18 @@ class ChatMessageSendCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $token = $input->getArgument('token');
+        $user = $this->getUserByToken($token);
+        if (!$user) { return 401; }
         $io = new SymfonyStyle($input, $output);
         $chatMessage = new ChatMessage();
         $chatMessage->setMessage($input->getArgument('message'));
         $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=>$input->getArgument('chatId')]);
+        if (!in_array($user,$chat->getUsers()->toArray())) { return 401; }
         if ($chat->getBlockedBy()!=null) {
             return Command::FAILURE;
         }
-        $chatMessage->setSender($this->em->getRepository(User::class)->findOneBy(['id'=>$input->getArgument('senderId')]));
+        $chatMessage->setSender($user);
         $chatMessage->setChat($chat);
         $chatMessage->setFile($this->em->getRepository(File::class)->findOneBy(['id'=>$input->getArgument('file')]));
         $chatMessage->setSent(new \DateTime());

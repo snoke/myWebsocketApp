@@ -14,37 +14,32 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\Chat;
-use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
+use App\Api\ChatApi\ChatCommand as AbstractCommand;
 #[AsCommand(
     name: 'chat:block',
     description: 'Add a short description for your command',
 )]
 class ChatBlockCommand extends AbstractCommand
 {
-    public function __construct(EntityManagerInterface $em,SerializerInterface $serializer) {
-        
-        parent::__construct();
-        
-        $this->em = $em;
-        $this->serializer = $serializer;
-    }
     protected function configure(): void
     {
+        parent::configure();
         $this
             ->addArgument('chatId', InputArgument::REQUIRED, 'chatId')
-            ->addArgument('userId', InputArgument::REQUIRED, 'userId')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $token = $input->getArgument('token');
+        $user = $this->getUserByToken($token);
+        if (!$user) { return 401; }
         $chatId = $input->getArgument('chatId');
-        $userId = $input->getArgument('userId');
         $chat = $this->em->getRepository(Chat::class)->findOneBy(['id'=> $chatId]);
+        if (!in_array($user,$chat->getUsers()->toArray())) { return 401; }
         if ($chat->getBlockedBy()!=null) {
             return Command::FAILURE;
         } 
-        $user = $this->em->getRepository(User::class)->findOneBy(['id'=> $userId]);
         $chat->setBlockedBy($user);
         $this->em->persist($chat);
         $this->em->flush();

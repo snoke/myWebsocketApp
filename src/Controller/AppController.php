@@ -18,6 +18,7 @@ class AppController extends AbstractController
             'controller_name' => 'AppController',
             'config' => [ 
                 'websocket_url' => $_ENV['WEBSOCKET_URL'],
+                'client' => 'web',
             ]
         ]);
     }

@@ -86,9 +86,7 @@ Vue.use(require('vue-moment'), {
 })
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
-
 const router = new VueRouter({  
-    mode:'history',
     components: {Base},
     routes: [
         { 
@@ -134,9 +132,7 @@ const router = new VueRouter({
         }
     ]
 });
-// Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -144,9 +140,13 @@ Vue.use(VueAxios, axios)
 import device from "vue-device-detector"
 Vue.use(device)
 
+var config = JSON.parse(document.getElementById('_symfonyData').innerHTML);
+if (config.client=='web') {
+    router.mode='history'
+}
 new Vue({
     created: function() {
-      this.config = JSON.parse(document.getElementById('_symfonyData').innerHTML);
+      this.config= config
     },
     methods: {
       connect() {
