@@ -41,7 +41,7 @@ DATABASE_URL="mysql://root@127.0.0.1:3306/myDatabase?serverVersion=mariadb-10.4.
 JWT_PASSPHRASE=supersecretpassword
 ```
 
-then run following command to set up database, jwt keypairs and assets
+then install dependencies, set up database, jwt keypairs and assets
 ```
 composer up
 php bin/console doctrine:database:create
