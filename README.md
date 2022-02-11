@@ -64,12 +64,12 @@ php bin/console server:start
 setup:
 ```
 npm install @capacitor/cli --save-dev
-php bin/console app:generate:entrypoint 
 npx cap init 
 npx cap add android
 ```
 and finally build:
 ```
+php bin/console app:generate:entrypoint 
 npx cap run android
 ```
 ## ToDos
