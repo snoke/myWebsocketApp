@@ -33,14 +33,13 @@ run following command to checkout the project
 ```
 git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && cd myWebsocketChat && nano .env
 ```
-edit following DOTENV variables matching your system
+edit .env and set server, websocket and database url and a jwt password 
 ```
 SERVER_URL='http://localhost' 
 WEBSOCKET_URL='ws://localhost:8080' //should match server:start command output as server and client can run on different machines
 DATABASE_URL="mysql://root@127.0.0.1:3306/myDatabase?serverVersion=mariadb-10.4.11"
 JWT_PASSPHRASE=supersecretpassword
 ```
-mount web root to myWebsocketChat/public
 
 then run following command to set up database, jwt keypairs and assets
 ```
@@ -60,7 +59,6 @@ php bin/console server:start
 ## build native client APK (Android Package Kit)
  native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup)
 
-setup:
 ```
 npm install @capacitor/cli --save-dev
 npx cap init && php bin/console app:generate:entrypoint && npx cap add android && npx cap run android
