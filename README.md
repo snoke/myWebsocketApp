@@ -19,7 +19,7 @@ This is not only a lot faster then typical http requests where a new connection 
 Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS Client.
 
 ## Live Demo
-browse to https://websocketchat.stefan-sander.online or use the [Native Android Chat Client](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk) 
+browse to https://websocketchat.stefan-sander.online or use the [Native Android Chat Client](#Downloads) 
 using following credientials
 ```
 alice:test
@@ -27,9 +27,10 @@ alice:test
 ```
 bob:test
 ```
-
+<a name="Downloads"></a>
 ## Downloads
 * [Native Android Chat Client (APK)](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk)  
+
 
 ## Server Installation
 run following command to checkout the project
