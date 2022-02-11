@@ -21,7 +21,7 @@ Project contains a super simple ```server:start```  - Command, a Json Api and a 
 
 
 ## Live Demo
-browse to https://websocketchat.stefan-sander.online or download and install the [Native Android Chat Client](#Downloads) onto your android phone 
+browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads) onto your android phone 
 using following credientials
 ```
 alice:test
