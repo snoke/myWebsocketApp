@@ -29,7 +29,7 @@ bob:test
 ```
 
 ## Downloads
-* [Native Android Chat Client](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk)  
+* [Native Android Chat Client (APK)](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk)  
 
 ## server installation
 run following command to checkout the project
