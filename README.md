@@ -63,13 +63,10 @@ php bin/console server:start
 
 setup:
 ```
-npm install @capacitor/core
 npm install @capacitor/cli --save-dev
-npm install @capacitor/android
 npx cap init &&
 npx cap add android
 ```
-
 and finally build:
 ```
 npx cap build android
