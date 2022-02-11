@@ -19,7 +19,7 @@ This is not only a lot faster then typical http requests where a new connection 
 Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS Client.
 
 ## Live Demo
-browse to https://websocketchat.stefan-sander.online or use the [native android client](https://github.com/snoke/myWebsocketApp/raw/master/app-debug.apk) 
+browse to https://websocketchat.stefan-sander.online or use the [native android client](https://github.com/snoke/myWebsocketApp/raw/master/public/client.apk) 
 using following credientials
 ```
 alice:test
@@ -41,7 +41,7 @@ DATABASE_URL="mysql://root@127.0.0.1:3306/myDatabase?serverVersion=mariadb-10.4.
 JWT_PASSPHRASE=supersecretpassword
 ```
 
-then run following command to set up database, jwt keypairs and assets
+then install dependencies, set up database, jwt keypairs and assets
 ```
 composer up
 php bin/console doctrine:database:create
