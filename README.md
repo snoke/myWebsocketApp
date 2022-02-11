@@ -57,7 +57,7 @@ php bin/console server:start
 ```
 
 ## build client apk (Android Package Kit)
- native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup)
+ native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
 
 ```
 npm install @capacitor/cli --save-dev
