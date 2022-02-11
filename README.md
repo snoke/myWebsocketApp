@@ -69,7 +69,6 @@ npx cap add android
 ```
 and finally build:
 ```
-npm run dev
 php bin/console app:generate:entrypoint 
 npx cap run android
 ```
