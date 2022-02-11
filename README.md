@@ -20,12 +20,6 @@ Project contains a super simple ```server:start```  - Command, a Json Api and a 
 
 
 
-
-<a name="Downloads"></a>
-## Downloads
-* [Native Android Chat Client (APK)](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk)  
-
-
 ## Live Demo
 browse to https://websocketchat.stefan-sander.online or download and install the [Native Android Chat Client](#Downloads) onto your android phone 
 using following credientials
@@ -36,7 +30,16 @@ alice:test
 bob:test
 ```
 
-## Server Installation
+
+
+<a name="Downloads"></a>
+## Downloads
+* [Native Android Chat Client (APK)](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk)  
+<br />
+
+## Documentation
+
+### Server Installation
 run following command to checkout the project
 ```
 git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && cd myWebsocketChat && nano .env
@@ -57,13 +60,13 @@ php bin/console lexik:jwt:generate-keypair && chown www-data config/jwt -R
 npm install && npm run dev 
 ```
 
-## Start Websocket Server
+### Start Websocket Server
 ```
 php bin/console server:start
 ```
 <br />
 
-## Build Client Apk (Android Package Kit)
+### Build Client Apk (Android Package Kit)
 * native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
 
 ```
