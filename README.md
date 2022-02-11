@@ -67,7 +67,7 @@ npx cap init && php bin/console app:generate:entrypoint && npx cap add android
 ```
 and finally build:
 ```
-npx cap run android
+php bin/console app:generate:entrypoint && npx cap run android
 ```
 ## ToDos
 * setup firebase and implement native android notification
