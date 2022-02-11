@@ -18,7 +18,7 @@ Project contains a super simple ```server:start```  - Command, a Json Api and a 
 * block/unblock chat
 * vuejs web and native android client
 
-
+<br />
 
 ## Live Demo
 browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads) onto your android phone 
@@ -39,7 +39,7 @@ bob:test
 
 ## Documentation
 
-### <div align="center"> Server Installation</div>
+###  Server Installation
 
 run following command to checkout the project
 ```
@@ -61,13 +61,13 @@ php bin/console lexik:jwt:generate-keypair && chown www-data config/jwt -R
 npm install && npm run dev 
 ```
 
-### <div align="center">Start Websocket Server</div>
+### Start Websocket Server
 ```
 php bin/console server:start
 ```
 <br />
 
-### <div align="center">Build Client Apk (Android Package Kit)</div>
+### Build Client Apk (Android Package Kit)
 native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
 
 ```
