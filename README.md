@@ -10,6 +10,7 @@ Command driven Symfony6 Websocket Chat Server with VueJS Client using JWT for au
 * Image Upload/File Transfer
 * live is typing info
 * block/unblock chat
+* vuejs web and native android client
 
 ## Description
 Websockets are persistent connections over TCP. 
