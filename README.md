@@ -64,7 +64,8 @@ php bin/console server:start
 setup:
 ```
 npm install @capacitor/cli --save-dev
-npx cap init //set public as assets dir, an index.html is prepared as entrypoint
+php bin/console app:generate:entrypoint 
+npx cap init 
 npx cap add android
 ```
 and finally build:
