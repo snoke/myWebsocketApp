@@ -56,7 +56,7 @@ npm run dev
 php bin/console server:start
 ```
 
-## build native client APK (Android Package Kit)
+## build client apk (Android Package Kit)
  native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup)
 
 ```
