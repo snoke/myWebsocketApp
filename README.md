@@ -28,7 +28,7 @@ alice:test
 bob:test
 ```
 
-## installation
+## server installation
 run following command to checkout the project
 ```
 git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && cd myWebsocketChat && nano .env
