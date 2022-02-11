@@ -4,12 +4,10 @@
   <img src="https://github.com/snoke/myWebsocketApp/blob/master/myWebsocketApp.png?raw=true" />
 </p>
 
-<br /><br />
 ## Description
 Websockets are persistent connections over TCP. 
 This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.
-
-<br /><br />
+<br />
 ## Features
 * Browser Push Notifications
 * Emojis
@@ -18,12 +16,15 @@ This is not only a lot faster then typical http requests where a new connection 
 * live is typing info
 * block/unblock chat
 * vuejs web and native android client
-Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS Client.
-<br /><br />
+Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS Client.<br />
+
+
+
 <a name="Downloads"></a>
 ## Downloads
 * [Native Android Chat Client (APK)](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk)  
-<br /><br />
+
+
 ## Live Demo
 browse to https://websocketchat.stefan-sander.online or use the [Native Android Chat Client](#Downloads) 
 using following credientials
@@ -33,7 +34,7 @@ alice:test
 ```
 bob:test
 ```
-<br /><br />
+
 ## Server Installation
 run following command to checkout the project
 ```
@@ -54,7 +55,7 @@ php bin/console doctrine:database:create && php bin/console do:mi:mi
 php bin/console lexik:jwt:generate-keypair && chown www-data config/jwt -R
 npm install && npm run dev 
 ```
-<br /><br />
+
 ## Start Websocket Server
 ```
 php bin/console server:start
@@ -68,7 +69,8 @@ php bin/console server:start
 npm install @capacitor/cli --save-dev
 npx cap init && php bin/console app:generate:entrypoint && npx cap add android && npx cap run android
 ```
-<br /><br />
+<br />
+
 ## TODOs
 * setup firebase and implement native android notification
 * build native ios client 
