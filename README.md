@@ -44,7 +44,7 @@ git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && cd myWe
 edit .env and set server, websocket and database url and a jwt password 
 ```
 SERVER_URL='http://localhost' 
-WEBSOCKET_URL='ws://localhost:8080' //should match server:start command output as server and client can run on different machines
+WEBSOCKET_URL='ws://localhost:8080' 
 DATABASE_URL="mysql://root@127.0.0.1:3306/myDatabase?serverVersion=mariadb-10.4.11"
 JWT_PASSPHRASE=supersecretpassword
 ```
