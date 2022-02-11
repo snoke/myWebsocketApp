@@ -44,13 +44,13 @@ mount web root to myWebsocketChat/public
 
 then run following command to set up database, jwt keypairs and assets
 ```
-cd myWebsocketChat &&
-composer up &&
-php bin/console doctrine:database:create &&
-php bin/console do:mi:mi &&
-php bin/console lexik:jwt:generate-keypair &&
-chown www-data config/jwt -R &&
-npm install &&
+cd myWebsocketChat
+composer up
+php bin/console doctrine:database:create
+php bin/console do:mi:mi
+php bin/console lexik:jwt:generate-keypair
+chown www-data config/jwt -R
+npm install
 npm run dev 
 ```
 ## start websocket server
@@ -64,7 +64,7 @@ php bin/console server:start
 setup:
 ```
 npm install @capacitor/cli --save-dev
-npx cap init &&
+npx cap init
 npx cap add android
 ```
 and finally build:
