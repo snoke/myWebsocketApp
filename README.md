@@ -31,7 +31,7 @@ bob:test
 ## installation
 run following command to checkout the project
 ```
-git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && nano myWebsocketChat/.env
+git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && cd myWebsocketChat && nano .env
 ```
 edit following DOTENV variables matching your system
 ```
@@ -44,7 +44,6 @@ mount web root to myWebsocketChat/public
 
 then run following command to set up database, jwt keypairs and assets
 ```
-cd myWebsocketChat
 composer up
 php bin/console doctrine:database:create
 php bin/console do:mi:mi
