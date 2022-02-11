@@ -39,7 +39,8 @@ bob:test
 
 ## Documentation
 
-### Server Installation
+### <div align="center"> Server Installation</div>
+
 run following command to checkout the project
 ```
 git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && cd myWebsocketChat && nano .env
@@ -60,13 +61,13 @@ php bin/console lexik:jwt:generate-keypair && chown www-data config/jwt -R
 npm install && npm run dev 
 ```
 
-### Start Websocket Server
+### <div align="center">Start Websocket Server</div>
 ```
 php bin/console server:start
 ```
 <br />
 
-### Build Client Apk (Android Package Kit)
+### <div align="center">Build Client Apk (Android Package Kit)</div>
 * native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
 
 ```
