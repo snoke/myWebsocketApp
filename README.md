@@ -104,7 +104,6 @@ php bin/console server:start
 &emsp; native client can be built using [Capacitor](https://capacitorjs.com) (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
 
 ```
-npm install @capacitor/cli --save-dev
 npx cap init && npx cap add android && npx cap run android
 ```
 
