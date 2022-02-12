@@ -97,7 +97,6 @@ npx cap init && npx cap add android && npx cap run android
 ## <br /> <div name="TODOs"> [^](#menu) TODOs</div>
 * setup firebase and implement native android notification
 * build native ios client 
-* hash password client side already?
 * add licence 
 
 <hr />
