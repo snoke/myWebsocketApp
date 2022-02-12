@@ -62,7 +62,7 @@ bob:test
 
 * webserver (apache2) <br /> 
 * database (mysql/mariadb) <br />  
-* php <br /> 
+* php7 <br /> 
 * composer <br /> 
 * npm <br />
 * git <br /> 
