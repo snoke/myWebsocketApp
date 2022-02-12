@@ -45,13 +45,13 @@ Project contains a super simple ```server:start```  - Command, a Json Api and a 
 
 ## <br /> <div name="LiveDemo"> [^](#menu) Live Demo  </div>
 browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads). <br /><br />
-You may use following credientials:
-```
+You may use following credientials: 
+`
 alice:test
-```
-```
+` and
+`
 bob:test
-```
+`
 
 ## <br /> <div name="Downloads"> [^](#menu) Downloads </div>
 * [Native Android Chat Client (APK)](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk)  - Live Demo Client
@@ -71,10 +71,10 @@ bob:test
 
 ###  &nbsp; [^](#menu) Server Installation
 
-&emsp; run following command to checkout the project
-```
+&emsp; run following command to checkout the project<br />  
+&emsp; `
 git clone https://github.com/snoke/myWebsocketApp.git <Webroot> && cd <Webroot>
-```
+` <br />  
 &emsp; create a file `.env.local` with following content
 ```
 SERVER_URL='http://localhost' 
@@ -83,29 +83,26 @@ DATABASE_URL="mysql://<DbUser>:<DbPassword>@127.0.0.1:3306/myWebsocketChat?serve
 JWT_PASSPHRASE=<supersecretpassword>
 ```
 
-&emsp; install dependencies, set up database, jwt keypairs and assets
-```
-npm run install
-```
+<br /> &emsp; install dependencies, set up database, jwt keypairs and assets <br /><br /> 
+&emsp; `
+git npm run install
+` <br />  
 
 ###  <br /> &nbsp; [^](#menu) Start Websocket Server
-```
+&emsp; `
 npm run server
-```
-&emsp; which is an alias of 
-```
+` which is an alias of `
 php bin/console server:start
-```
+` <br />  
 &emsp; <img src="https://github.com/snoke/myWebsocketApp/blob/master/server_start.png?raw=true" />
 
 
 
 ### <br /> &nbsp;  [^](#menu) Build Android Client (Android Package Kit)
-&emsp; check https://capacitorjs.com/docs/getting-started/environment-setup and set up Android Studio, SDKs and Emulators first
-
-```
+&emsp; check https://capacitorjs.com/docs/getting-started/environment-setup and set up Android Studio, SDKs and Emulators first<br />  
+&emsp; `
 npm run build:android
-```
+`<br />  
 &emsp; this script will build the android app, start an emulator with the app and put the .apk into `/public/Downloads`. <br />
 &emsp; it will remove all files created during the process
 
