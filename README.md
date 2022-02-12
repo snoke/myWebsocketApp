@@ -100,6 +100,6 @@ npx cap init && php bin/console app:generate:entrypoint && npx cap add android &
 
 <hr />
 <div align="center">
-keep coding :sunglasses:
+happy coding :sunglasses:
   </div>
   
