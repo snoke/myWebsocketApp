@@ -63,13 +63,12 @@ bob:test
 
 ## <div name="Downloads">Downloads</div>
 * [Native Android Chat Client (APK)](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk)  
-
 <br /><div align="right">
  [top ^](#menu)</div>
  
 ## <div name="Documentation">Documentation</div>
 
-### <div align="center"> Server Installation</div>
+### Server Installation
 
 run following command to checkout the project
 ```
@@ -91,13 +90,18 @@ php bin/console lexik:jwt:generate-keypair && chown www-data config/jwt -R
 npm install && npm run dev 
 ```
  
-### <div align="center">Start Websocket Server</div>
+<br /><div align="right">
+ [top ^](#menu)</div>
+ 
+### Start Websocket Server
 ```
 php bin/console server:start
 ```
-<br />
 
-### <div align="center">Build Client Apk (Android Package Kit)</div>
+<br /><div align="right">
+ [top ^](#menu)</div>
+
+### Build Client Apk (Android Package Kit)
 native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
 
 ```
