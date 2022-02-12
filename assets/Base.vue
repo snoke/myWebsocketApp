@@ -1,3 +1,4 @@
+<!-- Author: Stefan Sander <mail@stefan-sander.online> -->
 <template>
   <div id="app"> 
     <div v-if="!$root.connected">

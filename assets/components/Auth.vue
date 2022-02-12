@@ -1,3 +1,4 @@
+<!-- Author: Stefan Sander <mail@stefan-sander.online> -->
 <template>
     <div id="auth">
         <div id="auth_info" >

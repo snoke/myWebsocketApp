@@ -1,4 +1,7 @@
 <?php
+/*
+ * Author: Stefan Sander <mail@stefan-sander.online>
+ */
 namespace App\Api\JwtSubscriberApi;
 use Ratchet\WebSocket\WsConnection;
 use Symfony\Component\Security\Core\User\UserInterface as User;

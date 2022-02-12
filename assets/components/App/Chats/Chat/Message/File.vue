@@ -1,3 +1,4 @@
+<!-- Author: Stefan Sander <mail@stefan-sander.online> -->
 <template>
     <div>
         <img class="chat-image" :src="content" />

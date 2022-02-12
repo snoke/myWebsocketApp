@@ -1,3 +1,4 @@
+<!-- Author: Stefan Sander <mail@stefan-sander.online> -->
 <template>
     <div>
       <div id="loading" v-if="ready==false">

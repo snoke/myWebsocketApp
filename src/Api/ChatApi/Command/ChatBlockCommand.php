@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * Author: Stefan Sander <mail@stefan-sander.online>
+ */
 namespace App\Api\ChatApi\Command;
 
 use Symfony\Component\Console\Attribute\AsCommand;

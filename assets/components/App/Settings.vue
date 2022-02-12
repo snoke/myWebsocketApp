@@ -1,3 +1,4 @@
+<!-- Author: Stefan Sander <mail@stefan-sander.online> -->
 <template>
     <div id="settings"  class=" h-100p">
       

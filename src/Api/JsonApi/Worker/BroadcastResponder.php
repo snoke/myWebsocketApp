@@ -1,4 +1,7 @@
 <?php
+/*
+ * Author: Stefan Sander <mail@stefan-sander.online>
+ */
 namespace App\Api\JsonApi\Worker;
 use Ratchet\WebSocket\WsConnection;
 use App\Api\JsonApi\JsonCommandResponse;

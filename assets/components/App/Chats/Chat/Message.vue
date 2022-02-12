@@ -1,3 +1,4 @@
+<!-- Author: Stefan Sander <mail@stefan-sander.online> -->
 <template>
     <div> 
         <div class="row pb-1" ref="message" >

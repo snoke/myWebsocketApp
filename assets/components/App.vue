@@ -1,3 +1,4 @@
+<!-- Author: Stefan Sander <mail@stefan-sander.online> -->
 <template>
     <div id="layout " style="height:100vh;">
         <div class="container-fluid d-flex hcontainer flex-column p-0">
