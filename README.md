@@ -54,7 +54,7 @@ bob:test
 ```
 
 ## <br /> <div name="Downloads"> [^](#menu) Downloads </div>
-* [Native Android Chat Client (APK)](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk)  
+* [Native Android Chat Client (APK)](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk)  - Live Demo Client
 
  
 ## <br /> <div name="Documentation"> [^](#menu) Documentation</div>
