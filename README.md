@@ -64,7 +64,7 @@ bob:test
 ```
 git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && cd myWebsocketChat && nano .env
 ```
-&emsp; edit .env and set server, websocket and database url and a jwt password 
+&emsp; set server, websocket and database url and a jwt password 
 ```
 SERVER_URL='http://localhost' 
 WEBSOCKET_URL='ws://localhost:8080' 
