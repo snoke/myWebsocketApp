@@ -21,7 +21,7 @@
   
 
 # <div align="center" name="about">myWebsocketApp </div>
-### <div align="center">Command driven Symfony6 Websocket Chat Server with VueJS Client using JWT for authentification</div>
+### <div align="center">Command driven Symfony6 Websocket Chat Server with VueJS Web and native Android Client using JWT for authentification</div>
 <p align="center">
   <img src="https://github.com/snoke/myWebsocketApp/blob/master/myWebsocketApp.png?raw=true" />
 </p>
@@ -32,7 +32,7 @@
 ##  <br /> <div name="Description"> [^](#menu) Description </div>
 Websockets are persistent connections over TCP. 
 This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.<br /><br />
-Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS Client.<br />
+Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS web and native android client (apk).<br />
 
 ## <br /> <div name="Features"> [^](#menu) Features</div>
 * Browser Push Notifications
@@ -44,7 +44,7 @@ Project contains a super simple ```server:start```  - Command, a Json Api and a 
 * vuejs web and native android client
 
 ## <br /> <div name="LiveDemo"> [^](#menu) Live Demo  </div>
-browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads) . <br />
+browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads). <br /><br />
 You may use following credientials:
 ```
 alice:test
@@ -86,8 +86,8 @@ npm install && npm run dev
 php bin/console server:start
 ```
 
-### <br /> &nbsp;  [^](#menu) Build Client Apk (Android Package Kit)
-&emsp; native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
+### <br /> &nbsp;  [^](#menu) Build Android Client (Android Package Kit)
+&emsp; native client can be built using [Capacitor](https://capacitorjs.com) (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
 
 ```
 npm install @capacitor/cli --save-dev
@@ -97,6 +97,8 @@ npx cap init && php bin/console app:generate:entrypoint && npx cap add android &
 ## <br /> <div name="TODOs"> [^](#menu) TODOs</div>
 * setup firebase and implement native android notification
 * build native ios client 
+* hash password client side already?
+* add licence 
 
 <hr />
 <div align="center">
