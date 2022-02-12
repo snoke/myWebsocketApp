@@ -11,11 +11,13 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
+        "server": "php bin/console server:start",    
+        "build:android": "php bin/console app:entrypoint:generate && npx cap init --web-dir=public && npx cap add android && npx cap run android && php bin/console app:entrypoint:clear",
         "dev-server": "encore dev-server",
-        "dev": "php bin/console app:generate:entrypoint && encore dev",
+        "dev": "encore dev",
         "watch": "encore dev --watch",
-        "build": "php bin/console app:generate:entrypoint && encore production --progress"
-    },
+        "build": "encore production --progress"
+     },
     "dependencies": {
         "@capacitor/android": "^3.4.1",
         "@capacitor/core": "^3.4.1",
