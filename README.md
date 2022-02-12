@@ -26,6 +26,8 @@
   <img src="https://github.com/snoke/myWebsocketApp/blob/master/myWebsocketApp.png?raw=true" />
 </p>
 
+<br /><div align="right">
+ [top ^](#menu)</div>
   
   
 ## <div name="Description">Description</div>
@@ -33,7 +35,7 @@ Websockets are persistent connections over TCP.
 This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.<br /><br />
 Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS Client.<br />
 <br /><p align="right">
- [top ^](#menu)</p><br />
+ [top ^](#menu)</p>
 ## <div name="Features">Features</div>
 * Browser Push Notifications
 * Emojis
@@ -42,10 +44,8 @@ Project contains a super simple ```server:start```  - Command, a Json Api and a 
 * live is typing info
 * block/unblock chat
 * vuejs web and native android client
-
 <br /><div align="right">
- [top ^](#menu)</div><br />
-
+ [top ^](#menu)</div>
 
 ## <div name="LiveDemo">Live Demo</div>
 browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads) . <br />
@@ -59,14 +59,13 @@ bob:test
 
 
 <br /><div align="right">
- [top ^](#menu)</div><br />
+ [top ^](#menu)</div>
 
 ## <div name="Downloads">Downloads</div>
 * [Native Android Chat Client (APK)](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk)  
 
-
 <br /><div align="right">
- [top ^](#menu)</div><br />
+ [top ^](#menu)</div>
  
 ## <div name="Documentation">Documentation</div>
 
@@ -91,15 +90,13 @@ php bin/console doctrine:database:create && php bin/console do:mi:mi
 php bin/console lexik:jwt:generate-keypair && chown www-data config/jwt -R
 npm install && npm run dev 
 ```
-<br /><div align="right">
- [top ^](#menu)</div><br />
  
 ### <div align="center">Start Websocket Server</div>
 ```
 php bin/console server:start
 ```
-<br /><div align="right">
- [top ^](#menu)</div><br />
+<br />
+
 ### <div align="center">Build Client Apk (Android Package Kit)</div>
 native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
 
@@ -108,10 +105,9 @@ npm install @capacitor/cli --save-dev
 npx cap init && php bin/console app:generate:entrypoint && npx cap add android && npx cap run android
 ```
 <br /><div align="right">
- [top ^](#menu)</div><br />
+ [top ^](#menu)</div>
 ## <div name="TODOs">TODOs</div>
 * setup firebase and implement native android notification
 * build native ios client 
- 
 <br /><div align="right">
- [top ^](#menu)</div><br />
+ [top ^](#menu)</div>
