@@ -44,7 +44,7 @@ Project contains a super simple ```server:start```  - Command, a Json Api and a 
 * vuejs web and native android client
 
 ## <br /> <div name="LiveDemo"> [^](#menu) Live Demo  </div>
-browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads) . <br />
+browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads). <br /><br />
 You may use following credientials:
 ```
 alice:test
