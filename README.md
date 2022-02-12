@@ -28,12 +28,13 @@
 
   
   
-## <div name="Description"> [^](#menu) Description </div>
+
+##  <br /> <div name="Description"> [^](#menu) Description </div>
 Websockets are persistent connections over TCP. 
 This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.<br /><br />
 Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS Client.<br />
 
-## <div name="Features"> [^](#menu) Features</div>
+## <br /> <div name="Features"> [^](#menu) Features</div>
 * Browser Push Notifications
 * Emojis
 * Message Status (delivered/seen)
@@ -42,7 +43,7 @@ Project contains a super simple ```server:start```  - Command, a Json Api and a 
 * block/unblock chat
 * vuejs web and native android client
 
-## <div name="LiveDemo"> [^](#menu) Live Demo  </div>
+## <br /> <div name="LiveDemo"> [^](#menu) Live Demo  </div>
 browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads) . <br />
 Use following credientials:
 ```
@@ -52,19 +53,19 @@ alice:test
 bob:test
 ```
 
-## <div name="Downloads"> [^](#menu) Downloads </div>
+## <br /> <div name="Downloads"> [^](#menu) Downloads </div>
 * [Native Android Chat Client (APK)](https://github.com/snoke/myWebsocketApp/raw/master/public/downloads/android-client-latest.apk)  
 
  
-## <div name="Documentation"> [^](#menu) Documentation</div>
+## <br /> <div name="Documentation"> [^](#menu) Documentation</div>
 
-###  [^](#menu) Server Installation
+### <br />  &nbsp; [^](#menu) Server Installation
 
-run following command to checkout the project
+&emsp; run following command to checkout the project
 ```
 git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && cd myWebsocketChat && nano .env
 ```
-edit .env and set server, websocket and database url and a jwt password 
+&emsp; edit .env and set server, websocket and database url and a jwt password 
 ```
 SERVER_URL='http://localhost' 
 WEBSOCKET_URL='ws://localhost:8080' 
@@ -72,7 +73,7 @@ DATABASE_URL="mysql://root@127.0.0.1:3306/myDatabase?serverVersion=mariadb-10.4.
 JWT_PASSPHRASE=supersecretpassword
 ```
 
-then install dependencies, set up database, jwt keypairs and assets
+&emsp; then install dependencies, set up database, jwt keypairs and assets
 ```
 composer up
 php bin/console doctrine:database:create && php bin/console do:mi:mi
@@ -81,20 +82,20 @@ npm install && npm run dev
 ```
 
  
-###  [^](#menu) Start Websocket Server
+###  <br /> &nbsp; [^](#menu) Start Websocket Server
 ```
 php bin/console server:start
 ```
 
-###  [^](#menu) Build Client Apk (Android Package Kit)
-native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
+### <br /> &nbsp;  [^](#menu) Build Client Apk (Android Package Kit)
+&emsp; native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
 
 ```
 npm install @capacitor/cli --save-dev
 npx cap init && php bin/console app:generate:entrypoint && npx cap add android && npx cap run android
 ```
 
-## <div name="TODOs"> [^](#menu) TODOs</div>
+## <br /> <div name="TODOs"> [^](#menu) TODOs</div>
 * setup firebase and implement native android notification
 * build native ios client 
 
