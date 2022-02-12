@@ -58,8 +58,7 @@ bob:test
 
  
 ## <br /> <div name="Documentation"> [^](#menu) Documentation</div>
-
-### <br />  &nbsp; [^](#menu) Server Installation
+###  &nbsp; [^](#menu) Server Installation
 
 &emsp; run following command to checkout the project
 ```
