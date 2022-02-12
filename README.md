@@ -64,11 +64,11 @@ bob:test
 ```
 git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && cd myWebsocketChat && nano .env
 ```
-&emsp; edit .env and set server, websocket and database url and a jwt password 
+&emsp; set server, websocket and database url and a jwt password 
 ```
 SERVER_URL='http://localhost' 
 WEBSOCKET_URL='ws://localhost:8080' 
-DATABASE_URL="mysql://root@127.0.0.1:3306/myDatabase?serverVersion=mariadb-10.4.11"
+DATABASE_URL="mysql://root@127.0.0.1:3306/myWebsocketChat?serverVersion=mariadb-10.4.11"
 JWT_PASSPHRASE=supersecretpassword
 ```
 
