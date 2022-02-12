@@ -74,7 +74,7 @@ bob:test
 
 &emsp; run following command to checkout the project
 ```
-git clone https://github.com/snoke/myWebsocketApp.git <Webroot>
+git clone https://github.com/snoke/myWebsocketApp.git <Webroot> && cd <Webroot>
 ```
 &emsp; edit .env and set server, websocket and database url and a jwt password 
 ```
@@ -86,16 +86,16 @@ JWT_PASSPHRASE=supersecretpassword
 
 &emsp; install dependencies, set up database, jwt keypairs and assets
 ```
-cd <Webroot> && composer up
-php bin/console doctrine:database:create && php bin/console do:mi:mi
-php bin/console lexik:jwt:generate-keypair && chown www-data config/jwt -R
-npm install && npm run dev 
+npm run install
 ```
 
- 
 ###  <br /> &nbsp; [^](#menu) Start Websocket Server
 ```
 npm run server
+```
+&emsp; which is an alias of 
+```
+php bin/console server:start
 ```
 
 
@@ -105,6 +105,8 @@ npm run server
 ```
 npm run build:android
 ```
+&emsp; this script will build the android app, start an emulator with the app and put the .apk into `/public/Downloads`. <br />
+&emsp; it will remove all files created during the process
 
 ## <br /> <div name="TODOs"> [^](#menu) TODOs</div>
 * setup firebase and implement native android notification
