@@ -72,7 +72,7 @@ DATABASE_URL="mysql://root@127.0.0.1:3306/myWebsocketChat?serverVersion=mariadb-
 JWT_PASSPHRASE=supersecretpassword
 ```
 
-&emsp; then install dependencies, set up database, jwt keypairs and assets
+&emsp; mount webroot to myWebsocketChat/public and install dependencies, set up database, jwt keypairs and assets
 ```
 composer up
 php bin/console doctrine:database:create && php bin/console do:mi:mi
