@@ -76,12 +76,12 @@ bob:test
 ```
 git clone https://github.com/snoke/myWebsocketApp.git <Webroot> && cd <Webroot>
 ```
-&emsp; edit .env and set server, websocket and database url and a jwt password 
+&emsp; create a file `.env.local` with following content
 ```
 SERVER_URL='http://localhost' 
 WEBSOCKET_URL='ws://localhost:8080' 
-DATABASE_URL="mysql://root@127.0.0.1:3306/myWebsocketChat?serverVersion=mariadb-10.4.11"
-JWT_PASSPHRASE=supersecretpassword
+DATABASE_URL="mysql://<DbUser>:<DbPassword>@127.0.0.1:3306/myWebsocketChat?serverVersion=mariadb-10.4.11"
+JWT_PASSPHRASE=<supersecretpassword>
 ```
 
 &emsp; install dependencies, set up database, jwt keypairs and assets
@@ -97,6 +97,8 @@ npm run server
 ```
 php bin/console server:start
 ```
+&emsp; <img src="https://github.com/snoke/myWebsocketApp/blob/master/server_start.png?raw=true" />
+
 
 
 ### <br /> &nbsp;  [^](#menu) Build Android Client (Android Package Kit)
