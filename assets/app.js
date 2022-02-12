@@ -1,14 +1,9 @@
 /*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
+ * Author: Stefan Sander <mail@stefan-sander.online>
  */
 
-// any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
 
-// start the Stimulus application
 import './bootstrap';
 import Vue from 'vue';
 import Base from './Base';
@@ -72,7 +67,6 @@ library.add(faArrowUp)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-// Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -86,52 +80,57 @@ Vue.use(require('vue-moment'), {
 })
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
-const router = new VueRouter({  
-    components: {Base},
-    routes: [
-        { 
-                name: "auth",
-                path: '/auth', 
-                component:  Auth,
-                props: true,
-        },
-        { 
-                name: "app",
-                path: '/app', 
-                component:  App,
-                props: true,
-                children:[
-                  
-                  { 
-                    name: "app_contacts",
-                    path: '/app/contacts', 
-                    component:  Contacts,
-                    props: true,
-                  },
-                  { 
-                    name: "app_chats",
-                    path: '/app/chats', 
-                    component:  Chats,
-                    props: true,
-                  },
-                  { 
-                    name: "app_settings",
-                    path: '/app/settings', 
-                    component:  Settings,
-                    props: true,
-                  },
-                  { 
-                    name: "app_chat",
-                    path: '/app/chat/:id', 
-               //     component:  Chat,
-                    component:  Chat,
-                    props: true,
-                  },
-                ]
+var router = {  
+  components: {Base},
+  routes: [
+      { 
+              name: "auth",
+              path: '/auth', 
+              component:  Auth,
+              props: true,
+      },
+      { 
+              name: "app",
+              path: '/app', 
+              component:  App,
+              props: true,
+              children:[
+                
+                { 
+                  name: "app_contacts",
+                  path: '/app/contacts', 
+                  component:  Contacts,
+                  props: true,
+                },
+                { 
+                  name: "app_chats",
+                  path: '/app/chats', 
+                  component:  Chats,
+                  props: true,
+                },
+                { 
+                  name: "app_settings",
+                  path: '/app/settings', 
+                  component:  Settings,
+                  props: true,
+                },
+                { 
+                  name: "app_chat",
+                  path: '/app/chat/:id', 
+             //     component:  Chat,
+                  component:  Chat,
+                  props: true,
+                },
+              ]
 
-        }
-    ]
-});
+      }
+  ]
+};
+var config = JSON.parse(document.getElementById('_symfonyData').innerHTML);
+if (config.client=='web') {
+    router.mode='history'
+}
+router = new VueRouter(router);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 import axios from 'axios'
@@ -140,10 +139,6 @@ Vue.use(VueAxios, axios)
 import device from "vue-device-detector"
 Vue.use(device)
 
-var config = JSON.parse(document.getElementById('_symfonyData').innerHTML);
-if (config.client=='web') {
-    router.mode='history'
-}
 new Vue({
     created: function() {
       this.config= config
