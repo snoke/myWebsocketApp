@@ -73,9 +73,9 @@ bob:test
 
 &emsp; run following command to checkout the project
 ```
-git clone https://github.com/snoke/myWebsocketApp.git myWebsocketChat && cd myWebsocketChat && nano .env
+git clone https://github.com/snoke/myWebsocketApp.git <Webroot>
 ```
-&emsp; set server, websocket and database url and a jwt password 
+&emsp; edit .env and set server, websocket and database url and a jwt password 
 ```
 SERVER_URL='http://localhost' 
 WEBSOCKET_URL='ws://localhost:8080' 
@@ -83,9 +83,9 @@ DATABASE_URL="mysql://root@127.0.0.1:3306/myWebsocketChat?serverVersion=mariadb-
 JWT_PASSPHRASE=supersecretpassword
 ```
 
-&emsp; mount web root to `myWebsocketChat/public` and install dependencies, set up database, jwt keypairs and assets
+&emsp; install dependencies, set up database, jwt keypairs and assets
 ```
-composer up
+cd <Webroot> && composer up
 php bin/console doctrine:database:create && php bin/console do:mi:mi
 php bin/console lexik:jwt:generate-keypair && chown www-data config/jwt -R
 npm install && npm run dev 
@@ -96,6 +96,9 @@ npm install && npm run dev
 ```
 php bin/console server:start
 ```
+
+&emsp; <img src="https://github.com/snoke/myWebsocketApp/blob/master/server_start.png?raw=true" />
+
 
 ### <br /> &nbsp;  [^](#menu) Build Android Client (Android Package Kit)
 &emsp; native client can be built using [Capacitor](https://capacitorjs.com) (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
