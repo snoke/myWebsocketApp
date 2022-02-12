@@ -98,3 +98,8 @@ npx cap init && php bin/console app:generate:entrypoint && npx cap add android &
 * setup firebase and implement native android notification
 * build native ios client 
 
+<hr />
+<div align="center">
+keep coding :sunglasses:
+  </div>
+  
