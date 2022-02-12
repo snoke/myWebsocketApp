@@ -21,7 +21,7 @@
   
 
 # <div align="center" name="about">myWebsocketApp </div>
-### <div align="center">Command driven Symfony6 Websocket Chat Server with VueJS Client using JWT for authentification</div>
+### <div align="center">Command driven Symfony6 Websocket Chat Server with VueJS Web and native Android Client using JWT for authentification</div>
 <p align="center">
   <img src="https://github.com/snoke/myWebsocketApp/blob/master/myWebsocketApp.png?raw=true" />
 </p>
@@ -32,7 +32,7 @@
 ##  <br /> <div name="Description"> [^](#menu) Description </div>
 Websockets are persistent connections over TCP. 
 This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.<br /><br />
-Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS Client.<br />
+Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS web and native android client (apk).<br />
 
 ## <br /> <div name="Features"> [^](#menu) Features</div>
 * Browser Push Notifications
@@ -86,8 +86,8 @@ npm install && npm run dev
 php bin/console server:start
 ```
 
-### <br /> &nbsp;  [^](#menu) Build Client Apk (Android Package Kit)
-&emsp; native client can be built using capacitor (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
+### <br /> &nbsp;  [^](#menu) Build Android Client (Android Package Kit)
+&emsp; native client can be built using [Capacitor](https://capacitorjs.com) (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
 
 ```
 npm install @capacitor/cli --save-dev
