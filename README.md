@@ -58,6 +58,17 @@ bob:test
 
  
 ## <br /> <div name="Documentation"> [^](#menu) Documentation</div>
+###  &nbsp; [^](#menu) Requirements
+
+* webserver (apache2) <br /> 
+* database (mysql/mariadb) <br />  
+* php <br /> 
+* composer <br /> 
+* npm <br />
+* git <br /> 
+
+<br /> 
+
 ###  &nbsp; [^](#menu) Server Installation
 
 &emsp; run following command to checkout the project
@@ -72,7 +83,7 @@ DATABASE_URL="mysql://root@127.0.0.1:3306/myWebsocketChat?serverVersion=mariadb-
 JWT_PASSPHRASE=supersecretpassword
 ```
 
-&emsp; mount webroot to myWebsocketChat/public and install dependencies, set up database, jwt keypairs and assets
+&emsp; mount web root to `myWebsocketChat/public` and install dependencies, set up database, jwt keypairs and assets
 ```
 composer up
 php bin/console doctrine:database:create && php bin/console do:mi:mi
