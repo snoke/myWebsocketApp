@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AppController extends AbstractController
 {
     /**
-     * @Route("/client/{client}", name="index")
+     * @Route("/client/{client}")
      * @Route("/", name="index")
      * @Route("/{route}", name="index_route", requirements={"route"="^.+"})
      */
