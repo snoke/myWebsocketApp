@@ -32,8 +32,8 @@
 ##  <br /> <div name="Description"> [^](#menu) Description </div>
 Websockets are persistent connections over TCP. 
 This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.<br /><br />
-Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS web and native android client (apk).<br />
-JWT is used for authentification.
+Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS web and native android client (apk). JWT is used for authentification.<br />
+
 ## <br /> <div name="Features"> [^](#menu) Features</div>
 * Browser Push Notifications
 * Emojis
