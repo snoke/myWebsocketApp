@@ -91,7 +91,7 @@ php bin/console server:start
 
 ```
 npm install @capacitor/cli --save-dev
-npx cap init && php bin/console app:generate:entrypoint && npx cap add android && npx cap run android
+npx cap init && npx cap add android && npx cap run android
 ```
 
 ## <br /> <div name="TODOs"> [^](#menu) TODOs</div>
