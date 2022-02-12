@@ -97,7 +97,7 @@ npx cap init && php bin/console app:generate:entrypoint && npx cap add android &
 ## <br /> <div name="TODOs"> [^](#menu) TODOs</div>
 * setup firebase and implement native android notification
 * build native ios client 
-* hash password client side?
+* hash password client side already?
 * add licence 
 
 <hr />
