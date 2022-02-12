@@ -66,6 +66,7 @@ bob:test
 * composer <br /> 
 * npm <br />
 * git <br /> 
+* Android Studio to build Native Client <br /> 
 
 <br /> 
 
@@ -94,17 +95,15 @@ npm install && npm run dev
  
 ###  <br /> &nbsp; [^](#menu) Start Websocket Server
 ```
-php bin/console server:start
+npm run server
 ```
-
-&emsp; <img src="https://github.com/snoke/myWebsocketApp/blob/master/server_start.png?raw=true" />
 
 
 ### <br /> &nbsp;  [^](#menu) Build Android Client (Android Package Kit)
-&emsp; native client can be built using [Capacitor](https://capacitorjs.com) (check https://capacitorjs.com/docs/getting-started/environment-setup to install SDKs and Emulators)
+&emsp; check https://capacitorjs.com/docs/getting-started/environment-setup and install SDKs and Emulators first
 
 ```
-npx cap init && npx cap add android && npx cap run android
+npm run build:android
 ```
 
 ## <br /> <div name="TODOs"> [^](#menu) TODOs</div>
