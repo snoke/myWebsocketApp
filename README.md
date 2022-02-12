@@ -66,7 +66,6 @@ bob:test
 * composer <br /> 
 * npm <br />
 * git <br /> 
-* Android Studio to build Native Client <br /> 
 
 <br /> 
 
@@ -102,7 +101,7 @@ php bin/console server:start
 
 
 ### <br /> &nbsp;  [^](#menu) Build Android Client (Android Package Kit)
-&emsp; check https://capacitorjs.com/docs/getting-started/environment-setup and install SDKs and Emulators first
+&emsp; check https://capacitorjs.com/docs/getting-started/environment-setup and set up Android Studio, SDKs and Emulators first
 
 ```
 npm run build:android
