@@ -23,7 +23,7 @@
   
   
 
-# <div align="center" name="about"><a href="#menu"> [^] </a>myWebsocketApp </div>
+# <div align="center" name="about"><a href="#menu"> [^] </a>myWebsocketApp (beta)</div>
 ### <div align="center">Command driven Symfony6 Websocket Chat Server with VueJS Web and native Android Client</div>
 <p align="center">
   <img src="https://github.com/snoke/myWebsocketApp/blob/master/myWebsocketApp.png?raw=true" />
