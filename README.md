@@ -86,23 +86,11 @@ bob:test
     </ul>
   <br /></li>
   <li name="ServerInstallation"><h4> <a href="#Documentation"> [^] </a>  Server Installation</h4>
-<p>run following command to checkout the project:
+<p>run following command to checkout the project and start the installer:
 &emsp; <pre>
-git clone https://github.com/snoke/myWebsocketApp.git && cd myWebsocketApp
+git clone https://github.com/snoke/myWebsocketApp.git && cd myWebsocketApp && npm run installer
 </pre></p>
     
-create a file
-` .env.local
-`
-with following content matching your system: 
-&emsp; <pre>
-SERVER_URL='http://localhost' 
-WEBSOCKET_URL='ws://localhost:8080' 
-DATABASE_URL="mysql://DbUser:DbPassword@127.0.0.1:3306/myWebsocketApp?serverVersion=mariadb-10.4.11"
-</pre><p>install dependencies, set up database, jwt keypairs and assets with following command:
-&emsp; </p><pre>
-npm run install
-</pre>
 mount your web document root to `public`
 <br /><br /></li>
   <li name="WebsocketServer"><h4> <a href="#Documentation"> [^] </a>  Start Websocket Server</h4>
