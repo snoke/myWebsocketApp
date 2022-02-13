@@ -82,9 +82,7 @@ bob:test
     <ul>
       <li>webserver with php8 (apache2)</li>
       <li>database (mysql/mariadb)</li>
-      <li>composer</li>
-      <li>npm</li>
-      <li>git</li>
+      <li>composer, npm, git</li>
     </ul>
   <br /></li>
   <li name="ServerInstallation"><h4> <a href="#Documentation"> [^] </a>  Server Installation</h4>
