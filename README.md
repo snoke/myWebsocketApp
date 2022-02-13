@@ -94,13 +94,12 @@ git clone https://github.com/snoke/myWebsocketApp.git && cd myWebsocketApp && np
 mount your web document root to `public`
 <br /><br /></li>
   <li name="WebsocketServer"><h4> <a href="#Documentation"> [^] </a>  Start Websocket Server</h4>
-<p>run: &emsp;</p> <pre>
+<p>run: &emsp; <pre>
 npm run server
-</pre> 
-
+</pre>
    
 &emsp; which is an alias of `
-php bin/console server:start ` 
+php bin/console server:start ` </p>
     
 
 
@@ -113,8 +112,7 @@ npm run build:android
 </pre> 
 
 
-&emsp; this script will build the android app, start an emulator with the app and put the .apk into `/public/Downloads`.<br />
-&emsp; it will remove all files created during the process (the unpacked app)
+&emsp;  <p>this script will build the android app, start an emulator with the app and put the .apk into `/public/Downloads`. it will remove all files created during the process (the unpacked app)</p>
 
   <br /></li>
   </li>
