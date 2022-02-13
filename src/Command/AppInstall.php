@@ -78,17 +78,13 @@ class AppInstall extends Command
       if (strlen($password)>0) {
         $password = ':' . $password;
       }
-      if ($dbinfo[2]) {
+      if (isset($dbinfo[2])) {
         $version = strtolower($dbinfo[2]) . '-' . $dbinfo[1];
       } else {
         $version =  $dbinfo[1];
       }
-      $mariaDb = isset($dbinfo[2])?$dbinfo[2].'-':'';
-      $this->installer->setDatabaseUrl("mysql://".$user .$password."@".$host."/myWebsocketApp?serverVersion=".strtolower($mariaDb).$dbinfo[1]);
+      $this->installer->setDatabaseUrl("mysql://".$user .$password."@".$host."/myWebsocketApp?serverVersion=".strtolower($version));
       
-      if (count($errors) > 0) {
-        return $this->execute($input,$output);
-    }
     $output->write(sprintf("\033\143"));
     $this->io->title('Set up');  
       $str = 'SERVER_URL=\''.$this->askFor('ServerUrl') . "'\n";
