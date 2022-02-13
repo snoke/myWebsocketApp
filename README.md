@@ -107,12 +107,12 @@ php bin/console server:start ` </p>
 <br /><br /></li>
   <li name="ClientAPK"><h4> <a href="#Documentation"> [^] </a>  Build Android Client (Android Package Kit)</h4>
   <p>check <a href="https://capacitorjs.com/docs/getting-started/environment-setup">Capacitor Documentation</a> and set up Android Studio, SDKs and Emulators first.<br />then run:
-&emsp; </p><pre>
+&emsp; <pre>
 npm run build:android
 </pre> 
 
 
-&emsp;  <p>this script will build the android app, start an emulator with the app and put the .apk into `/public/Downloads`. it will remove all files created during the process (the unpacked app)</p>
+  this script will build the android app, start an emulator with the app and put the .apk into `/public/Downloads`. it will remove all files created during the process (the unpacked app)</p>
 
   <br /></li>
   </li>
