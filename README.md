@@ -75,7 +75,6 @@ bob:test
 <a href="#WebsocketServer">Start Websocket Server</a> -
 <a href="#ClientAPK">Build Android Client (APK)</a>
       
----    
 <ul>
   <li name="Requirements"><h4> <a href="#Documentation"> [^] </a>  Requirements</h4>
     <ul>
