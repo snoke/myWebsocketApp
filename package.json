@@ -12,7 +12,7 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "installer": "npm install --save-dev run-script-os npm run install",
+        "installer": "npm install --save-dev run-script-os && npm run install",
         "install": "run-script-os",
         "install:win32": "php bin/console app:install && php bin/console doctrine:database:create && php bin/console do:mi:mi && npm install @capacitor/cli --save-dev && npm install && npm run dev ",
         "install:default": "php bin/console app:install && php bin/console doctrine:database:create && php bin/console do:mi:mi && chown www-data config/jwt -R && chown www-data public -R && php bin/console lexik:jwt:generate-keypair && npm install @capacitor/cli --save-dev && npm install && npm run dev ",
