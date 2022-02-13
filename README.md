@@ -34,8 +34,8 @@ Websockets are persistent connections over TCP.
 This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.<br />
    
 Project contains  a super simple `
-server:start ` - Command, a Json Api and a VueJS web and native android client (apk).<br />
-JWT is used for authentification.<br />
+server:start ` - Command, a Json Api and a VueJS web and native android client (apk).<br /><br />
+JWT is used for authentification.
 
   <br /></li>
     <li name="Features"> <h3> <a href="#menu"> [^] </a>  Features</h3> <ul>
@@ -46,7 +46,7 @@ JWT is used for authentification.<br />
       <li>live is typing info</li>
       <li>block/unblock chat</li>
      <li>vuejs web and native android client</li>
-    </ul>
+    </ul><br />
   <br /></li>
     <li name="LiveDemo"> <h3> <a href="#menu"> [^] </a>  Live Demo</h3> 
     
@@ -74,7 +74,7 @@ bob:test
 <a href="#ServerInstallation">Server Installation</a> -
 <a href="#WebsocketServer">Start Websocket Server</a> -
 <a href="#ClientAPK">Build Android Client (APK)</a>
-      
+   <br /><br />   
 <ul>
   <li name="Requirements"><h4> <a href="#Documentation"> [^] </a>  Requirements</h4>
     <ul>
