@@ -74,11 +74,11 @@ bob:test
     <li name="Documentation"> <h3> <a href="#menu"> [^] </a>  Documentation</h3> 
 
       
-  | <a href="#Requirements">Requirements</a> | <a href="#ServerInstallation">Server Installation</a> | <a href="#WebsocketServer">Start Websocket Server</a> | <a href="#ClientAPK">Build Android Client (APK)</a>            | 
+  | <a href="#Requirements">Server Requirements</a> | <a href="#ServerInstallation">Server Installation</a> | <a href="#WebsocketServer">Start Websocket Server</a> | <a href="#ClientAPK">Build Android Client (APK)</a>            | 
   |-|-|-|-| 
    <br />   
 <ul>
-  <li name="Requirements"><h4> <a href="#Documentation"> [^] </a>  Requirements</h4>
+  <li name="Requirements"><h4> <a href="#Documentation"> [^] </a> Server Requirements</h4>
     <ul>
       <li>webserver with php7 (apache2)</li>
       <li>database (mysql/mariadb)</li>
