@@ -12,9 +12,10 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "install": "composer up && npm install --save-dev run-script-os && run-script-os",
-        "install:win32": "php bin/console doctrine:database:create && php bin/console do:mi:mi && npm install @capacitor/cli --save-dev && npm install && npm run dev ",
-        "install:default": "php bin/console doctrine:database:create && php bin/console do:mi:mi && chown www-data config/jwt -R && chown www-data public -R && php bin/console lexik:jwt:generate-keypair --overwrite && npm install @capacitor/cli --save-dev && npm install && npm run dev ",
+        "dbinstall": "php bin/console app:install && php bin/console doctrine:database:create && php bin/console do:mi:mi",
+        "install": "composer up && npm run dbinstall && npm install --save-dev run-script-os && run-script-os",
+        "install:win32": "npm install @capacitor/cli --save-dev && npm install && npm run dev ",
+        "install:default": "chown www-data config/jwt -R && chown www-data public -R && php bin/console lexik:jwt:generate-keypair --overwrite && npm install @capacitor/cli --save-dev && npm install && npm run dev ",
         "server": "php bin/console server:start",
         "build:android": "php bin/console app:entrypoint:generate && npx cap init --web-dir=public && npx cap add android && npx cap run android && php bin/console app:entrypoint:clear",
         "dev-server": "encore dev-server",
