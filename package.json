@@ -12,10 +12,9 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "installer": "composer up && npm install --save-dev run-script-os && npm run install",
-        "install": "run-script-os",
-        "install:win32": "php bin/console app:install && php bin/console doctrine:database:create && php bin/console do:mi:mi && npm install @capacitor/cli --save-dev && npm install && npm run dev ",
-        "install:default": "php bin/console app:install && php bin/console doctrine:database:create && php bin/console do:mi:mi && chown www-data config/jwt -R && chown www-data public -R && php bin/console lexik:jwt:generate-keypair && npm install @capacitor/cli --save-dev && npm install && npm run dev ",
+        "install": "composer up && npm install --save-dev run-script-os && npm run install && run-script-os",
+        "install:win32": "php bin/console doctrine:database:create && php bin/console do:mi:mi && npm install @capacitor/cli --save-dev && npm install && npm run dev ",
+        "install:default": "php bin/console doctrine:database:create && php bin/console do:mi:mi && chown www-data config/jwt -R && chown www-data public -R && php bin/console lexik:jwt:generate-keypair && npm install @capacitor/cli --save-dev && npm install && npm run dev ",
         "server": "php bin/console server:start",
         "build:android": "php bin/console app:entrypoint:generate && npx cap init --web-dir=public && npx cap add android && npx cap run android && php bin/console app:entrypoint:clear",
         "dev-server": "encore dev-server",
