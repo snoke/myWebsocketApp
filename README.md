@@ -96,7 +96,6 @@ with following content matching your system &emsp; <pre>
 SERVER_URL='http://localhost' 
 WEBSOCKET_URL='ws://localhost:8080' 
 DATABASE_URL="mysql://DbUser:DbPassword@127.0.0.1:3306/myWebsocketChat?serverVersion=mariadb-10.4.11"
-JWT_PASSPHRASE=supersecretpassword
 </pre> install dependencies, set up database, jwt keypairs and assets
 &emsp; <pre>
 git npm run install
