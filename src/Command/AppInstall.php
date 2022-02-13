@@ -52,10 +52,12 @@ class AppInstall extends Command
       $host = $this->askFor('databaseHost');
       $user = $this->askFor('databaseUser');
       $password = $this->askFor('databasePassword');
-      $db = mysqli_connect($host, $user, $password);
+      mysqli_report(MYSQLI_REPORT_OFF);
+      $db = @\mysqli_connect($host, $user, $password);
       if (!$db) {
-        $this->execute($input,$output);
-      }
+          $this->io->error("could not connect to Database");
+          $this->execute($input,$output);
+        }
       // Output the MySQL version
       $dbinfo = explode( '-', mysqli_get_server_info($db)) ;
       // Close connection
