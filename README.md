@@ -136,6 +136,6 @@ this script will build the android app, start an emulator with the app and put t
   </ul>
 <hr />
 <div align="center">
-happy coding :sunglasses:
+  © 2022 <a href="https://stefan-sander.online">Stefan Sander</a>
   </div>
   
