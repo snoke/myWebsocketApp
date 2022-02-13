@@ -20,6 +20,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 )]
 class AppEntrypointClear extends Command
 {    
+  private $client;
+
    private function rrmdir($dir) { 
     if (is_dir($dir)) { 
       $objects = scandir($dir);
@@ -34,23 +36,36 @@ class AppEntrypointClear extends Command
       rmdir($dir); 
     } 
   }
-   private $client;
 
     public function __construct(HttpClientInterface $client)
     {
         parent::__construct();
         $this->client = $client;
     }
-
+    protected function configure(): void
+    {
+        $this
+            ->addOption(
+                'final',
+                null,
+                InputOption::VALUE_NONE,
+                'deletes static entrypoint but not unpacked app files'
+            )
+        ;
+    }
     protected function execute(InputInterface $input, OutputInterface $output): int
     { 
-        file_exists(__DIR__.'/../../public/index.html')?unlink(__DIR__.'/../../public/index.html'):null;
-        file_exists(__DIR__.'/../../public/downloads/android-client-latest.apk')?unlink(__DIR__.'/../../public/downloads/android-client-latest.apk'):null;
+      file_exists(__DIR__.'/../../public/index.html')?unlink(__DIR__.'/../../public/index.html'):null;
+      file_exists(__DIR__.'/../../public/downloads/android-client-latest.apk')?unlink(__DIR__.'/../../public/downloads/android-client-latest.apk'):null;
+      if ($input->getOption('final')) {     
+         file_exists(__DIR__.'/../../android/app/build/outputs/apk/debug/app-debug.apk')?copy(__DIR__.'/../../android/app/build/outputs/apk/debug/app-debug.apk', __DIR__.'/../../public/downloads/android-client-latest.apk'):null;
+      } else {      
         file_exists(__DIR__.'/../../android/app/build/outputs/apk/debug/app-debug.apk')?rename(__DIR__.'/../../android/app/build/outputs/apk/debug/app-debug.apk', __DIR__.'/../../public/downloads/android-client-latest.apk'):null;
         file_exists(__DIR__.'/../../capacitor.config.ts')?unlink(__DIR__.'/../../capacitor.config.ts'):null;
         if (file_exists(__DIR__.'/../../android') && is_dir(__DIR__.'/../../android')) {
             $this->rrmdir(__DIR__.'/../../android');
-        }
+        } 
+      }
         return Command::SUCCESS;
     }
 }
