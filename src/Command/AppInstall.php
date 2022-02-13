@@ -44,14 +44,35 @@ class AppInstall extends Command
       $this->installer = new Installer(
         'http://localhost',
         'ws://localhost:8080',
-        'mysql://root:password@localhost:3306'
+        'localhost:3306',
+        'root',
+        '',
+        'mysql://root@localhost:3306/myWebsocketApp',
       ); 
+      $host = $this->askFor('databaseHost');
+      $user = $this->askFor('databaseUser');
+      $password = $this->askFor('databasePassword');
+      $db = mysqli_connect($host, $user, $password);
+      // Output the MySQL version
+      $dbinfo = explode( '-', mysqli_get_server_info($db)) ;
+      // Close connection
+      mysqli_close($db);
+      if (strlen($password)>0) {
+        $password = ':' . $password;
+      }
+      $this->installer->setDatabaseUrl("mysql://".$user .$password."@".$host."/myWebsocketApp?serverVersion=".strtolower($dbinfo[2])."-".$dbinfo[1]);
 
-      $str = 'SERVER_URL='.$this->askFor('ServerUrl') . "\n";
-      $str .= 'WEBSOCKET_URL='.$this->askFor('WebsocketUrl') . "\n";
-      $str .= 'DATABASE_URL='.$this->askFor('DatabaseUrl') . "\n";
+       $errors = $this->validator->validate($this->installer);
+      
+      if (count($errors) > 0) {
+        return $this->execute($input,$output);
+    }
+      $str = 'SERVER_URL=\''.$this->askFor('ServerUrl') . "'\n";
+      $str .= 'WEBSOCKET_URL=\''.$this->askFor('WebsocketUrl') . "'\n";
+      $str .= 'DATABASE_URL=\''.$this->installer->getDatabaseUrl() . "'\n";
       file_exists(__DIR__.'/../../.env.local')?unlink(__DIR__.'/../../.env.local'):null;
       file_put_contents(__DIR__.'/../../.env.local', $str);
+
         return Command::SUCCESS;
     }
 }

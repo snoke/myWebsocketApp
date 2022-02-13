@@ -6,19 +6,22 @@
         "@symfony/webpack-encore": "^1.7.0",
         "core-js": "^3.0.0",
         "regenerator-runtime": "^0.13.2",
+        "run-script-os": "^1.1.6",
         "webpack-notifier": "^1.6.0"
     },
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "install": "php bin/console app:install && composer up && php bin/console doctrine:database:create && php bin/console do:mi:mi && chown www-data config/jwt -R && chown www-data public -R && php bin/console lexik:jwt:generate-keypair && npm install @capacitor/cli --save-dev && npm install && npm run dev ",    
-        "server": "php bin/console server:start",    
+        "installer": "run-script-os",
+        "installer:win32": "composer up && php bin/console app:install && php bin/console doctrine:database:create && php bin/console do:mi:mi && npm install @capacitor/cli --save-dev && npm install && npm run dev ",
+        "installer:default": "composer up && php bin/console app:install && php bin/console doctrine:database:create && php bin/console do:mi:mi && chown www-data config/jwt -R && chown www-data public -R && php bin/console lexik:jwt:generate-keypair && npm install @capacitor/cli --save-dev && npm install && npm run dev ",
+        "server": "php bin/console server:start",
         "build:android": "php bin/console app:entrypoint:generate && npx cap init --web-dir=public && npx cap add android && npx cap run android && php bin/console app:entrypoint:clear",
         "dev-server": "encore dev-server",
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
-     },
+    },
     "dependencies": {
         "@capacitor/android": "^3.4.1",
         "@capacitor/core": "^3.4.1",

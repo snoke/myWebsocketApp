@@ -25,24 +25,45 @@ class Installer
     private $serverUrl;
     private $websocketUrl;
     private $databaseUrl;
+    private $databaseHost;
+    private $databaseUser;
+    private $databasePassword;
 public function __construct(
      $serverUrl,
      $websocketUrl,
-     $databaseUrl,
+      $databaseHost,
+      $databaseUser,
+      $databasePassword,
+      $databaseUrl,
     ) {
         $this->serverUrl = $serverUrl;
         $this->websocketUrl = $websocketUrl;
+        $this->databaseHost = $databaseHost;
+        $this->databaseUser = $databaseUser;
+        $this->databasePassword = $databasePassword;
         $this->databaseUrl = $databaseUrl;
 
 }
-public function setServerUrl($url) {
-    $this->serverUrl = $url;
+public function setServerUrl($val) {
+    $this->serverUrl = $val;
 }
-public function setWebsocketUrl($url) {
-    $this->websocketUrl = $url;
+public function setWebsocketUrl($val) {
+    $this->websocketUrl = $val;
 }
-public function setDatabaseUrl($url) {
-    $this->databaseUrl = $url;
+public function setDatabaseUrl($val) {
+    $this->databaseUrl = $val;
+}
+public function setDatabaseHost($val) {
+    $this->databaseHost = $val;
+}
+public function setDatabaseUser($val) {
+    $this->databaseUser = $val;
+}
+public function setDatabasePassword($val) {
+    $this->databasePassword = $val;
+}
+public function getDatabaseUrl() {
+    return $this->databaseUrl;
 }
 public function getServerUrl() {
     return $this->serverUrl;
@@ -50,8 +71,14 @@ public function getServerUrl() {
 public function getWebsocketUrl() {
     return $this->websocketUrl;
 }
-public function getDatabaseUrl() {
-    return $this->databaseUrl;
+public function getDatabaseHost() {
+    return $this->databaseHost;
+}
+public function getDatabaseUser() {
+    return $this->databaseUser;
+}
+public function getDatabasePassword() {
+    return $this->databasePassword;
 }
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
