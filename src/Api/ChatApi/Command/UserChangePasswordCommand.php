@@ -20,7 +20,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use App\Entity\User;
+use App\Api\ChatApi\Entity\User;
 
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 #[AsCommand(

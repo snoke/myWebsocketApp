@@ -7,7 +7,7 @@ namespace App\Api\JwtSubscriberApi\Worker;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 
 use \Ratchet\WebSocket\WsConnection;
-use App\Entity\User;
+use App\Api\ChatApi\Entity\User;
 //use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface as User;
 use App\Api\Command\AuthLoginCommand;
 use Doctrine\ORM\EntityManagerInterface;

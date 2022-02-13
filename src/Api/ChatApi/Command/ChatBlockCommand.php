@@ -14,8 +14,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\User;
-use App\Entity\Chat;
+use App\Api\ChatApi\Entity\User;
+use App\Api\ChatApi\Entity\Chat;
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 #[AsCommand(
     name: 'chat:block',

@@ -15,7 +15,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use App\Entity\User;
+use App\Api\ChatApi\Entity\User;
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
 #[AsCommand(

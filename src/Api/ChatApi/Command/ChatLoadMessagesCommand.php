@@ -17,8 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 use Doctrine\Common\Collections\Criteria;
-use App\Entity\Chat;
-use App\Entity\ChatMessage;
+use App\Api\ChatApi\Entity\Chat;
+use App\Api\ChatApi\Entity\ChatMessage;
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
 #[AsCommand(

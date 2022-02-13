@@ -3,7 +3,7 @@
  * Author: Stefan Sander <mail@stefan-sander.online>
  */
 
-namespace App\Entity;
+namespace App\Api\ChatApi\Entity;
 
 use App\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;

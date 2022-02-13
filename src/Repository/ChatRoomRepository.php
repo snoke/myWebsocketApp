@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 use Doctrine\Common\Collections\Criteria;
-use App\Entity\ChatRoom;
+use App\Api\ChatApi\Entity\ChatRoom;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
