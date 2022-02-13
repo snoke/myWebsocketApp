@@ -121,7 +121,7 @@ npm run build:android
 </pre> 
 
 
-this script will build the android app, start an emulator with the app and put the .apk into `/public/Downloads`.<br />it will remove all files created during the process
+this script will build the android app, start an emulator with the app and put the .apk into `/public/Downloads`.<br />it will remove all files created during the process (the unpacked app)
 
   <br /></li>
   </li>
