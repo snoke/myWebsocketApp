@@ -48,7 +48,7 @@ JWT is used for authentification.<br />
      <li>vuejs web and native android client</li>
     </ul>
   <br /></li>
-    <li name="LiveDemo"> <h3> <a href="#menu"> [^] </a>  LiveDemo</h3> 
+    <li name="LiveDemo"> <h3> <a href="#menu"> [^] </a>  Live Demo</h3> 
     
 browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads). <br />
 You may use following credientials: 
