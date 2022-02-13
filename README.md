@@ -31,8 +31,11 @@
 <ul>
   <li name="Description"> <h3> <a href="#menu"> [^] </a>  Description</h3> 
 Websockets are persistent connections over TCP. 
-This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.<br /><br />
-Project contains a super simple ```server:start```  - Command, a Json Api and a VueJS web and native android client (apk). JWT is used for authentification.<br />
+This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.<br />
+   
+Project contains  a super simple `
+server:start ` - Command, a Json Api and a VueJS web and native android client (apk).<br />
+JWT is used for authentification.<br />
 
   </li>
     <li name="Features"> <h3> <a href="#menu"> [^] </a>  Features</h3> <ul>
@@ -47,7 +50,7 @@ Project contains a super simple ```server:start```  - Command, a Json Api and a 
   </li>
     <li name="LiveDemo"> <h3> <a href="#menu"> [^] </a>  LiveDemo</h3> 
     
-browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads). <br /><br />
+browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads). <br />
 You may use following credientials: 
 `
 alice:test
@@ -79,26 +82,26 @@ bob:test
     </ul>
   </li>
   <li><h4> <a href="#menu"> [^] </a>  Server Installation</h4>
-  <ul>
-    <li>run following command to checkout the project
+run following command to checkout the project
 &emsp; <pre>
-git clone https://github.com/snoke/myWebsocketApp.git \<Webroot\> && cd \<Webroot\>
+git clone https://github.com/snoke/myWebsocketApp.git YourWebroot && cd YourWebroot
 </pre>
-</li>
-<li> create a file `.env.local` with following content <br /> 
-&emsp; <pre>
+    
+    
+    
+create a file
+` .env.local
+`
+with following content &emsp; <pre>
 SERVER_URL='http://localhost' 
 WEBSOCKET_URL='ws://localhost:8080' 
 DATABASE_URL="mysql://<DbUser>:<DbPassword>@127.0.0.1:3306/myWebsocketChat?serverVersion=mariadb-10.4.11"
-JWT_PASSPHRASE=<supersecretpassword>
-</pre>
-</li>
-<li> install dependencies, set up database, jwt keypairs and assets
+JWT_PASSPHRASE=supersecretpassword
+</pre> install dependencies, set up database, jwt keypairs and assets
 &emsp; <pre>
 git npm run install
 </pre>
-</li>
-</ul>
+
 </li>
   <li><h4> <a href="#menu"> [^] </a>  Start Websocket Server</h4>
 run &emsp; <pre>
@@ -109,10 +112,10 @@ php bin/console server:start
 &emsp; <img src="https://github.com/snoke/myWebsocketApp/blob/master/server_start.png?raw=true" />
 </li>
   <li><h4> <a href="#menu"> [^] </a>  Build Android Client (Android Package Kit)</h4>
-  check https://capacitorjs.com/docs/getting-started/environment-setup and set up Android Studio, SDKs and Emulators first<br />  
+  check https://capacitorjs.com/docs/getting-started/environment-setup and set up Android Studio, SDKs and Emulators first<br />then run
 &emsp; <pre>
 npm run build:android
-</pre><br />  
+</pre> 
 this script will build the android app, start an emulator with the app and put the .apk into `/public/Downloads`. <br />
 it will remove all files created during the process
 
