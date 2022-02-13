@@ -92,7 +92,7 @@ git clone https://github.com/snoke/myWebsocketApp.git YourWebroot && cd YourWebr
 create a file
 ` .env.local
 `
-with following content &emsp; <pre>
+with following content matching your system &emsp; <pre>
 SERVER_URL='http://localhost' 
 WEBSOCKET_URL='ws://localhost:8080' 
 DATABASE_URL="mysql://DbUser:DbPassword@127.0.0.1:3306/myWebsocketChat?serverVersion=mariadb-10.4.11"
