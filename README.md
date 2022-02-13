@@ -112,11 +112,13 @@ php bin/console server:start
 &emsp; <img src="https://github.com/snoke/myWebsocketApp/blob/master/server_start.png?raw=true" />
 </li>
   <li><h4> <a href="#menu"> [^] </a>  Build Android Client (Android Package Kit)</h4>
-  check https://capacitorjs.com/docs/getting-started/environment-setup and set up Android Studio, SDKs and Emulators first<br />then run
+  check https://capacitorjs.com/docs/getting-started/environment-setup and set up Android Studio, SDKs and Emulators first.<br />then run
 &emsp; <pre>
 npm run build:android
 </pre> 
-this script will build the android app, start an emulator with the app and put the .apk into `/public/Downloads`. <br />
+
+
+this script will build the android app, start an emulator with the app and put the .apk into `/public/Downloads`
 it will remove all files created during the process
 
   </li>
