@@ -83,10 +83,8 @@ bob:test
   <li><h4> <a href="#menu"> [^] </a>  Server Installation</h4>
 run following command to checkout the project
 &emsp; <pre>
-git clone https://github.com/snoke/myWebsocketApp.git YourWebroot && cd YourWebroot
+git clone https://github.com/snoke/myWebsocketApp.git && cd myWebsocketApp
 </pre>
-    
-    
     
 create a file
 ` .env.local
@@ -94,12 +92,12 @@ create a file
 with following content matching your system &emsp; <pre>
 SERVER_URL='http://localhost' 
 WEBSOCKET_URL='ws://localhost:8080' 
-DATABASE_URL="mysql://DbUser:DbPassword@127.0.0.1:3306/myWebsocketChat?serverVersion=mariadb-10.4.11"
+DATABASE_URL="mysql://DbUser:DbPassword@127.0.0.1:3306/myWebsocketApp?serverVersion=mariadb-10.4.11"
 </pre> install dependencies, set up database, jwt keypairs and assets
 &emsp; <pre>
 git npm run install
 </pre>
-
+mount your web document root to `public`
 </li>
   <li><h4> <a href="#menu"> [^] </a>  Start Websocket Server</h4>
 run &emsp; <pre>
