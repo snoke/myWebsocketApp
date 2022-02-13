@@ -21,29 +21,33 @@ use App\Entity\Installer;
 )]
 class AppInstall extends Command
 {    
-    private $message=null;
-  public function __construct(ValidatorInterface $validator) {
-    parent::__construct();
-    $this->validator = $validator;
-  }
-  private function askFor($name) {
-    $value = $this->io->ask($name,$this->installer->__get($name));
-    $oldValue = $this->installer->__get($name);
-    $this->installer->__set($name,$value);
-    $errors = $this->validator->validate($this->installer);
-    if (count($errors) > 0) {
-        $this->showHeader($this->output);
-        $this->io->error("`".$value."` is not valid for ´" . $name."´");
-        $this->installer->__set($name,$oldValue);
-        return $this->askFor($name);
+    private $message;
+
+    public function __construct(ValidatorInterface $validator) {
+        parent::__construct();
+        $this->validator = $validator;
     }
-    return $value;
-  }
-  private function showHeader($output) {
-    $this->output->write(sprintf("\033\143"));
-    $this->io->title('Set up');  
-      
-  }
+
+    private function askFor($name) {
+        $value = $this->io->ask($name,$this->installer->__get($name));
+        $oldValue = $this->installer->__get($name);
+        $this->installer->__set($name,$value);
+        $errors = $this->validator->validate($this->installer);
+        if (count($errors) > 0) {
+            $this->showHeader($this->output);
+            $this->io->error("`".$value."` is not valid for ´" . $name."´");
+            $this->installer->__set($name,$oldValue);
+            return $this->askFor($name);
+        }
+        return $value;
+    }
+
+    private function showHeader($output) {
+        $this->output->write(sprintf("\033\143"));
+        $this->io->title('Set up');  
+            
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {       
         $this->output=$output;
