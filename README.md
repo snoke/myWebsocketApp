@@ -23,7 +23,7 @@
   
   
 
-# <div align="center" name="about"><a href="#menu"> [^] </a>myWebsocketApp </div>
+# <div align="center" name="about"><a href="#menu"> [^] </a>myWebsocketApp (beta)</div>
 ### <div align="center">Command driven Symfony6 Websocket Chat Server with VueJS Web and native Android Client</div>
 <p align="center">
   <img src="https://github.com/snoke/myWebsocketApp/blob/master/myWebsocketApp.png?raw=true" />
@@ -74,17 +74,15 @@ bob:test
     <li name="Documentation"> <h3> <a href="#menu"> [^] </a>  Documentation</h3> 
 
       
-  | <a href="#Requirements">Requirements</a> | <a href="#ServerInstallation">Server Installation</a> | <a href="#WebsocketServer">Start Websocket Server</a> | <a href="#ClientAPK">Build Android Client (APK)</a>            | 
+  | <a href="#Requirements">Server Requirements</a> | <a href="#ServerInstallation">Server Installation</a> | <a href="#WebsocketServer">Start Websocket Server</a> | <a href="#ClientAPK">Build Android Client (APK)</a>            | 
   |-|-|-|-| 
    <br />   
 <ul>
-  <li name="Requirements"><h4> <a href="#Documentation"> [^] </a>  Requirements</h4>
+  <li name="Requirements"><h4> <a href="#Documentation"> [^] </a> Server Requirements</h4>
     <ul>
-      <li>webserver with php7 (apache2)</li>
+      <li>webserver with php8 (apache2)</li>
       <li>database (mysql/mariadb)</li>
-      <li>composer</li>
-      <li>npm</li>
-      <li>git</li>
+      <li>composer, npm, git</li>
     </ul>
   <br /></li>
   <li name="ServerInstallation"><h4> <a href="#Documentation"> [^] </a>  Server Installation</h4>
