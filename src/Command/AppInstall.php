@@ -61,7 +61,6 @@ class AppInstall extends Command
       // Output the MySQL version
       $dbinfo = explode( '-', mysqli_get_server_info($db)) ;
       // Close connection
-      mysqli_close($db);
       if (strlen($password)>0) {
         $password = ':' . $password;
       }
@@ -69,6 +68,7 @@ class AppInstall extends Command
       var_dump($dbinfo);
       $this->installer->setDatabaseUrl("mysql://".$user .$password."@".$host."/myWebsocketApp?serverVersion=".strtolower($dbinfo[2])."-".$dbinfo[1]);
 
+      mysqli_close($db);
        $errors = $this->validator->validate($this->installer);
       
       if (count($errors) > 0) {
