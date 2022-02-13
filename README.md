@@ -69,9 +69,15 @@ bob:test
  
   <br /></li>
     <li name="Documentation"> <h3> <a href="#menu"> [^] </a>  Documentation</h3> 
-            
+      
+<a href="#Requirements">Requirements</a> -
+<a href="#ServerInstallation">Server Installation</a> -
+<a href="#WebsocketServer">Start Websocket Server</a> -
+<a href="#ClientAPK">Build Android Client (APK)</a>
+      
+---    
 <ul>
-  <li><h4> <a href="#menu"> [^] </a>  Requirements</h4>
+  <li name="Requirements"><h4> <a href="#Documentation"> [^] </a>  Requirements</h4>
     <ul>
       <li>webserver with php7 (apache2)</li>
       <li>database (mysql/mariadb)</li>
@@ -80,7 +86,7 @@ bob:test
       <li>git</li>
     </ul>
   <br /></li>
-  <li><h4> <a href="#menu"> [^] </a>  Server Installation</h4>
+  <li name="ServerInstallation"><h4> <a href="#Documentation"> [^] </a>  Server Installation</h4>
 run following command to checkout the project
 &emsp; <pre>
 git clone https://github.com/snoke/myWebsocketApp.git && cd myWebsocketApp
@@ -99,7 +105,7 @@ git npm run install
 </pre>
 mount your web document root to `public`
 <br /><br /></li>
-  <li><h4> <a href="#menu"> [^] </a>  Start Websocket Server</h4>
+  <li name="WebsocketServer"><h4> <a href="#Documentation"> [^] </a>  Start Websocket Server</h4>
 run &emsp; <pre>
 npm run server
 </pre> which is an alias of <pre>
@@ -107,7 +113,7 @@ php bin/console server:start
 </pre>
 &emsp; <img src="https://github.com/snoke/myWebsocketApp/blob/master/server_start.png?raw=true" />
 <br /><br /></li>
-  <li><h4> <a href="#menu"> [^] </a>  Build Android Client (Android Package Kit)</h4>
+  <li name="ClientAPK"><h4> <a href="#Documentation"> [^] </a>  Build Android Client (Android Package Kit)</h4>
   check https://capacitorjs.com/docs/getting-started/environment-setup and set up Android Studio, SDKs and Emulators first.<br />then run
 &emsp; <pre>
 npm run build:android
