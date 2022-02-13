@@ -100,7 +100,7 @@ with following content matching your system &emsp; <pre>
 SERVER_URL='http://localhost' 
 WEBSOCKET_URL='ws://localhost:8080' 
 DATABASE_URL="mysql://DbUser:DbPassword@127.0.0.1:3306/myWebsocketApp?serverVersion=mariadb-10.4.11"
-</pre> install dependencies, set up database, jwt keypairs and assets
+</pre> install dependencies, set up database, jwt keypairs and assets with following command:
 &emsp; <pre>
 npm run install
 </pre>
