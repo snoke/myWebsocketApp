@@ -73,9 +73,8 @@ bob:test
 <ul>
   <li><h4> <a href="#menu"> [^] </a>  Requirements</h4>
     <ul>
-      <li>webserver (apache2)</li>
+      <li>webserver with php7 (apache2)</li>
       <li>database (mysql/mariadb)</li>
-      <li>php7</li>
       <li>composer</li>
       <li>npm</li>
       <li>git</li>
