@@ -119,8 +119,8 @@ php bin/console server:start `
 &emsp; <img src="https://github.com/snoke/myWebsocketApp/blob/master/server_start.png?raw=true" />
 <br /><br /></li>
   <li name="ClientAPK"><h4> <a href="#Documentation"> [^] </a>  Build Android Client (Android Package Kit)</h4>
-  check https://capacitorjs.com/docs/getting-started/environment-setup and set up Android Studio, SDKs and Emulators first.<br />then run:
-&emsp; <pre>
+  <p>check <a href="https://capacitorjs.com/docs/getting-started/environment-setup">Capacitor Documentation</a> and set up Android Studio, SDKs and Emulators first.<br />then run:
+&emsp; </p><pre>
 npm run build:android
 </pre> 
 
