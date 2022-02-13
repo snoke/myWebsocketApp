@@ -1,18 +1,21 @@
 
+
+
+
 <div name="menu">
+  
+  
+
+
 
 ---
 
-<div align="center">
+<div align="center">  
   
-  [About](#about) -
-  [Description](#Description) -
-   [Features](#Features) -
-   [Live Demo](#LiveDemo) -
-   [Downloads](#Downloads) -
-   [Documentation](#Documentation) -
-   [Todos](#TODOs)
-  </div>
+      
+| <a href="#about">About</a> | <a href="#Description">Description</a> | <a href="#Features">Features</a> | <a href="#LiveDemo">Live Demo</a> | <a href="#Downloads">Downloads</a> | <a href="#Documentation">Documentation</a> | <a href="#TODOs">TODOs</a> | 
+|-|-|-|-|-|-|-|  
+</div>
   
 ---
 
@@ -20,7 +23,7 @@
   
   
 
-# <div align="center" name="about">myWebsocketApp </div>
+# <div align="center" name="about"><a href="#menu"> [^] </a>myWebsocketApp </div>
 ### <div align="center">Command driven Symfony6 Websocket Chat Server with VueJS Web and native Android Client</div>
 <p align="center">
   <img src="https://github.com/snoke/myWebsocketApp/blob/master/myWebsocketApp.png?raw=true" />
@@ -69,12 +72,11 @@ bob:test
  
   <br /></li>
     <li name="Documentation"> <h3> <a href="#menu"> [^] </a>  Documentation</h3> 
+
       
-<a href="#Requirements">Requirements</a> -
-<a href="#ServerInstallation">Server Installation</a> -
-<a href="#WebsocketServer">Start Websocket Server</a> -
-<a href="#ClientAPK">Build Android Client (APK)</a>
-   <br /><br />   
+  | <a href="#Requirements">Requirements</a> | <a href="#ServerInstallation">Server Installation</a> | <a href="#WebsocketServer">Start Websocket Server</a> | <a href="#ClientAPK">Build Android Client (APK)</a>            | 
+  |-|-|-|-| 
+   <br />   
 <ul>
   <li name="Requirements"><h4> <a href="#Documentation"> [^] </a>  Requirements</h4>
     <ul>
