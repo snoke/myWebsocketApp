@@ -99,7 +99,7 @@ npm run server
 </pre> 
 
    
-which is an alias of `
+&emsp; which is an alias of `
 php bin/console server:start ` 
     
 
