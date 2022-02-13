@@ -80,7 +80,7 @@ bob:test
 <ul>
   <li name="Requirements"><h4> <a href="#Documentation"> [^] </a> Server Requirements</h4>
     <ul>
-      <li>webserver with php7 (apache2)</li>
+      <li>webserver with php8 (apache2)</li>
       <li>database (mysql/mariadb)</li>
       <li>composer</li>
       <li>npm</li>
