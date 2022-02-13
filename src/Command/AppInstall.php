@@ -65,8 +65,9 @@ class AppInstall extends Command
         $password = ':' . $password;
       }
       var_dump(mysqli_get_server_info($db));
-      var_dump($dbinfo);
+      var_dump(mysqli_get_server_version($db));
       var_dump($db->server_info);
+       
       $this->installer->setDatabaseUrl("mysql://".$user .$password."@".$host."/myWebsocketApp?serverVersion=".strtolower($dbinfo[2])."-".$dbinfo[1]);
 
       mysqli_close($db);
