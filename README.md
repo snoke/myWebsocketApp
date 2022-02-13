@@ -13,7 +13,7 @@
 <div align="center">  
   
       
-| <a href="#about">About</a> | <a href="#Description">Description</a> | <a href="#Features">Features</a> | <a href="#LiveDemo">Live Demo</a> | <a href="#Downloads">Downloads</a> | <a href="#Documentation">Documentation</a> | <a href="#TODOs">TODOs</a> | 
+| <a href="#about">About</a> | <a href="#Description">Description</a> | <a href="#Features">Features</a> | <a href="#LiveDemo">Live Demo</a> | <a href="#Downloads">Downloads</a> | <a href="#Documentation">Documentation</a> | <a href="#TODOs">ToDo</a> | 
 |-|-|-|-|-|-|-|  
 </div>
   
@@ -126,7 +126,7 @@ this script will build the android app, start an emulator with the app and put t
   <br /></li>
   </li>
   </ul>
-    <li name="TODOs"> <h3> <a href="#menu"> [^] </a>  TODOs</h3> 
+    <li name="TODOs"> <h3> <a href="#menu"> [^] </a>  ToDo</h3> 
     
 * setup firebase and implement native android notification
 * build native ios client 
