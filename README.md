@@ -86,35 +86,41 @@ bob:test
     </ul>
   <br /></li>
   <li name="ServerInstallation"><h4> <a href="#Documentation"> [^] </a>  Server Installation</h4>
-run following command to checkout the project
+<p>run following command to checkout the project:
 &emsp; <pre>
 git clone https://github.com/snoke/myWebsocketApp.git && cd myWebsocketApp
-</pre>
+</pre></p>
     
 create a file
 ` .env.local
 `
-with following content matching your system &emsp; <pre>
+with following content matching your system: 
+&emsp; <pre>
 SERVER_URL='http://localhost' 
 WEBSOCKET_URL='ws://localhost:8080' 
 DATABASE_URL="mysql://DbUser:DbPassword@127.0.0.1:3306/myWebsocketApp?serverVersion=mariadb-10.4.11"
-</pre> install dependencies, set up database, jwt keypairs and assets with following command:
-&emsp; <pre>
+</pre><p>install dependencies, set up database, jwt keypairs and assets with following command:
+&emsp; </p><pre>
 npm run install
 </pre>
 mount your web document root to `public`
 <br /><br /></li>
   <li name="WebsocketServer"><h4> <a href="#Documentation"> [^] </a>  Start Websocket Server</h4>
-run &emsp; <pre>
+<p>run: &emsp;</p> <pre>
 npm run server
-</pre> which is an alias of <pre>
-php bin/console server:start
-</pre>
+</pre> 
+
+   
+which is an alias of `
+php bin/console server:start ` 
+    
+
+
 &emsp; <img src="https://github.com/snoke/myWebsocketApp/blob/master/server_start.png?raw=true" />
 <br /><br /></li>
   <li name="ClientAPK"><h4> <a href="#Documentation"> [^] </a>  Build Android Client (Android Package Kit)</h4>
-  check https://capacitorjs.com/docs/getting-started/environment-setup and set up Android Studio, SDKs and Emulators first.<br />then run
-&emsp; <pre>
+  <p>check <a href="https://capacitorjs.com/docs/getting-started/environment-setup">Capacitor Documentation</a> and set up Android Studio, SDKs and Emulators first.<br />then run:
+&emsp; </p><pre>
 npm run build:android
 </pre> 
 
