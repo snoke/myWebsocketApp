@@ -28,7 +28,7 @@
 
   
   
-<ul>
+<br /><ul>
   <li name="Description"> <h3> <a href="#menu"> [^] </a>  Description</h3> 
 Websockets are persistent connections over TCP. 
 This is not only a lot faster then typical http requests where a new connection gets established for each request, also this allows live broadcasting to clients.<br />
@@ -37,7 +37,7 @@ Project contains  a super simple `
 server:start ` - Command, a Json Api and a VueJS web and native android client (apk).<br />
 JWT is used for authentification.<br />
 
-  </li>
+  <br /></li>
     <li name="Features"> <h3> <a href="#menu"> [^] </a>  Features</h3> <ul>
       <li>Browser Push Notifications</li>
       <li>Emojis</li>
@@ -47,7 +47,7 @@ JWT is used for authentification.<br />
       <li>block/unblock chat</li>
      <li>vuejs web and native android client</li>
     </ul>
-  </li>
+  <br /></li>
     <li name="LiveDemo"> <h3> <a href="#menu"> [^] </a>  LiveDemo</h3> 
     
 browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads). <br />
@@ -59,7 +59,7 @@ alice:test
 bob:test
 `
 
-  </li>
+  <br /></li>
     <li name="Downloads"> <h3> <a href="#menu"> [^] </a>  Downloads</h3> 
       
 <ul>
@@ -67,7 +67,7 @@ bob:test
 </ul>
 
  
-  </li>
+  <br /></li>
     <li name="Documentation"> <h3> <a href="#menu"> [^] </a>  Documentation</h3> 
             
 <ul>
@@ -79,7 +79,7 @@ bob:test
       <li>npm</li>
       <li>git</li>
     </ul>
-  </li>
+  <br /></li>
   <li><h4> <a href="#menu"> [^] </a>  Server Installation</h4>
 run following command to checkout the project
 &emsp; <pre>
@@ -98,7 +98,7 @@ DATABASE_URL="mysql://DbUser:DbPassword@127.0.0.1:3306/myWebsocketApp?serverVers
 git npm run install
 </pre>
 mount your web document root to `public`
-</li>
+<br /><br /></li>
   <li><h4> <a href="#menu"> [^] </a>  Start Websocket Server</h4>
 run &emsp; <pre>
 npm run server
@@ -106,7 +106,7 @@ npm run server
 php bin/console server:start
 </pre>
 &emsp; <img src="https://github.com/snoke/myWebsocketApp/blob/master/server_start.png?raw=true" />
-</li>
+<br /><br /></li>
   <li><h4> <a href="#menu"> [^] </a>  Build Android Client (Android Package Kit)</h4>
   check https://capacitorjs.com/docs/getting-started/environment-setup and set up Android Studio, SDKs and Emulators first.<br />then run
 &emsp; <pre>
@@ -116,7 +116,9 @@ npm run build:android
 
 this script will build the android app, start an emulator with the app and put the .apk into `/public/Downloads`.<br />it will remove all files created during the process
 
+  <br /></li>
   </li>
+  </ul>
     <li name="TODOs"> <h3> <a href="#menu"> [^] </a>  TODOs</h3> 
     
 * setup firebase and implement native android notification
