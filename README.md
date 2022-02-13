@@ -107,9 +107,14 @@ mount your web document root to `public`
   <li name="WebsocketServer"><h4> <a href="#Documentation"> [^] </a>  Start Websocket Server</h4>
 run &emsp; <pre>
 npm run server
-</pre> which is an alias of <pre>
-php bin/console server:start
-</pre>
+</pre> 
+
+   
+which is an alias of `
+php bin/console server:start ` 
+    
+
+
 &emsp; <img src="https://github.com/snoke/myWebsocketApp/blob/master/server_start.png?raw=true" />
 <br /><br /></li>
   <li name="ClientAPK"><h4> <a href="#Documentation"> [^] </a>  Build Android Client (Android Package Kit)</h4>
