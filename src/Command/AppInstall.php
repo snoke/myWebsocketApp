@@ -65,6 +65,7 @@ class AppInstall extends Command
       if (strlen($password)>0) {
         $password = ':' . $password;
       }
+      var_dump($dbinfo);
       $this->installer->setDatabaseUrl("mysql://".$user .$password."@".$host."/myWebsocketApp?serverVersion=".strtolower($dbinfo[2])."-".$dbinfo[1]);
 
        $errors = $this->validator->validate($this->installer);
