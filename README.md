@@ -88,10 +88,9 @@ bob:test
   <li name="ServerInstallation"><h4> <a href="#Documentation"> [^] </a>  Server Installation</h4>
 <p>run following command to checkout the project and start the installer:
 &emsp; <pre>
-git clone https://github.com/snoke/myWebsocketApp.git && cd myWebsocketApp && npm run installer
+git clone https://github.com/snoke/myWebsocketApp.git && cd myWebsocketApp
 </pre></p>
-    
-mount your web document root to `public`
+mount your web document root to  <code>public</code> then run: <pre> npm run installer </pre>
 <br /><br /></li>
   <li name="WebsocketServer"><h4> <a href="#Documentation"> [^] </a>  Start Websocket Server</h4>
 <p>run: &emsp; <pre>
