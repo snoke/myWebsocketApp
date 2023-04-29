@@ -18,6 +18,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand;
+use App\Entity\User;
+
 #[AsCommand(
     name: 'auth:login',
     description: 'Authenticate with provided credentials and retrieve JWT',
@@ -56,7 +58,6 @@ class AuthLoginCommand extends SubscriberBroadcastCommand
                 ],
             ]
         );
-
         $statusCode = $response->getStatusCode();
         if ($statusCode==401) {
             $output->write("login failed");

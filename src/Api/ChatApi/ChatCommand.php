@@ -7,7 +7,7 @@ namespace App\Api\ChatApi;
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-use App\Api\ChatApi\Entity\User;
+use App\Entity\User;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;

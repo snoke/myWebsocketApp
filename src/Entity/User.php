@@ -3,7 +3,7 @@
  * Author: Stefan Sander <mail@stefan-sander.online>
  */
 
-namespace App\Api\ChatApi\Entity;
+namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -39,6 +39,7 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
     private $roles = [];
 
     #[ORM\Column(type: 'string')]
+    private $password;
 
     #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'contacts')]
     private $contacts;

@@ -19,7 +19,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 //use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface as User;
 //use Symfony\Component\Security\Core\User\UserInterface as User;
-use App\Api\ChatApi\Entity\User;
+use App\Entity\User;
 use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
 
 #[AsCommand(

@@ -2,7 +2,7 @@
 /*
  * Author: Stefan Sander <mail@stefan-sander.online>
  * 
- * this command is being called when npm run build:android is called
+ * this command is being called when npm run dev or npm run build is called
  * it will create a static html for capacitor to build a native android app
  */
 

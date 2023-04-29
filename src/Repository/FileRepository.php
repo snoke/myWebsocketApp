@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Api\ChatApi\Entity\File;
+use App\Entity\File;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
