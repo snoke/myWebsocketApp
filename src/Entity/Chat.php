@@ -12,28 +12,29 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 use App\Api\JwtSubscriberApi\Entity;
+
 #[ORM\Entity(repositoryClass: ChatRepository::class)]
 class Chat extends Entity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[Groups(['app_chat','app_user_chats','chat_message_status'])]
+    #[Groups(['app_chat', 'app_user_chats', 'chat_message_status'])]
     #[ORM\Column(type: 'integer')]
     private $id;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'chats')]
-    #[Groups(['app_chat','app_user_chats'])]
+    #[Groups(['app_chat', 'app_user_chats'])]
     private $users;
-    
+
     #[ORM\OneToMany(mappedBy: 'chat', targetEntity: ChatMessage::class)]
     private $chatMessages;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[Groups(['app_chat','app_user_chats'])]
+    #[Groups(['app_chat', 'app_user_chats'])]
     private $blockedBy;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['app_chat','app_user_chats'])]
+    #[Groups(['app_chat', 'app_user_chats'])]
     private $typing;
 
 
@@ -79,10 +80,11 @@ class Chat extends Entity
     {
         return $this->chatMessages;
     }
+
     public function setChatMessages($chatMessages): self
     {
-            $this->chatMessages[] = $chatMessages;
-            return $this;
+        $this->chatMessages[] = $chatMessages;
+        return $this;
     }
 
     public function addChatMessage(ChatMessage $chatMessage): self

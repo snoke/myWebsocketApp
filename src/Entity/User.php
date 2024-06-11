@@ -13,9 +13,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Api\JwtSubscriberApi\Entity;
+
 /**
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  */
@@ -27,15 +27,15 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['user','app_user_chats','app_chat','app_chat_send','app_user_search','app_user_contacts','chat_message_status','chat:load:messages'])]
+    #[Groups(['user', 'app_user_chats', 'app_chat', 'app_chat_send', 'app_user_search', 'app_user_contacts', 'chat_message_status', 'chat:load:messages'])]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]    
-    #[Groups(['user','app_user_chats','app_chat','app_chat_send','app_user_search','app_user_contacts','chat_message_status'])]
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Groups(['user', 'app_user_chats', 'app_chat', 'app_chat_send', 'app_user_search', 'app_user_contacts', 'chat_message_status'])]
     private $username;
 
     #[ORM\Column(type: 'json')]
-    #[Groups("user")]
+    #[Groups('user')]
     private $roles = [];
 
     #[ORM\Column(type: 'string')]
@@ -46,7 +46,6 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
 
     #[ORM\ManyToMany(targetEntity: Chat::class, mappedBy: 'users')]
     private $chats;
-
 
 
     public function __construct()
@@ -79,7 +78,7 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     /**

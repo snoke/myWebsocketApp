@@ -39,15 +39,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findByLike($params)
     {
         $queryBuilder = $this->createQueryBuilder('u');
-        foreach($params as $key => $val) {
+        foreach ($params as $key => $val) {
             $queryBuilder = $queryBuilder->andWhere('u.' . $key . ' LIKE :val') //TODO: NOT CORRECTLY UNESCAPED KEY!!!
             ->setParameter('val', $val . '%');
         }
         return $queryBuilder->orderBy('u.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
     // /**
     //  * @return User[] Returns an array of User objects

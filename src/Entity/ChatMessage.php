@@ -10,13 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 use App\Api\JwtSubscriberApi\Entity;
+
 #[ORM\Entity(repositoryClass: ChatMessageRepository::class)]
 class ChatMessage extends Entity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['app_chat','app_chat_send','chat_message_status','chat:load:messages'])]
+    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Chat::class, inversedBy: 'chatMessages')]
@@ -24,31 +25,31 @@ class ChatMessage extends Entity
     private $chat;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[Groups(['app_chat','app_chat_send','chat_message_status','chat:load:messages','chat:load:messages'])]
+    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages', 'chat:load:messages'])]
     private $sender;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['app_chat','app_chat_send','chat_message_status','chat:load:messages'])]
+    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
     private $message;
 
     #[ORM\ManyToOne(targetEntity: File::class)]
-    #[Groups(['app_chat','app_chat_send','chat_message_status','chat:load:messages'])]
+    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
     private $file;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['app_chat','app_chat_send','chat_message_status','chat:load:messages'])]
+    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
     private $sent;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['app_chat','app_chat_send','chat_message_status','chat:load:messages'])]
+    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
     private $delivered;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['app_chat','app_chat_send','chat_message_status','chat:load:messages'])]
+    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
     private $seen;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['app_chat','app_chat_send','chat_message_status','chat:load:messages'])]
+    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
     private $status;
 
     public function getId(): ?int

@@ -10,24 +10,25 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 use App\Api\JwtSubscriberApi\Entity;
+
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 class File extends Entity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['app_chat','app_chat_send'])]
+    #[Groups(['app_chat', 'app_chat_send'])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     private $user;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['app_chat','app_chat_send'])]
+    #[Groups(['app_chat', 'app_chat_send'])]
     private $filename;
 
     #[ORM\Column(type: 'text')]
-    #[Groups(['app_chat','app_chat_send'])]
+    #[Groups(['app_chat', 'app_chat_send'])]
     private $content;
 
     public function getId(): ?int

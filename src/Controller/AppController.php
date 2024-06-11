@@ -16,11 +16,11 @@ class AppController extends AbstractController
      * @Route("/", name="index")
      * @Route("/{route}", name="index_route", requirements={"route"="^.+"})
      */
-    public function index($client="web",$route=null): Response
+    public function index($client = 'web', $route = null): Response
     {
         return $this->render('app/index.html.twig', [
             'controller_name' => 'AppController',
-            'config' => [ 
+            'config' => [
                 'websocket_url' => $_ENV['WEBSOCKET_URL'],
                 'client' => $client,
             ]
