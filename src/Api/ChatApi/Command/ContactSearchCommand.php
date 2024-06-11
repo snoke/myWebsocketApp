@@ -16,6 +16,9 @@ use App\Entity\User;
 
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'contact:search',
     description: 'search user by name (like search)',

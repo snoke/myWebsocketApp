@@ -16,6 +16,9 @@ use App\Entity\File;
 
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'file:upload',
     description: 'Uploads a file',

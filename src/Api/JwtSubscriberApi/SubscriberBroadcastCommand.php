@@ -11,6 +11,9 @@ use Symfony\Component\Console\Command\Command;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ *
+ */
 abstract Class SubscriberBroadcastCommand extends Command
 {
 
@@ -23,9 +26,9 @@ abstract Class SubscriberBroadcastCommand extends Command
     }
 
     /**
-     * @param User[] $users
+     * @param Collection $users
      */
-    public function setSubscribers(Collection $users)
+    public function setSubscribers(Collection $users): void
     {
         $this->subscribers = new ArrayCollection();
         foreach ($users as $user) {
@@ -33,15 +36,15 @@ abstract Class SubscriberBroadcastCommand extends Command
         }
     }
 
-    public function addSubscriber(User $user)
+    public function addSubscriber(User $user): void
     {
         $this->subscribers->add($user);
     }
 
     /**
-     * @return User[]
+     * @return Collection
      */
-    public function getSubscribers(): ArrayCollection
+    public function getSubscribers(): Collection
     {
         return $this->subscribers;
     }

@@ -59,7 +59,7 @@ class JsonApi extends WebsocketServer
         $this->workers = [$callbackResponder];
     }
 
-    private function execute(Command $command, ArrayInput $params)
+    private function execute(Command $command, ArrayInput $params): JsonCommandResponse
     {
         $output = new BufferedOutput();
         $statusCode = $command->run($params, $output);
@@ -72,17 +72,22 @@ class JsonApi extends WebsocketServer
         );
     }
 
-    protected function addWorker(Worker $worker)
+    protected function addWorker(Worker $worker): void
     {
         $this->workers[] = $worker;
     }
 
+    /**
+     * @param WsConnection $from
+     * @param string $json
+     * @return mixed
+     */
     public function run(WsConnection $from, string $json)
     {
         return $this->response;
     }
 
-    public function onOpen(ConnectionInterface $from)
+    public function onOpen(ConnectionInterface $from): void
     {
         parent::onOpen($from);
         foreach ($this->workers as $worker) {
@@ -90,7 +95,7 @@ class JsonApi extends WebsocketServer
         }
     }
 
-    public function onClose(ConnectionInterface $from)
+    public function onClose(ConnectionInterface $from): void
     {
         parent::onClose($from);
         foreach ($this->workers as $worker) {
@@ -98,7 +103,12 @@ class JsonApi extends WebsocketServer
         }
     }
 
-    public function onMessage(ConnectionInterface $from, $json)
+    /**
+     * @param ConnectionInterface $from
+     * @param $json
+     * @return void
+     */
+    public function onMessage(ConnectionInterface $from, $json): void
     {
         parent::onMessage($from, $json);
         $request = new JsonCommandRequest($from, $json);

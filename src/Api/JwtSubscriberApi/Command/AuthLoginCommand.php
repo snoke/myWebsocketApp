@@ -15,13 +15,16 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'auth:login',
     description: 'Authenticate with provided credentials and retrieve JWT',
 )]
 class AuthLoginCommand extends SubscriberBroadcastCommand
 {
-    private $client;
+    private HttpClientInterface $client;
 
     public function __construct(HttpClientInterface $client)
     {

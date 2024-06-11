@@ -12,6 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'chat:load:userchats',
     description: 'Retrieves Chats participated by given User Id',

@@ -11,6 +11,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 use App\Api\JwtSubscriberApi\Entity;
 
+/**
+ *
+ */
 #[ORM\Entity(repositoryClass: ChatMessageRepository::class)]
 class ChatMessage extends Entity
 {
@@ -18,39 +21,39 @@ class ChatMessage extends Entity
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
-    private $id;
+    private ?int $id;
 
     #[ORM\ManyToOne(targetEntity: Chat::class, inversedBy: 'chatMessages')]
     #[Groups(['chat_message_status'])]
-    private $chat;
+    private ?Chat $chat;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages', 'chat:load:messages'])]
-    private $sender;
+    private ?User $sender;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
-    private $message;
+    private ?string $message;
 
     #[ORM\ManyToOne(targetEntity: File::class)]
     #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
-    private $file;
+    private ?File $file;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
-    private $sent;
+    private ?\DateTimeInterface $sent;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
-    private $delivered;
+    private ?\DateTimeInterface $delivered;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
-    private $seen;
+    private ?\DateTimeInterface $seen;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
-    private $status;
+    private ?string $status;
 
     public function getId(): ?int
     {

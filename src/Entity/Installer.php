@@ -5,43 +5,26 @@ namespace App\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
+/**
+ *
+ */
 class Installer
 {
-    public function __get($property)
-    {
-        $methodName = 'get' . ucfirst($property);
-        if (method_exists($this, $methodName)) {
-            return call_user_func([$this, $methodName]);
-        } elseif (isset($this->{$property})) {
-            return $this->{$property};
-        }
-        return null;
-    }
 
-    public function __set($property, $value)
-    {
-        $methodName = 'set' . ucfirst($property);
-        if (method_exists($this, $methodName)) {
-            call_user_func_array([$this, $methodName], [$value]);
-        } else {
-            $this->{$property} = $value;
-        }
-    }
-
-    private $serverUrl;
-    private $websocketUrl;
-    private $databaseUrl;
-    private $databaseHost;
-    private $databaseUser;
-    private $databasePassword;
+    private ?string $serverUrl;
+    private ?string $websocketUrl;
+    private ?string $databaseUrl;
+    private ?string $databaseHost;
+    private ?string $databaseUser;
+    private ?string $databasePassword;
 
     public function __construct(
-        $serverUrl,
-        $websocketUrl,
-        $databaseHost,
-        $databaseUser,
-        $databasePassword,
-        $databaseUrl,
+        ?string $serverUrl,
+        ?string $websocketUrl,
+        ?string $databaseHost,
+        ?string $databaseUser,
+        ?string $databasePassword,
+        ?string $databaseUrl,
     )
     {
         $this->serverUrl = $serverUrl;
@@ -53,67 +36,67 @@ class Installer
 
     }
 
-    public function setServerUrl($val)
+    public function setServerUrl(?string $val): void
     {
         $this->serverUrl = $val;
     }
 
-    public function setWebsocketUrl($val)
+    public function setWebsocketUrl(?string $val): void
     {
         $this->websocketUrl = $val;
     }
 
-    public function setDatabaseUrl($val)
+    public function setDatabaseUrl(?string $val): void
     {
         $this->databaseUrl = $val;
     }
 
-    public function setDatabaseHost($val)
+    public function setDatabaseHost(?string $val): void
     {
         $this->databaseHost = $val;
     }
 
-    public function setDatabaseUser($val)
+    public function setDatabaseUser(?string $val): void
     {
         $this->databaseUser = $val;
     }
 
-    public function setDatabasePassword($val)
+    public function setDatabasePassword(?string $val): void
     {
         $this->databasePassword = $val;
     }
 
-    public function getDatabaseUrl()
+    public function getDatabaseUrl(): ?string
     {
         return $this->databaseUrl;
     }
 
-    public function getServerUrl()
+    public function getServerUrl(): ?string
     {
         return $this->serverUrl;
     }
 
-    public function getWebsocketUrl()
+    public function getWebsocketUrl(): ?string
     {
         return $this->websocketUrl;
     }
 
-    public function getDatabaseHost()
+    public function getDatabaseHost(): ?string
     {
         return $this->databaseHost;
     }
 
-    public function getDatabaseUser()
+    public function getDatabaseUser(): ?string
     {
         return $this->databaseUser;
     }
 
-    public function getDatabasePassword()
+    public function getDatabasePassword(): ?string
     {
         return $this->databasePassword;
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraint('serverUrl', new Assert\Url([
             'protocols' => ['http', 'https',],
@@ -125,4 +108,5 @@ class Installer
             'protocols' => ['mysql', 'postgresql', 'sqlite',],
         ]));
     }
+
 }

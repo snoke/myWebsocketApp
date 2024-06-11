@@ -4,10 +4,17 @@
  */
 
 namespace App\Api\JwtSubscriberApi;
+/**
+ *
+ */
 abstract class Entity
 {
     abstract public function getId();
 
+    /**
+     * @param $property
+     * @return mixed|null
+     */
     public function __get($property)
     {
         $methodName = 'get' . ucfirst($property);
@@ -19,6 +26,11 @@ abstract class Entity
         return null;
     }
 
+    /**
+     * @param $property
+     * @param $value
+     * @return void
+     */
     public function __set($property, $value)
     {
         $methodName = 'set' . ucfirst($property);

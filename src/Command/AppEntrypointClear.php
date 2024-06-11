@@ -15,13 +15,20 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'app:entrypoint:clear',
     description: 'Moves recently built apk into downloads, clears all android build data',
 )]
 class AppEntrypointClear extends Command
 {
-    private function rrmdir($dir)
+    /**
+     * @param $dir
+     * @return void
+     */
+    private function rrmdir($dir): void
     {
         if (is_dir($dir)) {
             $objects = scandir($dir);
@@ -37,7 +44,7 @@ class AppEntrypointClear extends Command
         }
     }
 
-    private $client;
+    private HttpClientInterface $client;
 
     public function __construct(HttpClientInterface $client)
     {

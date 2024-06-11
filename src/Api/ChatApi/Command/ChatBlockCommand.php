@@ -14,6 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use App\Entity\Chat;
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'chat:block',
     description: 'Add a short description for your command',

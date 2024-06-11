@@ -5,6 +5,7 @@
 
 namespace App\Api\ChatApi;
 
+use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -15,11 +16,14 @@ use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 
 use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
 
+/**
+ *
+ */
 abstract class ChatCommand extends AbstractCommand
 {
-    protected $encoder;
-    protected $em;
-    protected $serializer;
+    protected JWTEncoderInterface $encoder;
+    protected EntityManagerInterface $em;
+    protected SerializerInterface $serializer;
 
     public function __construct(EntityManagerInterface $em, SerializerInterface $serializer, JWTEncoderInterface $encoder)
     {
@@ -37,6 +41,11 @@ abstract class ChatCommand extends AbstractCommand
             ->addArgument('token', InputArgument::REQUIRED, 'user token');
     }
 
+    /**
+     * @param $token
+     * @return User|object|null
+     * @throws JWTDecodeFailureException
+     */
     protected function getUserByToken($token)
     {
 

@@ -14,17 +14,17 @@ use Symfony\Component\Console\Command\Command;
  */
 abstract class AbstractWorker
 {
-    public function onMessage(WsConnection $from, Command $command, JsonCommandResponse $response)
+    public function onMessage(WsConnection $from, Command $command, JsonCommandResponse $response): void
     {
         return;
     }
 
-    public function onClose(WsConnection $from)
+    public function onClose(WsConnection $from): void
     {
         return;
     }
 
-    public function onOpen(WsConnection $from)
+    public function onOpen(WsConnection $from): void
     {
         return;
     }

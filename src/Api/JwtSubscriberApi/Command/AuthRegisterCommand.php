@@ -21,13 +21,16 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\User;
 use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'auth:register',
     description: 'Sign up a new User',
 )]
 class AuthRegisterCommand extends AbstractCommand
 {
-    private $passwordHasher;
+    private UserPasswordHasherInterface $passwordHasher;
 
     public function __construct(EntityManagerInterface $em, SerializerInterface $serializer, UserPasswordHasherInterface $userPasswordHasher)
     {

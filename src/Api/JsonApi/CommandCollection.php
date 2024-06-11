@@ -8,11 +8,14 @@ namespace App\Api\JsonApi;
 
 use Symfony\Component\Console\Command\Command;
 
+/**
+ *
+ */
 class CommandCollection
 {
     private array $commands;
 
-    protected function addCommand(Command $command)
+    protected function addCommand(Command $command): void
     {
         $this->commands[] = $command;
     }

@@ -17,6 +17,9 @@ use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 
 use App\Api\JwtSubscriberApi\SubscriberBroadcastCommand as AbstractCommand;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'auth:token:decode',
     description: 'Extracts Claim from provided Token',

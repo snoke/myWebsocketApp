@@ -13,13 +13,16 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Entity\Installer;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'app:install',
     description: 'install dependencies, set up database, jwt keypairs and assets',
 )]
 class AppInstall extends Command
 {
-    private $message;
+    private ?string $message;
 
     public function __construct(ValidatorInterface $validator)
     {
@@ -27,6 +30,10 @@ class AppInstall extends Command
         $this->validator = $validator;
     }
 
+    /**
+     * @param $name
+     * @return array|bool|float|int|mixed|string|null
+     */
     private function askFor($name)
     {
         $value = $this->io->ask($name, $this->installer->__get($name));
@@ -42,7 +49,11 @@ class AppInstall extends Command
         return $value;
     }
 
-    private function showHeader($output)
+    /**
+     * @param $output
+     * @return void
+     */
+    private function showHeader($output): void
     {
         $this->output->write(sprintf("\033\143"));
         $this->io->title('Set up');

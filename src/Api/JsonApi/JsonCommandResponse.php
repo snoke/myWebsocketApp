@@ -7,6 +7,9 @@ namespace App\Api\JsonApi;
 
 use Symfony\Component\Console\Input\ArrayInput;
 
+/**
+ *
+ */
 class JsonCommandResponse
 {
     public function __construct(string $command, ArrayInput $params, int $statusCode, string $output)
@@ -17,7 +20,7 @@ class JsonCommandResponse
         $this->output = $output;
     }
 
-    private function encode()
+    private function encode(): bool|string
     {
         return json_encode([
             'command' => $this->command,
@@ -27,27 +30,30 @@ class JsonCommandResponse
         ]);
     }
 
+    /**
+     * @return bool|string
+     */
     public function __toString()
     {
         return $this->encode();
     }
 
-    public function getCommand()
+    public function getCommand(): string
     {
         return $this->command;
     }
 
-    public function getParams()
+    public function getParams(): ArrayInput
     {
         return $this->params;
     }
 
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->statusCode;
     }
 
-    public function getData()
+    public function getData(): string
     {
         return $this->output;
     }

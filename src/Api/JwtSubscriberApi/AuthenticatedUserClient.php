@@ -8,6 +8,9 @@ namespace App\Api\JwtSubscriberApi;
 use Ratchet\WebSocket\WsConnection;
 use Symfony\Component\Security\Core\User\UserInterface as User;
 
+/**
+ *
+ */
 class AuthenticatedUserClient
 {
     private WsConnection $connection;

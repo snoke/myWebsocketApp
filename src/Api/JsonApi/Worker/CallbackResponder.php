@@ -11,10 +11,13 @@ use Symfony\Component\Console\Command\Command;
 
 use App\Api\JsonApi\AbstractWorker as Worker;
 
+/**
+ *
+ */
 Class CallbackResponder extends Worker
 {
 
-    public function onMessage(WsConnection $from, Command $command, JsonCommandResponse $jsonData)
+    public function onMessage(WsConnection $from, Command $command, JsonCommandResponse $jsonData): void
     {
         $from->send($jsonData);
     }

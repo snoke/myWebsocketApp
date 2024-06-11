@@ -17,6 +17,9 @@ use App\Entity\ChatMessage;
 use App\Entity\File;
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'chat:message:send',
     description: 'Sends a chat message',

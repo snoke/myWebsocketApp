@@ -15,6 +15,9 @@ use App\Entity\ChatMessage;
 
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'chat:message:status',
     description: 'Sets a Message Status',

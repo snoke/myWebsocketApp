@@ -15,13 +15,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'app:entrypoint:generate',
     description: 'Create a static index.html entrypoint for capacitor',
 )]
 class AppEntrypointGenerate extends Command
 {
-    private $client;
+    private HttpClientInterface $client;
 
     public function __construct(HttpClientInterface $client)
     {

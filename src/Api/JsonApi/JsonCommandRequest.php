@@ -4,13 +4,23 @@
  */
 
 namespace App\Api\JsonApi;
+
+use Ratchet\ConnectionInterface;
+
+/**
+ *
+ */
 class JsonCommandRequest
 {
-    private $client;
-    private $action;
-    private $params;
+    private ConnectionInterface $client;
+    private mixed $action;
+    private mixed $params;
 
-    public function __construct($client, $json)
+    /**
+     * @param ConnectionInterface $client
+     * @param $json
+     */
+    public function __construct(ConnectionInterface $client, $json)
     {
         $this->client = $client;
         $data = json_decode($json, true);
@@ -18,11 +28,17 @@ class JsonCommandRequest
         $this->params = $data['params'];
     }
 
+    /**
+     * @return mixed
+     */
     public function getAction()
     {
         return $this->action;
     }
 
+    /**
+     * @return mixed
+     */
     public function getParams()
     {
         return $this->params;

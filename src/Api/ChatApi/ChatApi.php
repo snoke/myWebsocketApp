@@ -11,6 +11,9 @@ use App\Api\JwtSubscriberApi\Worker\SubscriberBroadcastResponder as BroadcastPus
 use App\Api\JsonApi\Worker\CallbackResponder;
 use App\Api\JwtSubscriberApi\JwtSubscriberApi as Api;
 
+/**
+ *
+ */
 class ChatApi extends Api
 {
 

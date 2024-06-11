@@ -12,13 +12,16 @@ use App\Api\JwtSubscriberApi\AuthenticatedUserClientCollection;
 use App\Api\JsonApi\AbstractWorker as Worker;
 use Symfony\Component\Console\Command\Command;
 
+/**
+ *
+ */
 class SubscriberBroadcastResponder extends Worker
 {
     private AuthenticatedUserClientCollection $userClients;
 
     public const FILTER_CALLBACK = true;
 
-    private function sendToSubscribers(WsConnection $from, SubscriberBroadcastCommand $command, JsonCommandResponse $jsonData)
+    private function sendToSubscribers(WsConnection $from, SubscriberBroadcastCommand $command, JsonCommandResponse $jsonData): void
     {
         foreach ($command->getSubscribers() as $subscriber) {
             foreach ($this->userClients->getClients() as $userClient) {
@@ -42,7 +45,7 @@ class SubscriberBroadcastResponder extends Worker
     }
 
 
-    public function onMessage(WsConnection $from, Command $command, JsonCommandResponse $jsonData)
+    public function onMessage(WsConnection $from, Command $command, JsonCommandResponse $jsonData): void
     {
 
         //Respond to Subscribers 

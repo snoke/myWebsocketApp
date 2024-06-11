@@ -13,6 +13,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'user:contacts',
     description: 'gets user contacts',

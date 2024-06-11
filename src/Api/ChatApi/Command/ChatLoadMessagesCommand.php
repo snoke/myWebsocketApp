@@ -15,6 +15,9 @@ use App\Entity\Chat;
 use App\Entity\ChatMessage;
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'chat:load:messages',
     description: 'Loads Chat Messages',

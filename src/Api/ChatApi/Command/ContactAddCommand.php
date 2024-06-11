@@ -16,6 +16,9 @@ use App\Entity\User;
 
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'contact:add',
     description: 'Adds a Contact',

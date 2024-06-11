@@ -11,6 +11,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ *
+ */
 class WebsocketServer implements MessageComponentInterface
 {
     protected \SplObjectStorage $clients;
@@ -22,23 +25,28 @@ class WebsocketServer implements MessageComponentInterface
         $this->clients = new \SplObjectStorage;
     }
 
-    public function setInterface(InputInterface $input, OutputInterface $output)
+    public function setInterface(InputInterface $input, OutputInterface $output): void
     {
         $this->io = new SymfonyStyle($input, $output);
     }
 
-    public function onOpen(ConnectionInterface $conn)
+    public function onOpen(ConnectionInterface $conn): void
     {
         $this->clients->attach($conn);
         $this->io->block("New connection from $conn->remoteAddress ($conn->resourceId)", 'INFO', 'fg=yellow', ' ', true);
     }
 
-    public function onMessage(ConnectionInterface $from, $msg)
+    /**
+     * @param ConnectionInterface $from
+     * @param $msg
+     * @return void
+     */
+    public function onMessage(ConnectionInterface $from, $msg): void
     {
         $this->io->block($msg, 'USER REQUEST', 'fg=blue', ' ', true);
     }
 
-    public function onClose(ConnectionInterface $conn)
+    public function onClose(ConnectionInterface $conn): void
     {
         $this->clients->detach($conn);
         $this->io->block("Connection dropped $conn->remoteAddress ($conn->resourceId)", 'INFO', 'fg=yellow', ' ', true);

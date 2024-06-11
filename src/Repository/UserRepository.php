@@ -36,6 +36,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    /**
+     * @param $params
+     * @return float|int|mixed|string
+     */
     public function findByLike($params)
     {
         $queryBuilder = $this->createQueryBuilder('u');

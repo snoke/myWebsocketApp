@@ -18,6 +18,9 @@ use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'server:start',
     description: 'Starts the Websocket Server',
@@ -48,7 +51,7 @@ class ServerStartCommand extends Command
             );
     }
 
-    private function createWsServer(HttpServer $httpServer)
+    private function createWsServer(HttpServer $httpServer): IoServer
     {
         $this->port = $this->port ? $this->port : self::WS_PORT;
         return IoServer::factory(
@@ -57,7 +60,7 @@ class ServerStartCommand extends Command
         );
     }
 
-    private function createWssServer(HttpServer $httpServer)
+    private function createWssServer(HttpServer $httpServer): IoServer
     {
         $this->port = $this->port ? $this->port : self::WSS_PORT;
         $loop = \React\EventLoop\Factory::create();

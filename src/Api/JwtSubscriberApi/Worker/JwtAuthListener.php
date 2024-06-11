@@ -21,6 +21,9 @@ use App\Api\JwtSubscriberApi\Command\AuthLoginCommand as LoginCommand;
 
 use App\Api\JsonApi\JsonCommandResponse;
 
+/**
+ *
+ */
 Class JwtAuthListener extends Worker
 {
 
@@ -45,12 +48,12 @@ Class JwtAuthListener extends Worker
         $this->loginCommand = $loginCommand;
     }
 
-    public function onClose(WsConnection $from)
+    public function onClose(WsConnection $from): void
     {
         $this->userClients->removeClient($from);
     }
 
-    public function onMessage(WsConnection $from, Command $command, JsonCommandResponse $response)
+    public function onMessage(WsConnection $from, Command $command, JsonCommandResponse $response): void
     {
         if ($command::class == $this->loginCommand::class) {
             if ($response->getStatusCode() == Command::SUCCESS) {

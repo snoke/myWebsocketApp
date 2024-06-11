@@ -23,14 +23,17 @@ use App\Entity\User;
 
 use App\Api\ChatApi\ChatCommand as AbstractCommand;
 
+/**
+ *
+ */
 #[AsCommand(
     name: 'user:change:password',
     description: 'change password',
 )]
 class UserChangePasswordCommand extends AbstractCommand
 {
-    private $passwordHasher;
-    protected $em;
+    private UserPasswordHasherInterface $passwordHasher;
+    protected EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em, SerializerInterface $serializer, JWTEncoderInterface $encoder, UserPasswordHasherInterface $userPasswordHasher, HttpClientInterface $client)
     {

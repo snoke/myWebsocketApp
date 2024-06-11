@@ -10,6 +10,9 @@ use App\Api\JwtSubscriberApi\Command\AuthLoginCommand;
 use App\Api\JwtSubscriberApi\Command\AuthRegisterCommand;
 use App\Api\JwtSubscriberApi\Command\AuthTokenDecodeCommand;
 
+/**
+ *
+ */
 class CommandCollection extends Base
 {
 

@@ -11,6 +11,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 use App\Api\JwtSubscriberApi\Entity;
 
+/**
+ *
+ */
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 class File extends Entity
 {
@@ -18,18 +21,18 @@ class File extends Entity
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     #[Groups(['app_chat', 'app_chat_send'])]
-    private $id;
+    private ?int $id;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private $user;
+    private ?User $user;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['app_chat', 'app_chat_send'])]
-    private $filename;
+    private ?string $filename;
 
     #[ORM\Column(type: 'text')]
     #[Groups(['app_chat', 'app_chat_send'])]
-    private $content;
+    private ?string $content;
 
     public function getId(): ?int
     {
@@ -53,7 +56,7 @@ class File extends Entity
         return $this->filename;
     }
 
-    public function setFilename(string $filename): self
+    public function setFilename(?string $filename): self
     {
         $this->filename = $filename;
 
@@ -65,7 +68,7 @@ class File extends Entity
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(?string $content): self
     {
         $this->content = $content;
 
