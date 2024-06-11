@@ -165,7 +165,7 @@ textarea {
 <script>
 import moment from 'moment';
 import  ChatMessage  from './Chat/Message.vue'
-import { emojis } from './Chat/emojis.json'
+import emojis from './Chat/emojis.json'
   import $ from 'jquery'
   export default {
     name: 'Chat',
