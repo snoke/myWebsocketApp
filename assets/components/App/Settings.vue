@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'Settings',
+  name: 'AppSettings',
   data: function () {
     return {
       oldpassword: null,

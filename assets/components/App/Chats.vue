@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: 'Chats',
+  name: 'AppChats',
   data: function () {
     return {
       ready: false,

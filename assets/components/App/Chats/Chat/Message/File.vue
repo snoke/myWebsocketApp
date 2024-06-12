@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'ChatMessagFile',
+  name: 'AppChatChatsMessageFile',
   props: ['data'],
   data: function () {
     return {

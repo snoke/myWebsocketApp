@@ -24,10 +24,27 @@ export default {
   methods: {
     connect() {
       if (!this.$root.connection) {
-        this.$root.connect();
-        setTimeout(() => {
-          this.connect()
-        }, 3000)
+        if (!this.$root.connected) {
+          this.$root.connection = new WebSocket(this.$root.config.websocket_url)
+          this.$root.connection.onopen = () => {
+            this.$root.connected = true;
+            this.$router.push({name: 'auth'})
+          }
+          this.$root.connection.onclose = () => {
+            this.$root.connected = null;
+            this.$root.connection = null;
+            this.$root.$emit('Base::connection-lost', {});
+          }
+
+          this.$root.connection.onmessage = (event) => {
+            let result = JSON.parse(event.data);
+            this.$root.$emit(result.command, result)
+
+          }
+          setTimeout(() => {
+            this.connect()
+          }, 3000)
+        }
       }
     },
     eventRouter() {

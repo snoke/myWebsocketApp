@@ -86,6 +86,7 @@ let router = {
     components: {Base},
     routes: routes
 };
+
 const config = JSON.parse(document.getElementById('_symfonyData').innerHTML);
 if (config.client === 'web') {
     router.mode = 'history'
@@ -93,32 +94,20 @@ if (config.client === 'web') {
 router = new VueRouter(router);
 
 new Vue({
+    data: function () {
+        return {
+            config: [],
+            connection: null,
+            connected: null,
+            token: null,
+            claim: null,
+            notify_permission: null,
+        }
+    },
     created: function () {
         this.config = config
     },
     methods: {
-        connect() {
-            if (!this.connected) {
-                if (!this.connection) {
-                    this.connection = new WebSocket(this.config.websocket_url)
-                    this.connection.onopen = () => {
-                        this.connected = true;
-                        this.$router.push({name: 'auth'})
-                    }
-                    this.connection.onclose = () => {
-                        this.connected = null;
-                        this.connection = null;
-                        this.$root.$emit('Base::connection-lost', {});
-                    }
-
-                    this.connection.onmessage = (event) => {
-                        let result = JSON.parse(event.data);
-                        this.$emit(result.command, result)
-
-                    }
-                }
-            }
-        },
         notify: function (message) {
             if (this.notify_permission) {
                 console.log("got permissions, sending notification")
@@ -129,16 +118,6 @@ new Vue({
         },
         created() {
         },
-    },
-    data: function () {
-        return {
-            config: [],
-            connection: null,
-            connected: null,
-            token: null,
-            claim: null,
-            notify_permission: null,
-        }
     },
     el: '#app',
     render: h => h(Base), router: router,

@@ -90,7 +90,7 @@ import {emojis} from './Chat/emojis.json'
 import $ from 'jquery'
 
 export default {
-  name: 'Chat',
+  name: 'AppChatsChat',
   components: {ChatMessage},
   data: function () {
     return {

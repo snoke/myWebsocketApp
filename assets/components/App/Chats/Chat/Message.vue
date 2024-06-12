@@ -32,7 +32,7 @@
 import ChatMessageFile from './Message/File.vue'
 
 export default {
-  name: 'Message',
+  name: 'AppChatChatsMessage',
   components: {ChatMessageFile},
   props: ['data'],
   data: function () {
