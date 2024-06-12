@@ -23,7 +23,14 @@ use App\Entity\Installer;
 class AppInstall extends Command
 {
     private ?string $message;
+    private ValidatorInterface $validator;
+    private Installer $installer;
+    private SymfonyStyle $io;
+    private OutputInterface $output;
 
+    /**
+     * @param ValidatorInterface $validator
+     */
     public function __construct(ValidatorInterface $validator)
     {
         parent::__construct();
@@ -34,7 +41,7 @@ class AppInstall extends Command
      * @param $name
      * @return array|bool|float|int|mixed|string|null
      */
-    private function askFor($name)
+    private function askFor($name): mixed
     {
         $value = $this->io->ask($name, $this->installer->__get($name));
         $oldValue = $this->installer->__get($name);
@@ -60,6 +67,11 @@ class AppInstall extends Command
 
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->output = $output;

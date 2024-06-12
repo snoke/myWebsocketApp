@@ -6,12 +6,11 @@
 namespace App\Entity;
 
 use App\Repository\ChatRepository;
+use App\Server\JwtSubscriberServer\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-
-use App\Api\JwtSubscriberApi\Entity;
 
 /**
  *
@@ -47,6 +46,9 @@ class Chat extends Entity
         $this->chatMessages = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +62,10 @@ class Chat extends Entity
         return $this->users;
     }
 
+    /**
+     * @param User $user
+     * @return $this
+     */
     public function addUser(User $user): self
     {
         if (!$this->users->contains($user)) {
@@ -69,6 +75,10 @@ class Chat extends Entity
         return $this;
     }
 
+    /**
+     * @param User $user
+     * @return $this
+     */
     public function removeUser(User $user): self
     {
         $this->users->removeElement($user);
@@ -94,6 +104,10 @@ class Chat extends Entity
         return $this;
     }
 
+    /**
+     * @param ChatMessage $chatMessage
+     * @return $this
+     */
     public function addChatMessage(ChatMessage $chatMessage): self
     {
         if (!$this->chatMessages->contains($chatMessage)) {
@@ -104,6 +118,10 @@ class Chat extends Entity
         return $this;
     }
 
+    /**
+     * @param ChatMessage $chatMessage
+     * @return $this
+     */
     public function removeChatMessage(ChatMessage $chatMessage): self
     {
         if ($this->chatMessages->removeElement($chatMessage)) {
@@ -116,11 +134,18 @@ class Chat extends Entity
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getBlockedBy(): ?User
     {
         return $this->blockedBy;
     }
 
+    /**
+     * @param User|null $blockedBy
+     * @return $this
+     */
     public function setBlockedBy(?User $blockedBy): self
     {
         $this->blockedBy = $blockedBy;
@@ -128,11 +153,18 @@ class Chat extends Entity
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getTyping(): ?\DateTimeInterface
     {
         return $this->typing;
     }
 
+    /**
+     * @param \DateTimeInterface|null $typing
+     * @return $this
+     */
     public function setTyping(?\DateTimeInterface $typing): self
     {
         $this->typing = $typing;

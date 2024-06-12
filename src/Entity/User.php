@@ -5,16 +5,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
+use App\Server\JwtSubscriberServer\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
-use App\Api\JwtSubscriberApi\Entity;
 
 /**
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
@@ -53,16 +53,26 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
         $this->chats = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getUsername(): ?string
     {
         return $this->username;
     }
 
+    /**
+     * @param string $username
+     * @return $this
+     */
     public function setUsername(string $username): self
     {
         $this->username = $username;
@@ -92,6 +102,10 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     * @return $this
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -99,6 +113,10 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
         return $this;
     }
 
+    /**
+     * @param string $role
+     * @return $this
+     */
     public function addRole(string $role): self
     {
         $this->roles = array_unique((array)$this->roles[] = $role);
@@ -114,6 +132,10 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
         return $this->password;
     }
 
+    /**
+     * @param string $password
+     * @return $this
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -138,6 +160,10 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
         return $this->contacts;
     }
 
+    /**
+     * @param User $contact
+     * @return $this
+     */
     public function addContact(self $contact): self
     {
         if (!$this->contacts->contains($contact)) {
@@ -147,6 +173,10 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
         return $this;
     }
 
+    /**
+     * @param User $contact
+     * @return $this
+     */
     public function removeContact(self $contact): self
     {
         $this->contacts->removeElement($contact);
@@ -162,6 +192,10 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
         return $this->chats;
     }
 
+    /**
+     * @param Chat $chat
+     * @return $this
+     */
     public function addChat(Chat $chat): self
     {
         if (!$this->chats->contains($chat)) {
@@ -172,6 +206,10 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
         return $this;
     }
 
+    /**
+     * @param Chat $chat
+     * @return $this
+     */
     public function removeChat(Chat $chat): self
     {
         if ($this->chats->removeElement($chat)) {

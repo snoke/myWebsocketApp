@@ -14,6 +14,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class FileRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, File::class);

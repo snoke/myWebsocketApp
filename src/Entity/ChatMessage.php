@@ -6,10 +6,9 @@
 namespace App\Entity;
 
 use App\Repository\ChatMessageRepository;
+use App\Server\JwtSubscriberServer\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-
-use App\Api\JwtSubscriberApi\Entity;
 
 /**
  *
@@ -55,16 +54,26 @@ class ChatMessage extends Entity
     #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
     private ?string $status;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return Chat|null
+     */
     public function getChat(): ?Chat
     {
         return $this->chat;
     }
 
+    /**
+     * @param Chat|null $chat
+     * @return $this
+     */
     public function setChat(?Chat $chat): self
     {
         $this->chat = $chat;
@@ -72,11 +81,18 @@ class ChatMessage extends Entity
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getSender(): ?User
     {
         return $this->sender;
     }
 
+    /**
+     * @param User|null $sender
+     * @return $this
+     */
     public function setSender(?User $sender): self
     {
         $this->sender = $sender;
@@ -84,11 +100,18 @@ class ChatMessage extends Entity
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getMessage(): ?string
     {
         return $this->message;
     }
 
+    /**
+     * @param string $message
+     * @return $this
+     */
     public function setMessage(string $message): self
     {
         $this->message = $message;
@@ -96,11 +119,18 @@ class ChatMessage extends Entity
         return $this;
     }
 
+    /**
+     * @return File|null
+     */
     public function getFile(): ?File
     {
         return $this->file;
     }
 
+    /**
+     * @param File|null $file
+     * @return $this
+     */
     public function setFile(?File $file): self
     {
         $this->file = $file;
@@ -108,11 +138,18 @@ class ChatMessage extends Entity
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getSent(): ?\DateTimeInterface
     {
         return $this->sent;
     }
 
+    /**
+     * @param \DateTimeInterface|null $sent
+     * @return $this
+     */
     public function setSent(?\DateTimeInterface $sent): self
     {
         $this->sent = $sent;
@@ -120,11 +157,18 @@ class ChatMessage extends Entity
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getDelivered(): ?\DateTimeInterface
     {
         return $this->delivered;
     }
 
+    /**
+     * @param \DateTimeInterface|null $delivered
+     * @return $this
+     */
     public function setDelivered(?\DateTimeInterface $delivered): self
     {
         $this->delivered = $delivered;
@@ -132,11 +176,18 @@ class ChatMessage extends Entity
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getSeen(): ?\DateTimeInterface
     {
         return $this->seen;
     }
 
+    /**
+     * @param \DateTimeInterface|null $seen
+     * @return $this
+     */
     public function setSeen(?\DateTimeInterface $seen): self
     {
         $this->seen = $seen;
@@ -144,11 +195,18 @@ class ChatMessage extends Entity
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getStatus(): ?string
     {
         return $this->status;
     }
 
+    /**
+     * @param string|null $status
+     * @return $this
+     */
     public function setStatus(?string $status): self
     {
         $this->status = $status;

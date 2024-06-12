@@ -24,6 +24,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 )]
 class AppEntrypointClear extends Command
 {
+
+    private HttpClientInterface $client;
+
     /**
      * @param $dir
      * @return void
@@ -44,14 +47,20 @@ class AppEntrypointClear extends Command
         }
     }
 
-    private HttpClientInterface $client;
-
+    /**
+     * @param HttpClientInterface $client
+     */
     public function __construct(HttpClientInterface $client)
     {
         parent::__construct();
         $this->client = $client;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         file_exists(__DIR__ . '/../../public/index.html') ? unlink(__DIR__ . '/../../public/index.html') : null;

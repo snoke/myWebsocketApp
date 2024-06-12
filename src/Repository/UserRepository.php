@@ -17,6 +17,9 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
@@ -40,7 +43,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * @param $params
      * @return float|int|mixed|string
      */
-    public function findByLike($params)
+    public function findByLike($params): mixed
     {
         $queryBuilder = $this->createQueryBuilder('u');
         foreach ($params as $key => $val) {
