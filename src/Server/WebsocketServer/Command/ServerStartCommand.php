@@ -16,7 +16,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 
 /**
+ * ServerStartCommand
  *
+ * starts the websocket server
  */
 #[AsCommand(
     name: 'server:start',
