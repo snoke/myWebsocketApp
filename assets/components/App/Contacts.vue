@@ -1,26 +1,10 @@
 <!-- Author: Stefan Sander <mail@stefan-sander.online> -->
 <template>
   <div id="contacts" class="h-100p">
-
-    <input id="contact_search" type="text" class="w-100" placeholder="find new contacts" v-on:keyup="findContacts()"
-           v-model="search"/>
-    <button type="button" v-for="user in contacts" :key="user.id" class="w-100 btn btn-outline-primary"
-            @click="addContact(user)">Add {{user.username}}
-    </button>
-
+    <input id="contact_search" type="text" class="w-100" placeholder="find new contacts" v-on:keyup="findContacts()" v-model="search" />
+    <button type="button" v-for="user in contacts" :key="user.id" class="w-100 btn btn-outline-primary" @click="addContact(user)">Add {{user.username}}</button>
   </div>
 </template>
-
-<style scoped>
-.h-100p {
-  height: 100%;
-}
-
-.card-title {
-  text-align: center;
-
-}
-</style>
 
 <script>
 export default {

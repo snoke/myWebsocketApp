@@ -1,7 +1,6 @@
 <!-- Author: Stefan Sander <mail@stefan-sander.online> -->
 <template>
   <div id="settings" class=" h-100p">
-
     <div class="w-100">
       <div class="alert row " v-if="message"
            v-bind:class="{
@@ -16,20 +15,8 @@
     <button v-on:click="save()" class="btn btn-outline-primary w-100">change password
       <font-awesome-icon icon="save"/>
     </button>
-
   </div>
 </template>
-
-<style scoped>
-.h-100p {
-  height: 100%;
-}
-
-.card-title {
-  text-align: center;
-
-}
-</style>
 
 <script>
 export default {

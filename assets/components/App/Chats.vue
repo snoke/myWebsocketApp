@@ -1,8 +1,6 @@
 <!-- Author: Stefan Sander <mail@stefan-sander.online> -->
 <template>
   <div class="h-100p">
-
-
     <div id="loading" v-if="ready===false">
       loading
     </div>
@@ -16,10 +14,8 @@
       </div>
       <div v-for="chat in chats" :key="chat.id">
         <b-button-group class="w-100" v-if="chat.blockedBy!=null">
-          <button type="button" disabled class="w-75 btn btn-outline-secondary"> {{renderUsernames(chat.users)}}
-          </button>
-          <button type="button" class="w-25 btn btn-outline-danger" @click="unblockChat(chat.id)"
-                  v-if="$root.claim.id===chat.blockedBy.id">
+          <button type="button" disabled class="w-75 btn btn-outline-secondary"> {{renderUsernames(chat.users)}}</button>
+          <button type="button" class="w-25 btn btn-outline-danger" @click="unblockChat(chat.id)"v-if="$root.claim.id===chat.blockedBy.id">
             unblock
             <font-awesome-icon icon="unlock"/>
           </button>
@@ -28,23 +24,14 @@
                   <b-dropdown-divider /> 
                 -->
         </b-button-group>
-        <button type="button" v-if="chat.blockedBy==null"
-                class="w-100 btn btn-outline-primary"
-                @click="startChat(chat.id)">
+        <button type="button" v-if="chat.blockedBy==null" class="w-100 btn btn-outline-primary" @click="startChat(chat.id)">
           {{renderUsernames(chat.users)}}
           <font-awesome-icon icon="comments"/>
         </button>
       </div>
     </div>
-
   </div>
 </template>
-
-<style scoped>
-.h-100p {
-  height: 100%;
-}
-</style>
 
 <script>
 export default {

@@ -4,13 +4,6 @@
     <img class="chat-image" :src="content"/>
   </div>
 </template>
-<style scoped>
-.chat-image {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
 
 <script>
 export default {

@@ -5,3 +5,146 @@ body {
 input, button, select, optgroup, textarea {
     margin-bottom: 5px;
 }
+
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.flex-fill {
+    flex: 1;
+}
+
+#layout {
+    height: 100vh;
+}
+
+.hcontainer {
+    height: 100vh;
+}
+
+.input-clearfix {
+    height: 100px;
+}
+
+.scrollable {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.h-100p {
+    height: 100%;
+}
+
+.card-title {
+    text-align: center;
+}
+
+.rounded {
+    border-radius: 5px;
+}
+
+.btn-light {
+    margin-bottom: 0px !important;
+    background: none !important;
+    border: none !important;
+}
+
+
+.emoji-btn {
+    padding: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin-right: -1px;
+    margin-bottom: 5px !important;
+}
+
+
+.minw-none {
+    min-width: 3rem !important;
+}
+
+
+.stickyInput {
+    height: 100px;
+    padding-left: 1em;
+    padding-right: 1em;
+    z-index: 1;
+    bottom: 0px;
+    width: 100%;
+    position: fixed;
+    left: 0;
+}
+
+.chat-inner-container {
+    min-height: 3rem;
+}
+
+.stickyButton {
+    z-index: 1;
+    right: 1rem;
+    position: fixed;
+    top: 3.5rem;
+}
+
+hr {
+    margin-bottom: 0.5em;
+    margin-top: 0.25em;
+}
+
+.border-primary {
+    border: 1px solid #0d6efd;
+}
+
+.alert-secondary {
+    margin-left: 8em;
+}
+
+textarea {
+    resize: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-left: 0 !important;
+}
+
+
+.icon-group {
+    z-index: 2;
+    border: 1px solid grey;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: white;
+    border-bottom: 0px;
+    bottom: 55px;
+}
+
+.alert {
+    margin-bottom: 4px !important;
+    padding: 0.5rem !important;
+}
+
+.message-content {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    white-space: break-spaces;
+}
+
+.message-check {
+    margin-top: 0.25rem;
+    float: right;
+    font-size: 0.75rem
+}
+
+.message-date {
+    margin-top: 0.25rem;
+    float: right;
+    font-size: 0.75rem
+}
+
+.chat-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

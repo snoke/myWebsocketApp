@@ -17,7 +17,6 @@
           <font-awesome-icon class="check-icon" icon="check" v-if="seen"/>
           <font-awesome-icon class="check-icon" icon="check" v-if="sent"/>
         </div>
-
         <div class="message-date">{{ sent | moment("D.MM.YYYY hh:mm") }}</div>
       </div>
       <div ref="sc" v-bind:class="{
@@ -28,28 +27,6 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-.message-content {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  white-space: break-spaces;
-}
-
-.message-check {
-  margin-top: 0.25rem;
-  float: right;
-  font-size: 0.75rem
-}
-
-.message-date {
-  margin-top: 0.25rem;
-  float: right;
-  font-size: 0.75rem
-}
-</style>
 
 <script>
 import ChatMessageFile from './Message/File.vue'

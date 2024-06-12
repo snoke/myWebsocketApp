@@ -13,11 +13,11 @@
           <b-card-body>
             <div id="auth_login">
               <div class="w-100">
-                <div class="alert row " v-if="login_message"
-                     v-bind:class="{
-                                    'alert-success':  login_message.status===0,
-                                    'alert-danger':  login_message.status===1,
-                                    }">{{login_message.data}}
+                <div class="alert row " v-if="login_message" v-bind:class="{
+                  'alert-success':  login_message.status===0,
+                  'alert-danger':  login_message.status===1,
+                  }">
+                  {{login_message.data}}
                 </div>
               </div>
               <input type="text" placeholder="loginName" name="loginName" v-model="login_loginName" class="w-100"/>
@@ -55,9 +55,6 @@
     </div>
   </div>
 </template>
-
-<style>
-</style>
 
 <script>
 export default {
