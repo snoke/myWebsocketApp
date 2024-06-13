@@ -8,7 +8,7 @@ namespace App\Server\JsonWebsocketServer;
 use Symfony\Component\Console\Input\ArrayInput;
 
 /**
- *
+ * JsonCommandResponse
  */
 class JsonCommandResponse
 {

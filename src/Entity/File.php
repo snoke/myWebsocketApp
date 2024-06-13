@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- *
+ * File
  */
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 class File extends Entity
@@ -19,18 +19,18 @@ class File extends Entity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['app_chat', 'app_chat_send'])]
+    #[Groups(['app:chat', 'app:chat:send'])]
     private ?int $id;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     private ?User $user;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['app_chat', 'app_chat_send'])]
+    #[Groups(['app:chat', 'app:chat:send'])]
     private ?string $filename;
 
     #[ORM\Column(type: 'text')]
-    #[Groups(['app_chat', 'app_chat_send'])]
+    #[Groups(['app:chat', 'app:chat:send'])]
     private ?string $content;
 
     /**

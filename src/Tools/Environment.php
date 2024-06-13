@@ -1,22 +1,16 @@
 <?php
 
-namespace App\Entity;
+namespace App\Tools;
 
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
-
-/**
- *
- */
-class Installer
+class Environment
 {
-
     private ?string $serverUrl;
     private ?string $websocketUrl;
     private ?string $databaseUrl;
     private ?string $databaseHost;
     private ?string $databaseUser;
     private ?string $databasePassword;
+    private ?string $database;
 
     /**
      * @param string|null $serverUrl
@@ -30,6 +24,7 @@ class Installer
         ?string $serverUrl,
         ?string $websocketUrl,
         ?string $databaseHost,
+        ?string $database,
         ?string $databaseUser,
         ?string $databasePassword,
         ?string $databaseUrl,
@@ -38,6 +33,7 @@ class Installer
         $this->serverUrl = $serverUrl;
         $this->websocketUrl = $websocketUrl;
         $this->databaseHost = $databaseHost;
+        $this->database = $database;
         $this->databaseUser = $databaseUser;
         $this->databasePassword = $databasePassword;
         $this->databaseUrl = $databaseUrl;
@@ -78,6 +74,14 @@ class Installer
     public function setDatabaseHost(?string $val): void
     {
         $this->databaseHost = $val;
+    }
+    /**
+     * @param string|null $val
+     * @return void
+     */
+    public function setDatabase(?string $val): void
+    {
+        $this->database = $val;
     }
 
     /**
@@ -133,6 +137,14 @@ class Installer
     /**
      * @return string|null
      */
+    public function getDatabase(): ?string
+    {
+        return $this->database;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getDatabaseUser(): ?string
     {
         return $this->databaseUser;
@@ -146,21 +158,22 @@ class Installer
         return $this->databasePassword;
     }
 
-    /**
-     * @param ClassMetadata $metadata
-     * @return void
-     */
-    public static function loadValidatorMetadata(ClassMetadata $metadata): void
-    {
-        $metadata->addPropertyConstraint('serverUrl', new Assert\Url([
-            'protocols' => ['http', 'https',],
-        ]));
-        $metadata->addPropertyConstraint('websocketUrl', new Assert\Url([
-            'protocols' => ['ws', 'wss',],
-        ]));
-        $metadata->addPropertyConstraint('databaseUrl', new Assert\Url([
-            'protocols' => ['mysql', 'postgresql', 'sqlite',],
-        ]));
+    public function __get($property) {
+        $methodName = 'get' .ucfirst($property);
+        if (method_exists($this, $methodName)) {
+            return call_user_func(array($this, $methodName));
+        } elseif (isset($this->{$property})) {
+            return $this->{$property};
+        }
+        return null;
     }
 
+    public function __set($property, $value) {
+        $methodName = 'set' .ucfirst($property);
+        if (method_exists($this, $methodName)) {
+            call_user_func_array(array($this,$methodName), array($value));
+        } else {
+            $this->{$property} = $value;
+        }
+    }
 }

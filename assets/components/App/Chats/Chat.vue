@@ -50,10 +50,10 @@
       <b-button-group class="w-100">
         <b-dropdown dropup menu-class="minw-none" class="emoji-btn btn btn-outline-primary" variant="light">
           <template #button-content>😊</template>
-          <b-dropdown-item v-for="(_,group) in this.emojis" :key="group" @click="showgroup(group)"> {{ group }}
+          <b-dropdown-item v-for="(_,group) in this.icons.emojis" :key="group" @click="showgroup(group)"> {{ group }}
           </b-dropdown-item>
         </b-dropdown>
-        <div v-for="(arr,group) in this.emojis" :key="group" :class="group+' icon-group w-100'"
+        <div v-for="(arr,group) in this.icons.emojis" :key="group" :class="group+' icon-group w-100'"
              style="display:none;position:absolute;">
           <div v-for="(k,v) in arr" :key="k" style="display:inline;" role='button' @click="addSmiley(v)">{{ v }}</div>
         </div>
@@ -86,7 +86,7 @@
 
 <script>
 import ChatMessage from './Chat/Message.vue'
-import {emojis} from './Chat/emojis.json'
+import icons from './Chat/icons.js'
 import $ from 'jquery'
 
 export default {
@@ -103,7 +103,7 @@ export default {
       users: [],
       chatMessages: [],
       blockedBy: null,
-      emojis,
+      icons,
       windowWidth: window.innerWidth,
       allowed_file_types: [
         'image/jpeg',
@@ -143,9 +143,9 @@ export default {
     },
     replaceEmoji() {
       let txt = document.getElementById('chat_input').value;
-      for (let group in this.emojis) {
-        for (let [code, smiley] in this.emojis[group]) {
-          txt = txt.replace(this.emojis[group][code], code);
+      for (let group in this.icons.emojis) {
+        for (let [code, smiley] in this.icons.emojis[group]) {
+          txt = txt.replace(this.icons.emojis[group][code], code);
         }
       }
       document.getElementById('chat_input').value = txt

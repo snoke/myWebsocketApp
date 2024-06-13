@@ -9,7 +9,7 @@ namespace App\Server\JsonWebsocketServer;
 use Symfony\Component\Console\Command\Command;
 
 /**
- *
+ * CommandCollection
  */
 class CommandCollection
 {

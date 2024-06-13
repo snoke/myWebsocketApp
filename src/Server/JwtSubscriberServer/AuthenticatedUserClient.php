@@ -9,7 +9,7 @@ use Ratchet\WebSocket\WsConnection;
 use Symfony\Component\Security\Core\User\UserInterface as User;
 
 /**
- *
+ * AuthenticatedUserClient
  */
 class AuthenticatedUserClient
 {

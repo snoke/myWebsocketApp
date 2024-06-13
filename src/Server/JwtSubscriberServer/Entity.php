@@ -5,7 +5,7 @@
 
 namespace App\Server\JwtSubscriberServer;
 /**
- *
+ * Entity
  */
 abstract class Entity
 {

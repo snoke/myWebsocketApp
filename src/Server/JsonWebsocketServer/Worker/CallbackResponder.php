@@ -11,7 +11,7 @@ use Ratchet\WebSocket\WsConnection;
 use Symfony\Component\Console\Command\Command;
 
 /**
- *
+ * CallbackResponder
  */
 Class CallbackResponder extends Worker
 {

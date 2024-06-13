@@ -27,11 +27,11 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['user', 'app_user_chats', 'app_chat', 'app_chat_send', 'app_user_search', 'app_user_contacts', 'chat_message_status', 'chat:load:messages'])]
+    #[Groups(['user', 'app:user:chats', 'app:chat', 'app:chat:send', 'app:user:search', 'app:user:contacts', 'chat:message:status', 'chat:load:messages'])]
     private ?int $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    #[Groups(['user', 'app_user_chats', 'app_chat', 'app_chat_send', 'app_user_search', 'app_user_contacts', 'chat_message_status'])]
+    #[Groups(['user', 'app:user:chats', 'app:chat', 'app:chat:send', 'app:user:search', 'app:user:contacts', 'chat:message:status'])]
     private ?string $username;
 
     #[ORM\Column(type: 'json')]

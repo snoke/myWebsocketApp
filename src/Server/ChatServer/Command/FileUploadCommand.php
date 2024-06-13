@@ -7,6 +7,7 @@ namespace App\Server\ChatServer\Command;
 
 use App\Entity\File;
 use App\Server\ChatServer\ChatCommand as AbstractCommand;
+use App\Server\JsonWebsocketServer\CommandException;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -16,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- *
+ * FileUploadCommand
  */
 #[AsCommand(
     name: 'file:upload',
@@ -37,18 +38,12 @@ class FileUploadCommand extends AbstractCommand
 
     /**
      * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     * @throws JWTDecodeFailureException
+     * @return string
+     * @throws CommandException
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function handle(InputInterface $input): string
     {
-        $token = $input->getArgument('token');
-        $user = $this->getUserByToken($token);
-        if (!$user) {
-            return 401;
-        }
-        $io = new SymfonyStyle($input, $output);
+        $user = $this->authorize($input->getArgument('token'));
 
         $file = new File();
 
@@ -58,7 +53,6 @@ class FileUploadCommand extends AbstractCommand
 
         $this->em->persist($file);
         $this->em->flush();
-        $output->write($file->getId());
-        return Command::SUCCESS;
+        return (string)$file->getId();
     }
 }

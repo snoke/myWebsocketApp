@@ -3,18 +3,18 @@
  * Author: Stefan Sander <mail@stefan-sander.online>
  */
 
-namespace App\Command;
+namespace App\Tools\Command;
 
-use Symfony\Component\Console\Command\Command;
+use App\Tools\Environment;
 use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use App\Entity\Installer;
 
 /**
- *
+ * AppInstall
  */
 #[AsCommand(
     name: 'app:install',
@@ -22,9 +22,9 @@ use App\Entity\Installer;
 )]
 class AppInstall extends Command
 {
-    private ?string $message;
+    private ?string $message = null;
     private ValidatorInterface $validator;
-    private Installer $installer;
+    private Environment $environment;
     private SymfonyStyle $io;
     private OutputInterface $output;
 
@@ -43,14 +43,14 @@ class AppInstall extends Command
      */
     private function askFor($name): mixed
     {
-        $value = $this->io->ask($name, $this->installer->__get($name));
-        $oldValue = $this->installer->__get($name);
-        $this->installer->__set($name, $value);
-        $errors = $this->validator->validate($this->installer);
+        $value = $this->io->ask($name, $this->environment->__get($name));
+        $oldValue = $this->environment->__get($name);
+        $this->environment->__set($name, $value);
+        $errors = $this->validator->validate($this->environment);
         if (count($errors) > 0) {
             $this->showHeader($this->output);
             $this->io->error('`' . $value . '` is not valid for ´' . $name . '´');
-            $this->installer->__set($name, $oldValue);
+            $this->environment->__set($name, $oldValue);
             return $this->askFor($name);
         }
         return $value;
@@ -75,33 +75,36 @@ class AppInstall extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->output = $output;
-        $this->io = new SymfonyStyle($input, $output);
+        $this->io= new SymfonyStyle($input, $output);
         $this->showHeader($output);
-        if ($this->message) {
+        if ($this->message !== null) {
             $this->io->error($this->message);
             $this->message = null;
         }
-        $this->installer = new Installer(
+        $this->environment = new Environment(
             'http://localhost',
             'ws://localhost:8080',
             'localhost:3306',
+            'myWebsocketApp',
             'root',
             '',
             'mysql://root@localhost:3306/myWebsocketApp',
         );
         $host = $this->askFor('databaseHost');
         $this->showHeader($output);
+        $database = $this->askFor('database');
+        $this->showHeader($output);
         $user = $this->askFor('databaseUser');
         $this->showHeader($output);
         $password = $this->askFor('databasePassword');
         $this->showHeader($output);
         mysqli_report(MYSQLI_REPORT_OFF);
-        $db = @\mysqli_connect($host, $user, $password);
-        if (!$db) {
+        $connection = @\mysqli_connect($host, $user, $password);
+        if (!$connection) {
             $this->message = 'could not connect to Database';
             return $this->execute($input, $output);
         }
-        $dbinfo = explode('-', mysqli_get_server_info($db));
+        $dbinfo = explode('-', mysqli_get_server_info($connection));
 
         if (strlen($password) > 0) {
             $password = ':' . $password;
@@ -111,9 +114,9 @@ class AppInstall extends Command
         } else {
             $version = $dbinfo[1];
         }
-        $this->installer->setDatabaseUrl('mysql://' . $user . $password . '@' . $host . '/myWebsocketApp?serverVersion=' . strtolower($version));
+        $this->environment->setDatabaseUrl('mysql://' . $user . $password . '@' . $host . '/' . $database . '?serverVersion=' . strtolower($version));
 
-        $output->write(sprintf("\033\143"));
+        $output->write("\033\143");
         $this->io->title('Set up');
         $str = 'SERVER_URL=\'' . $this->askFor('ServerUrl') . "'\n";
 
@@ -121,9 +124,12 @@ class AppInstall extends Command
         $str .= 'WEBSOCKET_URL=\'' . $this->askFor('WebsocketUrl') . "'\n";
 
         $this->showHeader($output);
-        $str .= 'DATABASE_URL=\'' . $this->installer->getDatabaseUrl() . "'\n";
+        $str .= 'DATABASE_URL=\'' . $this->environment->getDatabaseUrl() . "'\n";
 
-        file_exists(__DIR__ . '/../../.env.local') ? unlink(__DIR__ . '/../../.env.local') : null;
+        if (file_exists(__DIR__ . '/../../.env.local')) {
+            unlink(__DIR__ . '/../../.env.local');
+        }
+
         if (file_put_contents(__DIR__ . '/../../.env.local', $str)) {
 
             $this->io->block('config set up success');
@@ -135,4 +141,5 @@ class AppInstall extends Command
         }
 
     }
+
 }

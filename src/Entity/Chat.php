@@ -13,30 +13,30 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- *
+ * Chat
  */
 #[ORM\Entity(repositoryClass: ChatRepository::class)]
 class Chat extends Entity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[Groups(['app_chat', 'app_user_chats', 'chat_message_status'])]
+    #[Groups(['app:chat', 'app:user:chats', 'chat:message:status'])]
     #[ORM\Column(type: 'integer')]
     private ?int $id;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'chats')]
-    #[Groups(['app_chat', 'app_user_chats'])]
+    #[Groups(['app:chat', 'app:user:chats'])]
     private ?Collection $users;
 
     #[ORM\OneToMany(mappedBy: 'chat', targetEntity: ChatMessage::class)]
     private ?Collection $chatMessages;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[Groups(['app_chat', 'app_user_chats'])]
+    #[Groups(['app:chat', 'app:user:chats'])]
     private ?User $blockedBy;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['app_chat', 'app_user_chats'])]
+    #[Groups(['app:chat', 'app:user:chats'])]
     private ?\DateTimeInterface $typing;
 
 

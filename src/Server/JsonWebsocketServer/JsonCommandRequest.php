@@ -8,7 +8,7 @@ namespace App\Server\JsonWebsocketServer;
 use Ratchet\ConnectionInterface;
 
 /**
- *
+ * JsonCommandRequest
  */
 class JsonCommandRequest
 {

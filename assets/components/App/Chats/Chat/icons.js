@@ -1,4 +1,4 @@
-{
+export default {
   "_comment": "source: https://gist.github.com/rxaviers/7360908",
   "emojis": {
     "People": {

@@ -7,6 +7,7 @@ namespace App\Server\ChatServer\Command;
 
 use App\Entity\Chat;
 use App\Server\ChatServer\ChatCommand as AbstractCommand;
+use App\Server\JsonWebsocketServer\CommandException;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -15,7 +16,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- *
+ * ChatUnblockCommand
  */
 #[AsCommand(
     name: 'chat:unblock',
@@ -35,36 +36,27 @@ class ChatUnblockCommand extends AbstractCommand
 
     /**
      * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     * @throws JWTDecodeFailureException
+     * @return string
+     * @throws CommandException
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function handle(InputInterface $input): string
     {
-        $token = $input->getArgument('token');
-        $user = $this->getUserByToken($token);
-        if (!$user) {
-            return 401;
-        }
+        $user = $this->authorize($input->getArgument('token'));
         $chatId = $input->getArgument('chatId');
         $chat = $this->em->getRepository(Chat::class)->findOneBy(['id' => $chatId]);
         if (!in_array($user, $chat->getUsers()->toArray())) {
-            return 401;
+            throw new CommandException('not found', 401);
         }
         if ($chat->getBlockedBy() == null) {
-            $output->write('not found');
-            return Command::FAILURE;
+            throw new CommandException('not found');
         }
-        if ($chat->getBlockedBy() != $user) {
-            $output->write('not authorized');
-            return 401;
+        if ($chat->getBlockedBy() !== $user) {
+            throw new CommandException('not found');
         }
         $chat->setBlockedBy(null);
         $this->em->persist($chat);
         $this->em->flush();
-        $jsonContent = $this->serializer->serialize($chat, 'json', ['groups' => ['app_chat']]);
-        $output->write($jsonContent);
         $this->setSubscribers($chat->getUsers());
-        return Command::SUCCESS;
+        return $this->serializer->serialize($chat, 'json', ['groups' => ['app:chat']]);
     }
 }

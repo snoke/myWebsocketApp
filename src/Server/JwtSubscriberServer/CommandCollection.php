@@ -11,7 +11,7 @@ use App\Server\JwtSubscriberServer\Command\AuthRegisterCommand;
 use App\Server\JwtSubscriberServer\Command\AuthTokenDecodeCommand;
 
 /**
- *
+ * CommandCollection
  */
 class CommandCollection extends Base
 {

@@ -7,6 +7,7 @@ namespace App\Server\ChatServer\Command;
 
 use App\Entity\Chat;
 use App\Server\ChatServer\ChatCommand as AbstractCommand;
+use App\Server\JsonWebsocketServer\CommandException;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -15,7 +16,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- *
+ * ChatTypingCommand
  */
 #[AsCommand(
     name: 'chat:typing',
@@ -35,29 +36,23 @@ class ChatTypingCommand extends AbstractCommand
 
     /**
      * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     * @throws JWTDecodeFailureException
+     * @return string
+     * @throws CommandException
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function handle(InputInterface $input): string
     {
-        $token = $input->getArgument('token');
-        $user = $this->getUserByToken($token);
-        if (!$user) {
-            return 401;
-        }
+        $user = $this->authorize($input->getArgument('token'));
         $chatId = $input->getArgument('chatId');
         $chat = $this->em->getRepository(Chat::class)->findOneBy(['id' => $chatId]);
         if (!in_array($user, $chat->getUsers()->toArray())) {
-            return 401;
+            throw new CommandException('Unauthorized', 401);
         }
-        $output->write(json_encode([
-            'user' => ['id' => $user->getId(), 'username' => $user->getUsername()],
-            'chat' => ['id' => $chat->getId()]
-        ]));
 
         $this->setSubscribers($chat->getUsers());
 
-        return Command::SUCCESS;
+        return json_encode([
+            'user' => ['id' => $user->getId(), 'username' => $user->getUsername()],
+            'chat' => ['id' => $chat->getId()]
+        ]);
     }
 }

@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- *
+ * ChatMessage
  */
 #[ORM\Entity(repositoryClass: ChatMessageRepository::class)]
 class ChatMessage extends Entity
@@ -19,39 +19,39 @@ class ChatMessage extends Entity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
+    #[Groups(['app:chat', 'app:chat:send', 'chat:message:status', 'chat:load:messages'])]
     private ?int $id;
 
     #[ORM\ManyToOne(targetEntity: Chat::class, inversedBy: 'chatMessages')]
-    #[Groups(['chat_message_status'])]
+    #[Groups(['chat:message:status'])]
     private ?Chat $chat;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages', 'chat:load:messages'])]
+    #[Groups(['app:chat', 'app:chat:send', 'chat:message:status', 'chat:load:messages', 'chat:load:messages'])]
     private ?User $sender;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
+    #[Groups(['app:chat', 'app:chat:send', 'chat:message:status', 'chat:load:messages'])]
     private ?string $message;
 
     #[ORM\ManyToOne(targetEntity: File::class)]
-    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
+    #[Groups(['app:chat', 'app:chat:send', 'chat:message:status', 'chat:load:messages'])]
     private ?File $file;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
+    #[Groups(['app:chat', 'app:chat:send', 'chat:message:status', 'chat:load:messages'])]
     private ?\DateTimeInterface $sent;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
+    #[Groups(['app:chat', 'app:chat:send', 'chat:message:status', 'chat:load:messages'])]
     private ?\DateTimeInterface $delivered;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
+    #[Groups(['app:chat', 'app:chat:send', 'chat:message:status', 'chat:load:messages'])]
     private ?\DateTimeInterface $seen;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['app_chat', 'app_chat_send', 'chat_message_status', 'chat:load:messages'])]
+    #[Groups(['app:chat', 'app:chat:send', 'chat:message:status', 'chat:load:messages'])]
     private ?string $status;
 
     /**

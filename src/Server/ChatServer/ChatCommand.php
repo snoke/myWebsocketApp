@@ -6,6 +6,7 @@
 namespace App\Server\ChatServer;
 
 use App\Entity\User;
+use App\Server\JsonWebsocketServer\CommandException;
 use App\Server\JwtSubscriberServer\SubscriberBroadcastCommand as AbstractCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
@@ -14,7 +15,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- *
+ * ChatCommand
  */
 abstract class ChatCommand extends AbstractCommand
 {
@@ -46,15 +47,33 @@ abstract class ChatCommand extends AbstractCommand
             ->addArgument('token', InputArgument::REQUIRED, 'user token');
     }
 
+
     /**
      * @param $token
-     * @return ?User
-     * @throws JWTDecodeFailureException
+     * @return User|null
+     * @throws CommandException
      */
-    protected function getUserByToken($token): ?User
+    protected function getUserByToken($token): ?\Symfony\Component\Security\Core\User\UserInterface
     {
-
-        $payload = $this->encoder->decode($token);
+        try {
+            $payload = $this->encoder->decode($token);
+        } catch(JWTDecodeFailureException $e) {
+            throw new CommandException('invalid token', 401);
+        }
         return $this->em->getRepository(User::class)->findOneBy(['id' => $payload['id']]);
+    }
+
+    /**
+     * @param string $token
+     * @return User
+     * @throws CommandException
+     */
+    protected function authorize(string $token): User
+    {
+        $user = $this->getUserByToken($token);
+        if (!$user) {
+            throw new CommandException('Unauthorized', 401);
+        }
+        return $user;
     }
 }

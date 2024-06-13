@@ -9,6 +9,7 @@ use App\Entity\Chat;
 use App\Entity\ChatMessage;
 use App\Entity\File;
 use App\Server\ChatServer\ChatCommand as AbstractCommand;
+use App\Server\JsonWebsocketServer\CommandException;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -18,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- *
+ * ChatMessageSendCommand
  */
 #[AsCommand(
     name: 'chat:message:send',
@@ -40,26 +41,20 @@ class ChatMessageSendCommand extends AbstractCommand
 
     /**
      * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     * @throws JWTDecodeFailureException
+     * @return string
+     * @throws CommandException
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function handle(InputInterface $input): string
     {
-        $token = $input->getArgument('token');
-        $user = $this->getUserByToken($token);
-        if (!$user) {
-            return 401;
-        }
-        $io = new SymfonyStyle($input, $output);
+        $user = $this->authorize($input->getArgument('token'));
         $chatMessage = new ChatMessage();
         $chatMessage->setMessage($input->getArgument('message'));
         $chat = $this->em->getRepository(Chat::class)->findOneBy(['id' => $input->getArgument('chatId')]);
         if (!in_array($user, $chat->getUsers()->toArray())) {
-            return 401;
+            throw new CommandException('error');
         }
         if ($chat->getBlockedBy() != null) {
-            return Command::FAILURE;
+            throw new CommandException('error');
         }
         $chatMessage->setSender($user);
         $chatMessage->setChat($chat);
@@ -68,9 +63,7 @@ class ChatMessageSendCommand extends AbstractCommand
         $chatMessage->setStatus('sent');
         $this->em->persist($chatMessage);
         $this->em->flush();
-        $jsonContent = $this->serializer->serialize($chatMessage, 'json', ['groups' => ['app_chat_send']]);
-        $output->write($jsonContent);
         $this->setSubscribers($chat->getUsers());
-        return Command::SUCCESS;
+        return $this->serializer->serialize($chatMessage, 'json', ['groups' => ['app:chat:send']]);
     }
 }

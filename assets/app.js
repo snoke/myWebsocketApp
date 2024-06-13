@@ -87,7 +87,7 @@ let router = {
     routes: routes
 };
 
-const config = JSON.parse(document.getElementById('_symfonyData').innerHTML);
+const config = JSON.parse(document.getElementById('_appConfig').innerHTML);
 if (config.client === 'web') {
     router.mode = 'history'
 }

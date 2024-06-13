@@ -19,7 +19,7 @@ use Symfony\Component\Console\Command\Command;
 //use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface as User;
 
 /**
- *
+ * JwtAuthListener
  */
 Class JwtAuthListener extends Worker
 {

@@ -11,7 +11,7 @@ use App\Server\JwtSubscriberServer\Worker\JwtAuthListener as Authenticator;
 use App\Server\JwtSubscriberServer\Worker\SubscriberBroadcastResponder as BroadcastPusher;
 
 /**
- *
+ * ChatServer
  */
 class ChatServer extends Server
 {

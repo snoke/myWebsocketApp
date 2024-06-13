@@ -8,6 +8,7 @@ namespace App\Server\ChatServer\Command;
 use App\Entity\Chat;
 use App\Entity\ChatMessage;
 use App\Server\ChatServer\ChatCommand as AbstractCommand;
+use App\Server\JsonWebsocketServer\CommandException;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -16,7 +17,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- *
+ * ChatLoadMessagesCommand
  */
 #[AsCommand(
     name: 'chat:load:messages',
@@ -40,28 +41,18 @@ class ChatLoadMessagesCommand extends AbstractCommand
 
     /**
      * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     * @throws JWTDecodeFailureException
+     * @return string
+     * @throws CommandException
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function handle(InputInterface $input): string
     {
-        $token = $input->getArgument('token');
-        $user = $this->getUserByToken($token);
-        if (!$user) {
-            return 401;
-        }
+        $user = $this->authorize($input->getArgument('token'));
         $chatId = $input->getArgument('chatId');
         $steps = $input->getArgument('steps');
         $chat = $this->em->getRepository(Chat::class)->findOneBy(['id' => $chatId]);
-        if (!in_array($user, $chat->getUsers()->toArray())) {
-            return 401;
-        }
         $page = $input->getArgument('page');
         $messages = $this->em->getRepository(ChatMessage::class)->findBy(['chat' => $chat], ['id' => 'desc'], $steps, $page);
 
-        $jsonContent = $this->serializer->serialize($messages, 'json', ['groups' => [$this->getName()]]);
-        $output->write($jsonContent);
-        return Command::SUCCESS;
+        return $this->serializer->serialize($messages, 'json', ['groups' => [$this->getName()]]);
     }
 }

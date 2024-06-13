@@ -1,11 +1,11 @@
 <!-- Author: Stefan Sander <mail@stefan-sander.online> -->
 <template>
-  <div id="settings" class=" h-100p">
+  <div id="settings" class="h-100p">
     <div class="w-100">
       <div class="alert row " v-if="message"
            v-bind:class="{
-                'alert-success':  message.status===0,
-                'alert-danger':  message.status===1,
+                'alert-success': message.status===0,
+                'alert-danger': message.status===1,
                 }">{{message.data}}
       </div>
     </div>
@@ -31,7 +31,6 @@ export default {
   },
   methods: {
     save: function () {
-
       this.$root.connection.send(
           JSON.stringify({
             'action': 'user:change:password',

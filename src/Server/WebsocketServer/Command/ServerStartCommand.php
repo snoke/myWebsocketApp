@@ -75,12 +75,14 @@ class ServerStartCommand extends Command
      */
     private function createWssServer(HttpServer $httpServer): IoServer
     {
+
         $this->port = $this->port ?: self::WSS_PORT;
         $loop = \React\EventLoop\Factory::create();
         $server = new \React\Socket\Server('0.0.0.0:' . $this->port, $loop);
+        $dir =  __DIR__ . '/../..';
         $secureServer = new \React\Socket\SecureServer($server, $loop, [
-            'local_cert' => __DIR__ . '/../../config/ssl/certificate.crt',
-            'local_pk' => __DIR__ . '/../../config/ssl/private.key',
+            'local_cert' => $dir . '/config/ssl/certificate.crt',
+            'local_pk' => $dir . '/config/ssl/private.key',
             'verify_peer' => false,
         ]);
 

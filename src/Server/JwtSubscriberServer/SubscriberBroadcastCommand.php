@@ -5,17 +5,17 @@
 
 namespace App\Server\JwtSubscriberServer;
 
+use App\Server\JsonWebsocketServer\CommandException;
+use App\Server\JsonWebsocketServer\JsonCommand;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Security\Core\User\UserInterface as User;
 
 /**
- *
+ * SubscriberBroadcastCommand
  */
-abstract Class SubscriberBroadcastCommand extends Command
+abstract Class SubscriberBroadcastCommand extends JsonCommand
 {
-
     private Collection $subscribers;
 
     public function __construct()

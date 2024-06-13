@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- *
+ * JWTCreatedListener
  */
 class JWTCreatedListener extends AbstractController
 {

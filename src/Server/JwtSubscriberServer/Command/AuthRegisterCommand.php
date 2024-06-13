@@ -6,6 +6,7 @@
 namespace App\Server\JwtSubscriberServer\Command;
 
 use App\Entity\User;
+use App\Server\JsonWebsocketServer\CommandException;
 use App\Server\JwtSubscriberServer\SubscriberBroadcastCommand as AbstractCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -20,7 +21,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 //use Symfony\Component\Security\Core\User\UserInterface as User;
 
 /**
- *
+ * AuthRegisterCommand
  */
 #[AsCommand(
     name: 'auth:register',
@@ -60,27 +61,23 @@ class AuthRegisterCommand extends AbstractCommand
 
     /**
      * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
+     * @return string
+     * @throws CommandException
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function handle(InputInterface $input): string
     {
         $loginName = $input->getArgument('loginName');
         $password = $input->getArgument('password');
         $password2 = $input->getArgument('password2');
 
-
         if ($password !== $password2) {
-            $output->write('passwords are not identical');
-            return Command::FAILURE;
+            throw new CommandException('passwords are not identical');
         }
         if (strlen($password) < 4) {
-            $output->write('password is too short');
-            return Command::FAILURE;
+            throw new CommandException('password is too short');
         }
         if ($this->em->getRepository(User::class)->findOneBy(['username' => $loginName])) {
-            $output->write('username already taken');
-            return Command::FAILURE;
+            throw new CommandException('username already taken');
         }
         $user = new User();
         $user->setUsername($loginName);
@@ -92,7 +89,7 @@ class AuthRegisterCommand extends AbstractCommand
         );
         $this->em->persist($user);
         $this->em->flush();
-        $output->write($user->getId());
-        return Command::SUCCESS;
+
+        return (string)$user->getId();
     }
 }

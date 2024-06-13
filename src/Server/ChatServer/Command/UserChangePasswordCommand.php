@@ -7,6 +7,7 @@ namespace App\Server\ChatServer\Command;
 
 use App\Entity\User;
 use App\Server\ChatServer\ChatCommand as AbstractCommand;
+use App\Server\JsonWebsocketServer\CommandException;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
@@ -26,7 +27,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
- *
+ * UserChangePasswordCommand
  */
 #[AsCommand(
     name: 'user:change:password',
@@ -67,22 +68,13 @@ class UserChangePasswordCommand extends AbstractCommand
 
     /**
      * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     * @throws JWTDecodeFailureException
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
+     * @return string
+     * @throws CommandException
      * @throws TransportExceptionInterface
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function handle(InputInterface $input): string
     {
-        $token = $input->getArgument('token');
-        $user = $this->getUserByToken($token);
-        if (!$user) {
-            return 401;
-        }
+        $user = $this->authorize($input->getArgument('token'));
         $oldpassword = $input->getArgument('oldpassword');
         $password = $input->getArgument('password');
         $password2 = $input->getArgument('password2');
@@ -101,27 +93,18 @@ class UserChangePasswordCommand extends AbstractCommand
         );
 
         $statusCode = $response->getStatusCode();
-        $contentType = $response->getHeaders()['content-type'][0];
-        $content = $response->getContent();
-        $content = $response->toArray();
 
         if ($statusCode != 200) {
-            $output->write('wrong password');
-            return Command::FAILURE;
+            throw new CommandException('wrong password');
         }
-
 
         if ($password !== $password2) {
-            $output->write('passwords are not identical');
-            return Command::FAILURE;
+            throw new CommandException('passwords are not identical');
         }
         if (strlen($password) < 4) {
-            $output->write('password is too short');
-            return Command::FAILURE;
+            throw new CommandException('password is too short');
         }
 
-        $payload = $this->encoder->decode($token);
-        $user = $this->em->getRepository(User::class)->findOneBy(['id' => $payload['id']]);
         $user->setPassword(
             $this->passwordHasher->hashPassword(
                 $user,
@@ -130,8 +113,6 @@ class UserChangePasswordCommand extends AbstractCommand
         );
         $this->em->persist($user);
         $this->em->flush();
-        $io = new SymfonyStyle($input, $output);
-        $output->write('password changed');
-        return Command::SUCCESS;
+        return 'password changed';
     }
 }

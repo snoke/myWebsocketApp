@@ -63,22 +63,32 @@ class JsonServer extends WebsocketServer
     }
 
     /**
-     * @param Command $command
+     * @param JsonCommand $command
      * @param ArrayInput $params
      * @return JsonCommandResponse
-     * @throws ExceptionInterface
      */
-    private function execute(Command $command, ArrayInput $params): JsonCommandResponse
+    private function execute(JsonCommand $command, ArrayInput $params): JsonCommandResponse
     {
-        $output = new BufferedOutput();
-        $statusCode = $command->run($params, $output);
-        $data = $output->fetch();
+        $data = $command->handle($params);
+
         return new JsonCommandResponse(
             $command->getName(),
             $params,
-            $statusCode,
+            200,
             $data
         );
+
+        /*
+            $output = new BufferedOutput();
+            $statusCode = $command->run($params, $output);
+            $data = $output->fetch();
+            return new JsonCommandResponse(
+                $command->getName(),
+                $params,
+                $statusCode,
+                $data
+            );
+     */
     }
 
     /**

@@ -13,7 +13,7 @@ use Ratchet\WebSocket\WsConnection;
 use Symfony\Component\Console\Command\Command;
 
 /**
- *
+ * SubscriberBroadcastResponder
  */
 class SubscriberBroadcastResponder extends Worker
 {

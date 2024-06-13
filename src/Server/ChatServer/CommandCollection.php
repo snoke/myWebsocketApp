@@ -24,7 +24,7 @@ use App\Server\JwtSubscriberServer\Command\AuthTokenDecodeCommand;
 use App\Server\JwtSubscriberServer\CommandCollection as Base;
 
 /**
- *
+ * CommandCollection
  */
 class CommandCollection extends Base
 {

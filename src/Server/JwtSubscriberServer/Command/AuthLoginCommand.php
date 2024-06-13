@@ -5,12 +5,11 @@
 
 namespace App\Server\JwtSubscriberServer\Command;
 
+use App\Server\JsonWebsocketServer\CommandException;
 use App\Server\JwtSubscriberServer\SubscriberBroadcastCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -19,7 +18,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
- *
+ * AuthLoginCommand
  */
 #[AsCommand(
     name: 'auth:login',
@@ -48,17 +47,16 @@ class AuthLoginCommand extends SubscriberBroadcastCommand
             ->addArgument('password', InputArgument::REQUIRED, 'login password');
     }
 
+
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws CommandException
+     * @throws ClientExceptionInterface
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function handle(InputInterface $input): string
     {
         $loginName = $input->getArgument('loginName');
         $password = $input->getArgument('password');
@@ -77,14 +75,10 @@ class AuthLoginCommand extends SubscriberBroadcastCommand
         );
         $statusCode = $response->getStatusCode();
         if ($statusCode == 401) {
-            $output->write('login failed');
-            return Command::FAILURE;
+            throw new CommandException('login failed', $statusCode);
         }
-        $contentType = $response->getHeaders()['content-type'][0];
-        $content = $response->getContent();
         $content = $response->toArray();
 
-        $output->write($content['token']);
-        return Command::SUCCESS;
+        return $content['token'];
     }
 }

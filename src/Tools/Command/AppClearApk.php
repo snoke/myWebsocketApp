@@ -6,27 +6,22 @@
  * it will create a static html for capacitor to build a native android app
  */
 
-namespace App\Command;
+namespace App\Tools\Command;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-
 /**
- *
+ * AppClearApk
  */
 #[AsCommand(
-    name: 'app:entrypoint:clear',
+    name: 'app:clear:apk',
     description: 'Moves recently built apk into downloads, clears all android build data',
 )]
-class AppEntrypointClear extends Command
+class AppClearApk extends Command
 {
-
-    private HttpClientInterface $client;
-
     /**
      * @param $dir
      * @return void
@@ -47,13 +42,9 @@ class AppEntrypointClear extends Command
         }
     }
 
-    /**
-     * @param HttpClientInterface $client
-     */
-    public function __construct(HttpClientInterface $client)
+    public function __construct()
     {
         parent::__construct();
-        $this->client = $client;
     }
 
     /**
@@ -63,12 +54,21 @@ class AppEntrypointClear extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        file_exists(__DIR__ . '/../../public/index.html') ? unlink(__DIR__ . '/../../public/index.html') : null;
-        file_exists(__DIR__ . '/../../public/downloads/android-client-latest.apk') ? unlink(__DIR__ . '/../../public/downloads/android-client-latest.apk') : null;
-        file_exists(__DIR__ . '/../../android/app/build/outputs/apk/debug/app-debug.apk') ? rename(__DIR__ . '/../../android/app/build/outputs/apk/debug/app-debug.apk', __DIR__ . '/../../public/downloads/android-client-latest.apk') : null;
-        file_exists(__DIR__ . '/../../capacitor.config.ts') ? unlink(__DIR__ . '/../../capacitor.config.ts') : null;
-        if (file_exists(__DIR__ . '/../../android') && is_dir(__DIR__ . '/../../android')) {
-            $this->rrmdir(__DIR__ . '/../../android');
+        $dir = __DIR__ . '/../..';
+        if(file_exists($dir . '/public/index.html')) {
+            unlink($dir . '/public/index.html');
+        }
+        if(file_exists($dir . '/public/downloads/android-client-latest.apk')) {
+            unlink($dir . '/public/downloads/android-client-latest.apk');
+        }
+        if(file_exists($dir . '/android/app/build/outputs/apk/debug/app-debug.apk')) {
+            rename($dir . '/android/app/build/outputs/apk/debug/app-debug.apk', $dir . '/public/downloads/android-client-latest.apk');
+        }
+        if(file_exists($dir . '/capacitor.config.ts')) {
+            unlink($dir . '/capacitor.config.ts');
+        }
+        if (file_exists($dir . '/android') && is_dir($dir . '/android')) {
+            $this->rrmdir($dir . '/android');
         }
         return Command::SUCCESS;
     }
