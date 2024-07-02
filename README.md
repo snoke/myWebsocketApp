@@ -13,8 +13,8 @@
 <div align="center">  
   
       
-| <a href="#about">About</a> | <a href="#Description">Description</a> | <a href="#Features">Features</a> | <a href="#LiveDemo">Live Demo</a> | <a href="#Downloads">Downloads</a> | <a href="#Documentation">Documentation</a> | <a href="#TODOs">ToDo</a> | 
-|-|-|-|-|-|-|-|  
+| <a href="#about">About</a> | <a href="#Description">Description</a> | <a href="#Features">Features</a> |  <a href="#Downloads">Downloads</a> | <a href="#Documentation">Documentation</a> | <a href="#TODOs">ToDo</a> | 
+|-|-|-|-|-|-| 
 </div>
   
 ---
@@ -50,18 +50,6 @@ JWT is used for authentification.
       <li>block/unblock chat</li>
      <li>vuejs web and native android client</li>
     </ul><br />
-  <br /></li>
-    <li name="LiveDemo"> <h3> <a href="#menu"> [^] </a>  Live Demo</h3> 
-    
-browse to https://websocketchat.stefan-sander.online or download the [Native Android Chat Client](#Downloads). <br />
-You may use following credientials: 
-`
-alice:test
-` and
-`
-bob:test
-`
-
   <br /></li>
     <li name="Downloads"> <h3> <a href="#menu"> [^] </a>  Downloads</h3> 
       
